@@ -2,9 +2,9 @@
 
 :computer: Trabalho referente a diciplina de Desenvolvimento Orientado a Objetos
 
-:pushpin: <b> Objetivo: implementar um sistema orientado a objetos em Python para o controle de agendamento de vacinação.
+:pushpin: Objetivo: implementar um sistema orientado a objetos em Python para o controle de agendamento de vacinação.
 
-:pushpin: <b> Escopo: Cada posto de vacinação possui um estoque de vacinas de variados fabricantes, enfermeiros e enfermeiras responsáveis pela aplicação das
+:pushpin: Escopo: Cada posto de vacinação possui um estoque de vacinas de variados fabricantes, enfermeiros e enfermeiras responsáveis pela aplicação das
 vacinas, e pacientes a serem vacinados.
 
 :arrow_right: Um sistema de vacinação deve ser configurado para um determinado posto de vacinação em um município. Nele devem ser cadastrados os enfermeiros e enfermeiras que trabalham naquele posto, as doses de vacinas disponíveis com quantidade e fabricante, assim como os pacientes que serão atendidos por aquele posto de vacinação.
