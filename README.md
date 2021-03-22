@@ -1,6 +1,6 @@
 # sistema-vacinacao :syringe:
 
-:computer: Trabalho referente a diciplina de Desenvolvimento Orientado a Objetos
+:pushpin: **Projeto**: trabalho referente a diciplina de Desenvolvimento Orientado a Objetos
 
 :pushpin: **Objetivo:** implementar um sistema orientado a objetos em Python para o controle de agendamento de vacinação.
 
