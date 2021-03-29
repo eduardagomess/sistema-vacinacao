@@ -1,13 +1,10 @@
 from tela.telaSistema import TelaSistema
-import os
 from controlador.controladorEstoque import ControladorEstoque
 from controlador.controladorVacinacao import ControladorVacinacao
 from controlador.controladorAgendamento import ControladorAgendamento
 from controlador.controladorPaciente import ControladorPaciente
 from controlador.controladorEnfermeiro import ControladorEnfermeiro
 from utils import estilo
-import os
-
 
 
 class ControladorSistema:
