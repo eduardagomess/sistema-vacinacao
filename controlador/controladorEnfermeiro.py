@@ -14,7 +14,9 @@ class ControladorEnfermeiro:
         estilo.clear()
         dados_enfermeiro = self.__tela_enfermeiro.pega_dados_enfermeiro()
         enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"],dados_enfermeiro["coren"])
-        self.__enfermeiros.append(enfermeiro)
+        if enfermeiro not in self.__enfermeiros:
+            self.__enfermeiros.append(enfermeiro)
+            return enfermeiro
 
     def listar_enfermeiros(self):
         for enfermeiro in self.__enfermeiros:
@@ -27,12 +29,14 @@ class ControladorEnfermeiro:
 
 
     def pega_nome_enfermeiro(self):
+        estilo.clear()
         nome = self.__tela_enfermeiro.busca_enfermeiro_nome()
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.nome == nome:
                 return enfermeiro
 
     def pega_cpf_enfermeiro(self):
+        estilo.clear()
         cpf = self.__tela_enfermeiro.busca_enfermeiro_cpf()
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.cpf == cpf:

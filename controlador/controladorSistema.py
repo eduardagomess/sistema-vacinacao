@@ -62,6 +62,7 @@ class ControladorSistema:
         return self.__tela_sistema
 
     def abre_tela(self):
+        estilo.clear()
         opcoes = {1: self.acessar_cadastro_paciente, 2: self.acessar_cadastro_enfermeiro, 3: self.acessar_estoque, 4: self.acessar_registro_vacinacao,
                   5: self.acessar_agendamentos, 6: self.finaliza_sistema}
         while True:

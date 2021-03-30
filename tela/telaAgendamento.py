@@ -32,8 +32,11 @@ class TelaAgendamento:
 
     def mostra_dados(self, dados):
         print("Nome do paciente: ",dados["paciente"])
-        print("Informações agendamento ", "A vacina esta marcada para " + dados["agendamento"][0] + " as " + dados["agendamento"][1] + " horas")
-        print("Nome do Enfermeiro ", dados["enfermeiro"])
+        print("Informações agendamento: ", "A vacina está marcada para " + dados["agendamento"][0] + " as " + dados["agendamento"][1])
+        print("Nome do Enfermeiro(a): ", dados["enfermeiro"])
+
+    def mostra_mensagem_paciente(self):
+        print("Paciente não cadastrado")
 
     def editar_agendamento(self):
         pass

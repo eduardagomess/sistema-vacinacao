@@ -15,23 +15,20 @@ class ControladorAgendamento:
 
 
     def inserir_agendamento(self):
+        estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
-        paciente = controlador_paciente.verificar_paciente()
-        if paciente:
-            paciente_escolhido = controlador_paciente.busca_paciente()
-        else:
-            paciente_escolhido = controlador_paciente.inserir_paciente()
-
+        paciente = controlador_paciente.busca_paciente()
+        if paciente == None:
+            paciente = controlador_paciente.inserir_paciente()
         dia, hora = self.__tela_agendamento.pegar_dados_agendamento()
         dia = dia.lower().capitalize()
         enfermeiro_escolhido = controlador_enfermeiro.busca_enfermeiro()
-
+        if enfermeiro_escolhido == None:
+            enfermeiro_escolhido = controlador_enfermeiro.inserir_enfermeiro()
         if hora not in self.__agenda[dia]:
             self.__agenda[dia].append(hora)
-            print(paciente)
-            print(self.__agenda)
-            self.__agendamentos[paciente_escolhido.nome] = {"paciente": paciente_escolhido, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
+            self.__agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
 
     def editar_agendamento(self):
         pass
@@ -41,7 +38,7 @@ class ControladorAgendamento:
 
     def listar_agendamentos(self):
         for agendamento in self.__agendamentos:
-                self.__tela_agendamento.mostra_dados({ "paciente":self.__agendamentos[agendamento]["paciente"].nome, "agendamento": self.__agendamentos[agendamento]["agendamento"],
+            self.__tela_agendamento.mostra_dados({"paciente": self.__agendamentos[agendamento]["paciente"].nome, "agendamento": self.__agendamentos[agendamento]["agendamento"],
                                                        "enfermeiro": self.__agendamentos[agendamento]["enfermeiro"].nome})
 
 
@@ -50,10 +47,10 @@ class ControladorAgendamento:
 
 
     def abre_tela(self):
+        estilo.clear()
         opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento, 4: self.listar_agendamentos, 5: self.retornar_sistema}
         continua = True
         while continua:
-            estilo.clear()
             opcao_selecionada = self.__tela_agendamento.mostra_opcoes()
             if opcao_selecionada == 5:
                 continua = False
