@@ -3,7 +3,7 @@ class TelaEnfermeiro:
         pass
 
     def mostra_opcoes(self):
-        print("------ CADASTRO DE ENFERMEIROS --------")
+        print("------ ÁREA DE ENFERMEIROS --------")
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir enfermeiro")
         print("2 - Listar enfermeiros")
@@ -31,11 +31,11 @@ class TelaEnfermeiro:
         print("COREN do enfermeiro: ", dados_enfermeiro["coren"] + "\n")
 
     def mostra_opcao_busca(self):
-        print("------ Opção de busca ----------")
+        print("------ OPÇÃO DE BUSCA DO ENFERMEIRO ----------")
         print("1 - buscar pelo nome")
         print("2 - buscar pelo cpf")
         print("3 - buscar pelo COREN")
-        opcao = int(input("insira a opcao:"))
+        opcao = int(input("insira a opção:"))
         return opcao
 
     def busca_enfermeiro_nome(self):
@@ -51,7 +51,7 @@ class TelaEnfermeiro:
         return coren
 
     def mostra_opcao_alteracao_cadastro(self):
-        print("------ ALTAREÇÃO DE CADASTRO --------")
+        print("------ ALTAREÇÃO DE CADASTRO DO ENFERMEIRO --------")
         print("Escolha a opção que você deseja alterar:  ")
         print("1 - alterar o nome do enfermeiro")
         print("2 - alterar o telefone do enfermeiro")

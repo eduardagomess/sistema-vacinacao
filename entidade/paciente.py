@@ -7,7 +7,7 @@ class Paciente(Pessoa):
         self.__dose = dose
         self.__data_nascimento = data_nascimento
         self.__endereco = endereco
-        self.__pacientes = []
+
 
     @property
     def dose(self):
@@ -16,10 +16,6 @@ class Paciente(Pessoa):
     @dose.setter
     def dose(self, dose):
         self.__dose = dose
-
-    @property
-    def lista_pecientes(self):
-        return self.__pacientes
 
     @property
     def endereco(self):

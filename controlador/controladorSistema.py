@@ -14,7 +14,7 @@ class ControladorSistema:
         self.__controlador_agendamento = ControladorAgendamento(self)
         self.__controlador_paciente = ControladorPaciente(self)
         self.__controlador_enfermeiro = ControladorEnfermeiro(self)
-        self.__tela_sistema = TelaSistema()
+        self.__tela_sistema = TelaSistema(self)
 
     def inicializa_sistema(self):
         self.abre_tela()
@@ -37,6 +37,29 @@ class ControladorSistema:
     def finaliza_sistema(self):
         exit(0)
 
+    @property
+    def controlador_estoque(self):
+        return self.__controlador_estoque
+
+    @property
+    def controlador_vacinacao(self):
+        return self.__controlador_vacinacao
+
+    @property
+    def controlador_agendamento(self):
+        return self.__controlador_agendamento
+
+    @property
+    def controlador_paciente(self):
+        return self.__controlador_paciente
+
+    @property
+    def controlador_enfermeiro(self):
+        return self.__controlador_enfermeiro
+
+    @property
+    def tela_sistema(self):
+        return self.__tela_sistema
 
     def abre_tela(self):
         opcoes = {1: self.acessar_cadastro_paciente, 2: self.acessar_cadastro_enfermeiro, 3: self.acessar_estoque, 4: self.acessar_registro_vacinacao,

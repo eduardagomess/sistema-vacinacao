@@ -1,6 +1,6 @@
 class TelaSistema:
-    def __init__(self):
-        pass
+    def __init__(self, controlador_sistema):
+        self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
         print("------ SISTEMA DE VACINAÇÃO --------")

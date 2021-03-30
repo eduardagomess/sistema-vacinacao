@@ -16,7 +16,10 @@ class ControladorPaciente:
         paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
                             dados_paciente["endereco"], dados_paciente["data_nascimento"], dados_paciente["dose"])
 
-        self.__pacientes.append(paciente)
+        if paciente not in self.__pacientes:
+            self.__pacientes.append(paciente)
+            return paciente
+
 
     def listar_pacientes(self):
         for paciente in self.__pacientes:
@@ -26,27 +29,35 @@ class ControladorPaciente:
 
     def pega_nome_paciente(self):
         nome = self.__tela_paciente.busca_paciente_nome()
-        for index, paciente in enumerate(self.__pacientes):
+        for paciente in self.__pacientes:
             if paciente.nome == nome:
                 return paciente
 
     def pega_cpf_paciente(self):
         cpf = self.__tela_paciente.busca_paciente_cpf()
-        for index, paciente in enumerate(self.__pacientes):
+        for paciente in self.__pacientes:
             if paciente.cpf == cpf:
                 return paciente
 
-
-    def busca_paciente(self):
+    def busca_tipo_busca_paciente(self):
         estilo.clear()
         tipo_busca = self.__tela_paciente.mostra_opcao_busca()
         if tipo_busca == 1:
             paciente_escolhido = self.pega_nome_paciente()
         else:
             paciente_escolhido = self.pega_cpf_paciente()
-        for paciente in self.__pacientes:
-            if paciente == paciente_escolhido:
-                return paciente_escolhido
+        return paciente_escolhido
+
+    def busca_paciente(self):
+        paciente_escolhido = self.busca_tipo_busca_paciente()
+        return paciente_escolhido
+
+    def verificar_paciente(self):
+        if self.busca_paciente() == None:
+            return False
+        else:
+            return True
+
 
     def editar_paciente(self):
         paciente = self.busca_paciente()
