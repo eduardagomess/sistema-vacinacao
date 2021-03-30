@@ -13,7 +13,7 @@ class TelaPaciente:
         return int(input("Insira o número da opção escolhida: "))
 
     def pega_dados_paciente(self):
-        print("------ CADASTRAR PACIENTE ------")
+        print(" ---- CADASTRADO DE PACIENTES  ----")
         nome = input("Insira o nome completo do paciente: ")
         telefone = input("Insira o telefone do paciente ( ddxxxxxxxxxx): ")
 
