@@ -1,4 +1,24 @@
+from utils import estilo
+import time
+import datetime
+
 class TelaPaciente:
+
+    def __init__(self, controlador_sistema):
+        self.__controlador_sistema = controlador_sistema
+
+    def le_numero_inteiro(self, mensagem: str = "", inteiros_validos: [] = None):
+        while True:
+            valor_lido = input(mensagem)
+            try:
+                inteiro = int(valor_lido)
+                if inteiros_validos and inteiro not in inteiros_validos:
+                    raise ValueError
+                return inteiro
+            except ValueError:
+                print("Valor incorreto, digite um valor numérico inteiro válido")
+                if inteiros_validos:
+                    print("Valores válidos: ", inteiros_validos)
 
     def mostra_opcoes(self):
         print("------ ÁREA DE PACIENTES --------")
@@ -10,18 +30,39 @@ class TelaPaciente:
         print("5 - Buscar paciente")
         print("6 - Retornar a tela principal do sistema")
 
-        return int(input("Insira o número da opção escolhida: "))
+        opcao = self.le_numero_inteiro("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5,6])
+        return opcao
 
     def pega_dados_paciente(self):
         print(" ---- CADASTRADO DE PACIENTES  ----")
+
         nome = input("Insira o nome completo do paciente: ")
+        while not nome.isalpha():
+            self.excecao(" ----- CAMPO NOME DEVE CONTER APENAS LETRAS -----")
+            time.sleep(1)
+            nome = input("Insira novamente o nome completo do paciente: ")
+
         telefone = input("Insira o telefone do paciente ( ddxxxxxxxxxx): ")
+        while not telefone.isdigit():
+            self.excecao("----- CAMPO TELEFONE DEVE CONTER APENAS NUMEROS ------")
+            time.sleep(1)
+            telefone = input("Insira novamente o telefone do paciente ( ddxxxxxxxxxx): ")
 
-        cpf = int(input("Insira o cpf do paciente: "))
-        endereco = input("Insira o endereço do paciente: ")
-        data_nascimento = int(input("Insira a data de nascimento do paciente: "))
-        dose = int(input("Insira em qual estágio da dose o paciente está (0 - 1 - 2): "))
+        cpf = input("Insira o cpf do paciente: ")
+        while not cpf.isdigit():
+            self.excecao(" ----- CAMPO CPF DEVE CONTER APENAS NUMEROS -----")
+            time.sleep(1)
+            cpf = input("Insira novamente o cpf do paciente: ")
 
+        endereco = input("Insira  endereço do paciente: ")
+
+        data_nascimento =  input("Insira a data de nascimento do paciente (DD/MM/AAAA): ")
+
+
+        dose = input("Insira em qual estágio da dose o paciente está (0 - 1 - 2): ")
+        while dose not in ["0", "1", "2"]:
+            self.excecao(" ---- CAMPO DOSE DEVE SER UM NÚMERO ENTRE 0 E 2 ----")
+            dose = input("Insira novamente em qual estágio da dose o paciente está (0 - 1 - 2): ")
         return {"nome": nome, "telefone": telefone, "cpf":cpf, "endereco": endereco, "data_nascimento": data_nascimento, "dose": dose}
 
     def mostra_dados(self, dados_paciente):
@@ -58,9 +99,10 @@ class TelaPaciente:
         return opcao
 
     def busca_paciente_nome(self):
-        nome = input("Insira o nome do paciente: ")
-        return nome
+        return input("Insira o nome do paciente: ")
 
     def busca_paciente_cpf(self):
-        cpf = int(input("Insira o cpf do paciente: "))
-        return cpf
+        return int(input("Insira o cpf do paciente: "))
+
+    def excecao(self, mensagem):
+        print(mensagem)

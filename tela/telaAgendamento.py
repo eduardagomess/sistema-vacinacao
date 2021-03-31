@@ -41,8 +41,21 @@ class TelaAgendamento:
     def mostra_msg_enfermeiro_nao_castrado(self):
         print("PACIENTE NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO")
 
-    def editar_agendamento(self):
-        pass
+    def mostra_opcao_alteracao(self):
+        print("------ ALTAREÇÃO DE ANGENDAMENTO --------")
+        print("Escolha a opção que você deseja alterar:  ")
+        print("1 - alterar o dia da vacinação")
+        print("2 - alterar o horario da vacinação")
+        print("3 - alterar o dia e a horario da vacinação")
+        print("4 - alterar o enfermeiro")
+        return int(input("Insira o número da opção escolhida: "))
+
+    def pega_novos_dados(self, opcao):
+        print("------ Inserir novo dado para alteração do agendamento --------")
+        opcoes_mudanca = {1: "dia", 2: "hora", 3: "dia e hora", 4: "enfermeiro"}
+        print("Insira " + opcoes_mudanca[opcao])
+        dado = input()
+        return [opcoes_mudanca[opcao], dado]
 
     def excluir_agendamento(self):
         pass

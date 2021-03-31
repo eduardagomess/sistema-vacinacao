@@ -1,5 +1,4 @@
 from tela.telaAgendamento import TelaAgendamento
-from tela.telaPaciente import TelaPaciente
 from utils import estilo
 import time
 
@@ -38,10 +37,29 @@ class ControladorAgendamento:
             self.__agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
 
     def editar_agendamento(self):
+        controlador_paciente = self.__controlador_sistema.controlador_paciente
+        controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
+        paciente = controlador_paciente.busca_paciente()
+        enfermeiro = controlador_enfermeiro.busca_enfermeiro()
+        tipo_de_alteracao = self.__tela_agendamento.mostra_opcao_alteracao()
+        dado_novo = self.__tela_agendamento.pega_novos_dados(tipo_de_alteracao)
+
+        if dado_novo[0] == "dia":
+            pass
+        elif dado_novo[0] == "hora":
+            pass
+        elif dado_novo[0] == "enfermeiro":
+            pass
         pass
 
     def excluir_agendamento(self):
-        pass
+        controlador_paciente = self.__controlador_sistema.controlador_paciente
+        paciente = controlador_paciente.busca_paciente()
+        print(paciente)
+        print(self.__agendamentos[paciente.nome])
+        dia, hora = [str(w) for w in self.__agendamentos[paciente.nome]["agendamento"]]
+        self.__agenda[dia.lower().capitalize()].remove(hora)
+        del self.__agendamentos[paciente.nome]
 
     def listar_agendamentos(self):
         estilo.clear()
@@ -51,7 +69,7 @@ class ControladorAgendamento:
 
 
     def retornar_sistema(self):
-        pass
+        return self.__controlador_sistema
 
 
     def abre_tela(self):
