@@ -19,11 +19,11 @@ class ControladorSistema:
     def inicializa_sistema(self):
         self.abre_tela()
 
-    def acessar_cadastro_enfermeiro(self):
-        self.__controlador_enfermeiro.abre_tela()
-
-    def acessar_cadastro_paciente(self):
+    def acessar_area_paciente(self):
         self.__controlador_paciente.abre_tela()
+
+    def acessar_area_enfermeiro(self):
+        self.__controlador_enfermeiro.abre_tela()
 
     def acessar_estoque(self):
         self.__controlador_estoque.abre_tela()
@@ -34,7 +34,8 @@ class ControladorSistema:
     def acessar_agendamentos(self):
         self.__controlador_agendamento.abre_tela()
 
-    def finaliza_sistema(self):
+    @staticmethod
+    def finaliza_sistema():
         exit(0)
 
     @property
@@ -62,11 +63,8 @@ class ControladorSistema:
         return self.__tela_sistema
 
     def abre_tela(self):
-        estilo.clear()
-        opcoes = {1: self.acessar_cadastro_paciente, 2: self.acessar_cadastro_enfermeiro, 3: self.acessar_estoque, 4: self.acessar_registro_vacinacao,
-                  5: self.acessar_agendamentos, 6: self.finaliza_sistema}
+        opcoes = {1: self.acessar_area_paciente, 2: self.acessar_area_enfermeiro, 3: self.acessar_estoque,
+                  4: self.acessar_registro_vacinacao, 5: self.acessar_agendamentos, 6: self.finaliza_sistema}
         while True:
             estilo.clear()
             opcoes[self.__tela_sistema.mostra_opcoes()]()
-
-

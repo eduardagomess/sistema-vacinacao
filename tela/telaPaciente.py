@@ -1,24 +1,12 @@
-from utils import estilo
 import time
-import datetime
+from tela.telaAbstrata import AbstractTela
 
-class TelaPaciente:
+
+class TelaPaciente(AbstractTela):
 
     def __init__(self, controlador_sistema):
+        super().__init__()
         self.__controlador_sistema = controlador_sistema
-
-    def le_numero_inteiro(self, mensagem: str = "", inteiros_validos: [] = None):
-        while True:
-            valor_lido = input(mensagem)
-            try:
-                inteiro = int(valor_lido)
-                if inteiros_validos and inteiro not in inteiros_validos:
-                    raise ValueError
-                return inteiro
-            except ValueError:
-                print("Valor incorreto, digite um valor numérico inteiro válido")
-                if inteiros_validos:
-                    print("Valores válidos: ", inteiros_validos)
 
     def mostra_opcoes(self):
         print("------ ÁREA DE PACIENTES --------")
@@ -30,7 +18,7 @@ class TelaPaciente:
         print("5 - Buscar paciente")
         print("6 - Retornar a tela principal do sistema")
 
-        opcao = self.le_numero_inteiro("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5,6])
+        opcao = self.verifica_num("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5,6])
         return opcao
 
     def pega_dados_paciente(self):
