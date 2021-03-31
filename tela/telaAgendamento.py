@@ -53,9 +53,12 @@ class TelaAgendamento:
     def pega_novos_dados(self, opcao):
         print("------ Inserir novo dado para alteração do agendamento --------")
         opcoes_mudanca = {1: "dia", 2: "hora", 3: "dia e hora", 4: "enfermeiro"}
-        print("Insira " + opcoes_mudanca[opcao])
-        dado = input()
-        return [opcoes_mudanca[opcao], dado]
+        if opcao == 4:
+            return opcoes_mudanca[opcao]
+        else:
+            print("Insira " + opcoes_mudanca[opcao])
+            dado = input()
+            return [opcoes_mudanca[opcao], dado]
 
     def excluir_agendamento(self):
         pass

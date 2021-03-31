@@ -36,9 +36,9 @@ class TelaPaciente:
     def pega_dados_paciente(self):
         print(" ---- CADASTRADO DE PACIENTES  ----")
 
-        nome = input("Insira o nome completo do paciente: ")
+        nome = input("Insira o nome completo do paciente: ").replace(" ", "")
         while not nome.isalpha():
-            self.excecao(" ----- CAMPO NOME DEVE CONTER APENAS LETRAS -----")
+            self.excecao(" ----- CAMPO NOME DEVE CONTER APENAS LETRAS -----").replace(" ", "")
             time.sleep(1)
             nome = input("Insira novamente o nome completo do paciente: ")
 

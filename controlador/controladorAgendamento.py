@@ -40,17 +40,33 @@ class ControladorAgendamento:
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
         paciente = controlador_paciente.busca_paciente()
-        enfermeiro = controlador_enfermeiro.busca_enfermeiro()
         tipo_de_alteracao = self.__tela_agendamento.mostra_opcao_alteracao()
         dado_novo = self.__tela_agendamento.pega_novos_dados(tipo_de_alteracao)
+        hora = self.__agendamentos[paciente.nome]["agendamento"][1]
+        dia = self.__agendamentos[paciente.nome]["agendamento"][0].lower().capitalize()
+        self.__agenda[dia].remove(hora)
 
         if dado_novo[0] == "dia":
-            pass
+            dia_novo = dado_novo[1].lower().capitalize()
+            if hora not in self.__agenda[dia_novo]:
+                self.__agenda[dia_novo].append(hora)
+            self.__agendamentos[paciente.nome]["agendamento"][0] = dia_novo
+
         elif dado_novo[0] == "hora":
-            pass
-        elif dado_novo[0] == "enfermeiro":
-            pass
-        pass
+            if dado_novo[1] not in self.__agenda[dia]:
+                self.__agenda[dia].append(dado_novo[1])
+            self.__agendamentos[paciente.nome]["agendamento"][1] = dado_novo[1]
+        else:
+            enfermeiro = controlador_enfermeiro.busca_enfermeiro()
+            if enfermeiro == None:
+                enfermeiro  = controlador_enfermeiro.inserir_enfermeiro()
+
+            print(self.__agendamentos[paciente.nome]["enfermeiro"])
+
+            print(self.__agendamentos[paciente.nome])
+
+            self.__agendamentos[paciente.nome]["enfermeiro"] = enfermeiro
+
 
     def excluir_agendamento(self):
         controlador_paciente = self.__controlador_sistema.controlador_paciente
@@ -63,6 +79,7 @@ class ControladorAgendamento:
 
     def listar_agendamentos(self):
         estilo.clear()
+        print((self.__agendamentos))
         for agendamento in self.__agendamentos:
             self.__tela_agendamento.mostra_dados({"paciente": self.__agendamentos[agendamento]["paciente"].nome, "agendamento": self.__agendamentos[agendamento]["agendamento"],
                                                        "enfermeiro": self.__agendamentos[agendamento]["enfermeiro"].nome})
