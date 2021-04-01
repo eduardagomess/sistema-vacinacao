@@ -1,7 +1,10 @@
-class TelaAgendamento:
+from tela.telaAbstrata import AbstractTela
 
-    def __init__(self):
-        pass
+class TelaAgendamento(AbstractTela):
+
+    def __init__(self, controlador_sistema):
+        super().__init__()
+        self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
         print("------ AGENDAMENTOS--------")
@@ -11,8 +14,7 @@ class TelaAgendamento:
         print("3 - excluir agendamento")
         print("4 - listar agendamentos")
         print("5 - retornar_sistema")
-        return int(input("Insira o número da opção escolhida: "))
-
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5])
 
     def pegar_dados_agendamento(self):
         print("---------AGENDAMENTO--------")
@@ -22,13 +24,16 @@ class TelaAgendamento:
         print("3 - quarta")
         print("4 - quinta")
         print("5 - sexta")
-        dia = input("Insira o número da opção escolhida: ")
+        dia = {1: "segunda", 2: "terça", 3: "quarta", 4: "quinta", 5: "sexta"}
+        opcao = int(input("Insira o número da opção escolhida: "))
+
         print("Escolha um dos horario abaixo  ")
-        print("8", "8:15", "8:30", "8:45", "9", "9:15", "9:30", "9:45", "10", "10:15", "10:30", "10:45", "11", "11:15", "11:30", "11:45", "12", "12:15", "12:30", "12:45", "13", \
-        "13:15", "13:30", "13:45", "14", "14:15", "14:30", "14:45", "13", "13:15", "13:30", "13:45", "14", "14:15", "14:30", "14:45", "15", "15:15", "15:30", "15:45", "16", \
+        print(" 8:00", "8:15", "8:30", "8:45", "9", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11\n","11:15", "11:30", "11:45", "12", "12:15", "12:30", "12:45", "13", \
+        "13:15", "13:30", "13:45", "14\n", "14:15", "14:30", "14:45", "13", "13:15", "13:30", "13:45", "14", "14:15", "14:30", "14:45", "15\n", "15:15", "15:30", "15:45", "16", \
         "16:15", "16:30", "16:45", "17", "17:15", "17:30", "17:45", "18")
+
         hora = input("Insira a hora escolhida: ")
-        return [dia, hora]
+        return [dia[opcao], hora]
 
     def mostra_dados(self, dados):
         print("Nome do paciente: ",dados["paciente"])
@@ -39,7 +44,7 @@ class TelaAgendamento:
         print("PACIENTE NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO")
 
     def mostra_msg_enfermeiro_nao_castrado(self):
-        print("PACIENTE NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO")
+        print("ENFERMEIRO NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO")
 
     def mostra_opcao_alteracao(self):
         print("------ ALTAREÇÃO DE ANGENDAMENTO --------")
@@ -60,8 +65,4 @@ class TelaAgendamento:
             dado = input()
             return [opcoes_mudanca[opcao], dado]
 
-    def excluir_agendamento(self):
-        pass
 
-    def listar_agendamentos(self):
-        pass

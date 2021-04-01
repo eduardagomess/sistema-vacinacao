@@ -6,21 +6,22 @@ class ControladorEnfermeiro:
 
     def __init__(self, controlador_sistema):
         self.__enfermeiros = []
-        self.__tela_enfermeiro = TelaEnfermeiro()
+        self.__tela_enfermeiro = TelaEnfermeiro(self)
         self.__controlador_sistema = controlador_sistema
         self.__lista_pacientes = []
 
     def inserir_enfermeiro(self):
         estilo.clear()
-        dados_enfermeiro = self.__tela_enfermeiro.pega_dados_enfermeiro()
-        enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"],dados_enfermeiro["coren"])
+        dados_enfermeiro = self.__tela_enfermeiro.pega_dados_enfermeiro(1)
+        enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
         if enfermeiro not in self.__enfermeiros:
             self.__enfermeiros.append(enfermeiro)
             return enfermeiro
 
     def listar_enfermeiros(self):
         for enfermeiro in self.__enfermeiros:
-            self.__tela_enfermeiro.mostra_dados({"nome": enfermeiro.nome, "telefone": enfermeiro.telefone, "cpf": enfermeiro.cpf, "coren": enfermeiro.coren})
+            dados_enf = {"nome": enfermeiro.nome, "telefone": enfermeiro.telefone, "cpf": enfermeiro.cpf, "coren": enfermeiro.coren}
+            self.__tela_enfermeiro.mostra_dados(dados_enf)
 
     def listar_pacientes(self):
         enfermeiro = self.busca_enfermeiro()
@@ -62,8 +63,7 @@ class ControladorEnfermeiro:
 
     def editar_enfermeiro(self):
         enfermeiro = self.busca_enfermeiro()
-        tipo_de_alteracao = self.__tela_enfermeiro.mostra_opcao_alteracao_cadastro()
-        dado_novo = self.__tela_enfermeiro.pega_novos_dados(tipo_de_alteracao)
+        dado_novo = self.__tela_enfermeiro.pega_dados_enfermeiro(2)
 
         if dado_novo[0] == "nome":
             enfermeiro.nome = dado_novo[1]

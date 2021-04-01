@@ -2,18 +2,20 @@ from tela.telaAgendamento import TelaAgendamento
 from utils import estilo
 import time
 
+
 class ControladorAgendamento:
 
     def __init__(self, controlador_sistema):
         self.__agenda = {"Segunda": [], "Terca": [], "Quarta": [],"Quinta": [], "Sexta": []}
         self.__agendamentos = {}
-        self.__tela_agendamento = TelaAgendamento()
+        self.__tela_agendamento = TelaAgendamento(self)
         self.__controlador_sistema = controlador_sistema
         self.__lista_pacientes = []
         self.__lista_enfermeiro = []
 
 
     def inserir_agendamento(self):
+        estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
         paciente = controlador_paciente.busca_paciente()
@@ -37,6 +39,7 @@ class ControladorAgendamento:
             self.__agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
 
     def editar_agendamento(self):
+        estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
         paciente = controlador_paciente.busca_paciente()
@@ -69,6 +72,7 @@ class ControladorAgendamento:
 
 
     def excluir_agendamento(self):
+        estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         paciente = controlador_paciente.busca_paciente()
         print(paciente)
@@ -79,11 +83,9 @@ class ControladorAgendamento:
 
     def listar_agendamentos(self):
         estilo.clear()
-        print((self.__agendamentos))
         for agendamento in self.__agendamentos:
             self.__tela_agendamento.mostra_dados({"paciente": self.__agendamentos[agendamento]["paciente"].nome, "agendamento": self.__agendamentos[agendamento]["agendamento"],
                                                        "enfermeiro": self.__agendamentos[agendamento]["enfermeiro"].nome})
-
 
     def retornar_sistema(self):
         return self.__controlador_sistema
@@ -97,6 +99,7 @@ class ControladorAgendamento:
             opcao_selecionada = self.__tela_agendamento.mostra_opcoes()
             if opcao_selecionada == 5:
                 continua = False
+            print(opcao_selecionada)
             opcoes[opcao_selecionada]()
 
 

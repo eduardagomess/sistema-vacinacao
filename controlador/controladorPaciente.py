@@ -11,10 +11,11 @@ class ControladorPaciente:
 
     def inserir_paciente(self):
         estilo.clear()
-        dados_paciente = self.__tela_paciente.pega_dados_paciente()
+        opcao_cadastro = 1
+        dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
 
-        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
-                            dados_paciente["endereco"], dados_paciente["data_nascimento"], dados_paciente["dose"])
+        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],dados_paciente["bairro"],
+                            dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"], dados_paciente["data_nascimento"], dados_paciente["dose"])
 
         if paciente not in self.__pacientes:
             self.__pacientes.append(paciente)
@@ -22,13 +23,12 @@ class ControladorPaciente:
 
     def listar_pacientes(self):
         for paciente in self.__pacientes:
-            self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
-                                                        "cpf": paciente.cpf, "endereco": paciente.endereco,
-                                                        "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
+            self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone, "cpf": paciente.cpf, "endereco": paciente.endereco,
+                                               "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
 
     def pega_paciente_por_nome(self):
         estilo.clear()
-        nome = self.__tela_paciente.busca_paciente_nome()
+        nome = self.__tela_paciente.busca_paciente_nome().title()
         for paciente in self.__pacientes:
             if paciente.nome == nome:
                 return paciente
@@ -52,13 +52,13 @@ class ControladorPaciente:
     def busca_paciente(self):
         estilo.clear()
         paciente = self.tipo_de_busca_paciente()
+        print(paciente)
         return paciente
-
 
     def editar_paciente(self):
         paciente = self.busca_paciente()
-        tipo_de_alteracao = self.__tela_paciente.mostra_opcao_alteracao_cadastro()
-        dado_novo = self.__tela_paciente.pega_novos_dados(tipo_de_alteracao)
+        opcao_cadastro = 2
+        dado_novo = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
 
         if dado_novo[0] == "nome":
             paciente.nome = dado_novo[1]
@@ -67,7 +67,7 @@ class ControladorPaciente:
         elif dado_novo[0] == "cpf":
             paciente.cpf = dado_novo[1]
         elif dado_novo[0] == "endereco":
-            paciente.endereco = dado_novo[1]
+            paciente.determinar_endereco(dado_novo[1][0], dado_novo[1][1], dado_novo[1][2], dado_novo[1][3])
         elif dado_novo[0] == "data_nascimento":
             paciente.data_nascimento = dado_novo[1]
         paciente.dose = dado_novo[1]

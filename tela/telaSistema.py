@@ -1,5 +1,10 @@
-class TelaSistema:
+from tela.telaAbstrata import AbstractTela
+
+
+class TelaSistema(AbstractTela):
+
     def __init__(self, controlador_sistema):
+        super().__init__()
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
@@ -11,4 +16,6 @@ class TelaSistema:
         print("4 - Área de prontuário")
         print("5 - Área de agendamentos")
         print("6 - Sair do sistema \n")
-        return int(input("Insira o número da opção escolhida: "))
+
+        opcao = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
+        return opcao
