@@ -8,7 +8,7 @@ class TelaAgendamento(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print(self.titulo("------ AGENDAMENTOS--------"))
+        print(self.titulo("----------- AGENDAMENTOS---------------"))
         print("Escolha a opção que você deseja alterar:  ")
         print("1 - inserir agendamento")
         print("2 - editar agendamento")
@@ -18,13 +18,13 @@ class TelaAgendamento(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5])
 
     def pegar_dados_agendamento(self, agenda):
-        print(self.titulo("---------AGENDAMENTO--------"))
+        print(self.titulo("---------------- AGENDAMENTO ----------------"))
         print("Escolha a opção que referente ao dia da vacina:  ")
-        print("1 - segunda")
-        print("2 - terça")
-        print("3 - quarta")
-        print("4 - quinta")
-        print("5 - sexta")
+        print("1 - Segunda")
+        print("2 - Terça")
+        print("3 - Quarta")
+        print("4 - Quinta")
+        print("5 - Sexta")
 
         dia = {1: "segunda", 2: "terca", 3: "quarta", 4: "quinta", 5: "sexta"}
         opcao = int(self.pegar_num("Insira o número da opção escolhida: "))
@@ -49,26 +49,24 @@ class TelaAgendamento(AbstractTela):
         identificador = 0
         for horario_disponivel in horarios_disponiveis:
             if count % 10 == 0:
+                print("\n")
                 print(f'{self.info(f"({identificador})")} {horario_disponivel}', end=" ")
             else:
                 print(f'{self.info(f"({identificador})")}  {horario_disponivel}', end=" ")
             identificador += 1
             count += 1
+        print("\n")
         hora = int(self.pegar_num("Insira o numero referente a hora escolhida: "))
         return [dia[opcao], horarios_disponiveis[hora]]
 
-    def pega_tipo_dose(self):
-        print("------TIPO DE VACINA -------")
-        print('1- coronaVac')
-        print('2- AstraZeneca')
-        tipo = int(input("onsira o numero do tipo da vacina"))
-        return tipo
+    def mostra_dados(self, agendamentos):
+        for agendamento in agendamentos:
+            print("\nNome do paciente: ", self.info(agendamentos[agendamento]["paciente"].nome))
+            print("Informações agendamento:  ", self.info("A vacina está marcada para " +
+                  agendamentos[agendamento]["agendamento"][0] + " as " + agendamentos[agendamento]["agendamento"][1]))
+            print("Nome do Enfermeiro(a): ", self.info(agendamentos[agendamento]["enfermeiro"].nome))
+        print(input(("Aperte enter para continuar: ")))
 
-    def mostra_dados(self, dados):
-        print("Nome do paciente: ", dados["paciente"])
-        print("Informações agendamento: ",
-              "A vacina está marcada para " + dados["agendamento"][0] + " as " + dados["agendamento"][1])
-        print("Nome do Enfermeiro(a): ", dados["enfermeiro"])
 
     def mostra_msg_paciente_nao_castrado(self):
         print(self.erro("PACIENTE NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO"))

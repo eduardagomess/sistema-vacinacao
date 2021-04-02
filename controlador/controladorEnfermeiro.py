@@ -1,14 +1,16 @@
 from entidade.enfermeiro import Enfermeiro
 from tela.telaEnfermeiro import TelaEnfermeiro
 from utils import estilo
+from utils.faker.Enfermeiro import fakeEnfermeiro
+from utils.faker.Enfermeiro import fakeEnfermeiro2
+from utils.faker.Enfermeiro import fakeEnfermeiro3
 
 class ControladorEnfermeiro:
 
     def __init__(self, controlador_sistema):
-        self.__enfermeiros = []
+        self.__enfermeiros = [fakeEnfermeiro, fakeEnfermeiro2, fakeEnfermeiro3]
         self.__tela_enfermeiro = TelaEnfermeiro(self)
         self.__controlador_sistema = controlador_sistema
-        self.__lista_pacientes = []
 
     def inserir_enfermeiro(self):
         estilo.clear()
@@ -19,14 +21,14 @@ class ControladorEnfermeiro:
             return enfermeiro
 
     def listar_enfermeiros(self):
-        for enfermeiro in self.__enfermeiros:
-            dados_enf = {"nome": enfermeiro.nome, "telefone": enfermeiro.telefone, "cpf": enfermeiro.cpf, "coren": enfermeiro.coren}
-            self.__tela_enfermeiro.mostra_dados(dados_enf)
+        self.__tela_enfermeiro.mostra_dados_enfermeiros(self.__enfermeiros)
 
     def listar_pacientes(self):
         enfermeiro = self.busca_enfermeiro()
-        for paciente in enfermeiro.lista_pacientes:
-            self.__tela_enfermeiro.mostra_pacientes({"nome": paciente.nome, "cpf": paciente.cpf})
+        if len(enfermeiro.lista_pacientes) == 0:
+            self.__tela_enfermeiro.mostra_pacientes(None)
+        else:
+            self.__tela_enfermeiro.mostra_pacientes(enfermeiro.lista_pacientes)
 
 
     def pega_nome_enfermeiro(self):
@@ -44,7 +46,7 @@ class ControladorEnfermeiro:
                 return enfermeiro
 
     def pega_coren_enfermeiro(self):
-        coren = self.__tela_enfermeiro.busca_enfermeiro_cpf()
+        coren = self.__tela_enfermeiro.busca_enfermeiro_coren()
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.coren == coren:
                 return enfermeiro
@@ -59,7 +61,7 @@ class ControladorEnfermeiro:
     def busca_dado_enfermeiro(self):
         estilo.clear()
         enfermeiro = self.busca_enfermeiro()
-        self.__tela_enfermeiro.mostra_dados({"nome": enfermeiro.nome, "telefone": enfermeiro.telefone, "cpf": enfermeiro.cpf, "coren": enfermeiro.coren})
+        self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
 
     def editar_enfermeiro(self):
         enfermeiro = self.busca_enfermeiro()
