@@ -4,7 +4,9 @@ from excecao.caracter_numerico import NomeComCaracterNumerico
 from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
 from excecao.telefone_invalido import TelefoneComNumeroInvalido
 from excecao.cpf_invalido import CpfInvalido
+from excecao.dose_invalida import DoseInvalida
 import datetime
+
 
 class AbstractTela(ABC):
 
@@ -12,13 +14,38 @@ class AbstractTela(ABC):
     def __init__(self):
         pass
 
+    def mostra_info(self, message: str) -> str:
+        return f'\033[30m{message}\033[1m'
+
+
+    def aviso(self, message: str) -> str:
+        return f'\033[93m{message}\033[0m'
+
+    def erro(self, message: str) -> str:
+        return f'\033[91m{message}\033[0m'
+
+    def info(self, message: str) -> str:
+        return f'\033[96m{message}\033[0m'
+
+    def titulo(self, message: str) -> str:
+        return f'\033[94m{message}\033[0m'
+
+    def escolha(self, message: str) -> str:
+        return f'\033[95m{message}\033[0m'
+
     def pegar_opcao(self, mensagem: str = "", inteiros_validos: [] = None):
         while True:
-            valor_lido = int(input(mensagem))
+            valor_lido = input(mensagem)
             try:
-                if inteiros_validos and valor_lido not in inteiros_validos:
+                if valor_lido.isalpha():
+                    raise CaracterAlfabeticoExcecao
+                elif inteiros_validos and int(valor_lido) not in inteiros_validos:
                     raise ValueError
-                return valor_lido
+                return int(valor_lido)
+            except CaracterAlfabeticoExcecao:
+                print(self.erro("Valor incorreto, insira apenas números"))
+                if inteiros_validos:
+                    print(self.info("Valores válidos: "), (self.info(inteiros_validos)))
             except ValueError:
                 print(self.erro("Valor incorreto, digite um valor numérico inteiro válido"))
                 if inteiros_validos:
@@ -37,7 +64,6 @@ class AbstractTela(ABC):
                 print(self.erro("Valor incorreto, insira apenas letras"))
             except NomeInvalido:
                 print(self.erro("Preencha o nome com no mínimo 5 caracteres"))
-
 
     def pegar_telefone(self,  mensagem: str = ""):
         while True:
@@ -71,13 +97,11 @@ class AbstractTela(ABC):
         while True:
             data_nascimento = input(mensagem)
             formatacao = "%d/%m/%Y"
-
             try:
                 datetime.datetime.strptime(data_nascimento, formatacao)
                 return data_nascimento
             except ValueError:
                 print("Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
-
 
     def pegar_complemento(self, mensagem: str = ""):
         while True:
@@ -99,20 +123,21 @@ class AbstractTela(ABC):
             except Exception:
                 print(self.erro("Valor incorreto, insira apenas números"))
 
-    def aviso(self, message: str) -> str:
-        return f'\033[93m{message}\033[0m'
+    def pegar_dose(self, mensagem: str = ""):
+        while True:
+            valor_lido = input(mensagem)
+            try:
+                if not valor_lido.isdigit():
+                    raise CaracterAlfabeticoExcecao
+                elif int(valor_lido) not in [0,1,2]:
+                    raise DoseInvalida
+                return valor_lido
+            except CaracterAlfabeticoExcecao:
+                print(self.erro("Valor incorreto, digite um valor numérico inteiro válido (0,1 ou 2)"))
+            except DoseInvalida:
+                print(self.erro("Valor incorreto, insira apenas números (0,1 ou 2)"))
 
-    def erro(self, message: str) -> str:
-        return f'\033[91m{message}\033[0m'
 
-    def info(self, message: str) -> str:
-        return f'\033[96m{message}\033[0m'
-
-    def titulo(self, message: str) -> str:
-        return f'\033[94m{message}\033[0m'
-
-    def escolha(self, message: str) -> str:
-        return f'\033[95m{message}\033[0m'
 
 
 

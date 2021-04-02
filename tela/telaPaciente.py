@@ -9,6 +9,7 @@ class TelaPaciente(AbstractTela):
 
     def mostra_opcoes(self):
         print(self.titulo("------ ÁREA DE PACIENTES --------"))
+
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir paciente")
         print("2 - Listar pacientes")
@@ -22,7 +23,7 @@ class TelaPaciente(AbstractTela):
 
         dados_requeridos = {0: self.pegar_nome, 1: self.pegar_telefone, 2: self.pegar_cpf,
                             3: self.pegar_nome, 4: self.pegar_nome, 5: self.pegar_num,
-                            6: self.pegar_complemento, 7: self.pegar_data_nascimento, 8: self.pegar_opcao}
+                            6: self.pegar_complemento, 7: self.pegar_data_nascimento, 8: self.pegar_dose}
 
         mensagem_requerimento = {0: "Insira o nome do paciente: ", 1: "Insira o telefone do paciente: ",
                                  2: "Insira o cpf do paciente: ", 3: "Insira o bairro: ",
@@ -44,8 +45,6 @@ class TelaPaciente(AbstractTela):
             return dict(zip(dados_cadastro, dados_paciente))
 
         else:
-            print(self.titulo("------ Inserir novo dado para alteração do cadastro --------"))
-
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
 
             opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf ", 3: "bairro", 4: "rua",
@@ -62,12 +61,17 @@ class TelaPaciente(AbstractTela):
                 return [opcoes_mudanca[opcao_escolhida], dado]
 
     def mostra_dados(self, dados_paciente):
-        print("Nome do paciente: ", dados_paciente["nome"])
-        print("Telefone do paciente: ", dados_paciente["telefone"])
-        print("CPF do paciente: ", dados_paciente["cpf"])
-        print("Endereço do paciente: ", dados_paciente["endereco"])
-        print("Data de nascimento do paciente: ", dados_paciente["data_nascimento"])
-        print("O paciente está no estãgio ", str(dados_paciente["dose"]) + " da dose")
+        for paciente in dados_paciente:
+            print(paciente)
+
+            print("Nome do paciente: ", self.info(paciente.nome))
+            print("Telefone do paciente: ", self.info(paciente.telefone))
+            print("CPF do paciente: ", self.info(paciente.cpf))
+            print("Endereço do paciente: ", self.info(paciente.endereco))
+            print("Data de nascimento do paciente: ", self.info(paciente.data_nascimento))
+            print("O paciente está no estãgio: ", self.info(str(paciente.dose) + " da dose"))
+        print(self.info("Aperte enter para continuar"))
+        input()
 
     def mostra_opcao_alteracao_cadastro(self):
         print(self.titulo("------ ALTAREÇÃO DE CADASTRO DO PACIENTE --------"))
@@ -87,7 +91,7 @@ class TelaPaciente(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def busca_paciente_nome(self):
-        return input("Insira o nome do paciente: ")
+        return self.pegar_nome("Insira o nome do paciente: ")
 
     def busca_paciente_cpf(self):
-        return int(input("Insira o cpf do paciente: "))
+        return int(self.pegar_cpf("Insira o cpf do paciente: "))

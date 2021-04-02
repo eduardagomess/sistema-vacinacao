@@ -23,10 +23,13 @@ class ControladorPaciente:
             return paciente
 
     def listar_pacientes(self):
-        for paciente in self.__pacientes:
-            self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
-                                               "cpf": paciente.cpf, "endereco": paciente.endereco,
-                                               "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
+        lista_paciente = self.__pacientes
+        self.__tela_paciente.mostra_dados(lista_paciente)
+        #for paciente in self.__pacientes:
+            #self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
+                                              # "cpf": paciente.cpf, "endereco": paciente.endereco,
+                                              # "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
+
 
     def pega_paciente_por_nome(self):
         estilo.clear()
@@ -54,11 +57,12 @@ class ControladorPaciente:
     def busca_paciente(self):
         estilo.clear()
         paciente = self.tipo_de_busca_paciente()
-        print(paciente)
-        return paciente
+        self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
+                                           "cpf": paciente.cpf, "endereco": paciente.endereco,
+                                           "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
 
     def editar_paciente(self):
-        paciente = self.busca_paciente()
+        paciente = self.tipo_de_busca_paciente()
         opcao_cadastro = 2
         dado_novo = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
 
@@ -72,10 +76,11 @@ class ControladorPaciente:
             paciente.determinar_endereco(dado_novo[1][0], dado_novo[1][1], dado_novo[1][2], dado_novo[1][3])
         elif dado_novo[0] == "data_nascimento":
             paciente.data_nascimento = dado_novo[1]
-        paciente.dose = dado_novo[1]
+        else:
+            paciente.dose = dado_novo[1]
 
     def excluir_paciente(self):
-        paciente = self.busca_paciente()
+        paciente = self.tipo_de_busca_paciente()
         self.__pacientes.remove(paciente)
 
     def retornar_sistema(self):
