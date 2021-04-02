@@ -14,8 +14,9 @@ class ControladorPaciente:
         opcao_cadastro = 1
         dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
 
-        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],dados_paciente["bairro"],
-                            dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"], dados_paciente["data_nascimento"], dados_paciente["dose"])
+        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
+                            dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],
+                            dados_paciente["complemento"], dados_paciente["data_nascimento"], dados_paciente["dose"])
 
         if paciente not in self.__pacientes:
             self.__pacientes.append(paciente)
@@ -23,7 +24,8 @@ class ControladorPaciente:
 
     def listar_pacientes(self):
         for paciente in self.__pacientes:
-            self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone, "cpf": paciente.cpf, "endereco": paciente.endereco,
+            self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
+                                               "cpf": paciente.cpf, "endereco": paciente.endereco,
                                                "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
 
     def pega_paciente_por_nome(self):

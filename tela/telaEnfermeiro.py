@@ -8,7 +8,7 @@ class TelaEnfermeiro(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print("------ ÁREA DE ENFERMEIROS --------")
+        print(self.titulo("------ ÁREA DE ENFERMEIROS --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir enfermeiro")
         print("2 - Listar enfermeiros")

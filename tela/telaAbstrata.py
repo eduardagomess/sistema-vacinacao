@@ -1,4 +1,10 @@
 from abc import ABC, abstractmethod
+from excecao.nome_invalido import NomeInvalido
+from excecao.caracter_numerico import NomeComCaracterNumerico
+from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
+from excecao.telefone_invalido import TelefoneComNumeroInvalido
+from excecao.cpf_invalido import CpfInvalido
+import datetime
 
 class AbstractTela(ABC):
 
@@ -14,49 +20,64 @@ class AbstractTela(ABC):
                     raise ValueError
                 return valor_lido
             except ValueError:
-                print("Valor incorreto, digite um valor numérico inteiro válido")
+                print(self.erro("Valor incorreto, digite um valor numérico inteiro válido"))
                 if inteiros_validos:
-                    print("Valores válidos: ", inteiros_validos)
+                    print(self.info("Valores válidos: "), (self.info(inteiros_validos)))
 
     def pegar_nome(self,  mensagem: str = ""):
         while True:
             nome = input(mensagem)
             try:
                 if not nome.replace(" ", "").isalpha():
-                    raise Exception
+                    raise NomeComCaracterNumerico
+                elif len(nome.replace(" ", "")) < 5:
+                    raise NomeInvalido
                 return nome.title()
-            except Exception:
-                print("Valor incorreto, insira apenas letras")
+            except NomeComCaracterNumerico:
+                print(self.erro("Valor incorreto, insira apenas letras"))
+            except NomeInvalido:
+                print(self.erro("Preencha o nome com no mínimo 5 caracteres"))
+
 
     def pegar_telefone(self,  mensagem: str = ""):
         while True:
             telefone = input(mensagem)
             try:
                 if not telefone.isdigit():
-                    raise Exception
+                    raise CaracterAlfabeticoExcecao
+                elif len(telefone) < 10 or (len(telefone) > 13):
+                    raise TelefoneComNumeroInvalido
                 return int(telefone)
-            except Exception:
-                print("Valor incorreto, insira o telfone com a seguinte formatação: DDXXXXXXXXXX")
+            except CaracterAlfabeticoExcecao:
+                print(self.erro("Valor incorreto, insira apenas números"))
+            except TelefoneComNumeroInvalido:
+                print(self.erro("Valor incorreto, o número deve conter de 10 a 11 digitos (incluíndo DDD)"))
 
     def pegar_cpf(self, mensagem: str = ""):
         while True:
             cpf = input(mensagem)
             try:
                 if not cpf.isdigit():
-                    raise Exception
+                    raise CaracterAlfabeticoExcecao
+                elif len(cpf) != 11:
+                    raise CpfInvalido
                 return int(cpf)
-            except Exception:
-                print("Valor incorreto, insira apenas números, formatação: 12645974944")
+            except CaracterAlfabeticoExcecao:
+                print(self.erro("Valor incorreto, insira apenas números"))
+            except CpfInvalido:
+                print(self.erro("Valor incorreto, o CPF deve conter 11 digitos, formatação: 12645974944"))
 
     def pegar_data_nascimento(self, mensagem: str = ""):
         while True:
             data_nascimento = input(mensagem)
+            formatacao = "%d/%m/%Y"
+
             try:
-                if not data_nascimento.replace("/", "").isdigit():
-                    raise Exception
+                datetime.datetime.strptime(data_nascimento, formatacao)
                 return data_nascimento
-            except Exception:
+            except ValueError:
                 print("Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
+
 
     def pegar_complemento(self, mensagem: str = ""):
         while True:
@@ -66,7 +87,7 @@ class AbstractTela(ABC):
                     raise Exception
                 return complemento.title()
             except Exception:
-                print("Valor incorreto, insira apenas letras e numeros")
+                print(self.erro("Valor incorreto, insira apenas letras e numeros"))
 
     def pegar_num(self, mensagem: str = ""):
         while True:
@@ -76,7 +97,22 @@ class AbstractTela(ABC):
                     raise Exception
                 return numero
             except Exception:
-                print("Valor incorreto, insira apenas números")
+                print(self.erro("Valor incorreto, insira apenas números"))
+
+    def aviso(self, message: str) -> str:
+        return f'\033[93m{message}\033[0m'
+
+    def erro(self, message: str) -> str:
+        return f'\033[91m{message}\033[0m'
+
+    def info(self, message: str) -> str:
+        return f'\033[96m{message}\033[0m'
+
+    def titulo(self, message: str) -> str:
+        return f'\033[94m{message}\033[0m'
+
+    def escolha(self, message: str) -> str:
+        return f'\033[95m{message}\033[0m'
 
 
 
