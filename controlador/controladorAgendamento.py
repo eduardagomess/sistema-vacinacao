@@ -25,6 +25,7 @@ class ControladorAgendamento:
             time.sleep(1.5)
             estilo.clear()
             paciente = controlador_paciente.inserir_paciente()
+
         dia, hora = self.__tela_agendamento.pegar_dados_agendamento(self.__agenda)
         dia = dia.lower().capitalize()
         enfermeiro_escolhido = controlador_enfermeiro.busca_enfermeiro()

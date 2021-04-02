@@ -1,11 +1,14 @@
 from tela.telaPaciente import TelaPaciente
 from entidade.paciente import Paciente
 from utils import estilo
+from utils.faker.Paciente import fakePaciente
+from utils.faker.Paciente import fakePaciente2
+from utils.faker.Paciente import fakePaciente3
 
 
 class ControladorPaciente:
     def __init__(self, controlador_sistema):
-        self.__pacientes = []
+        self.__pacientes = [fakePaciente, fakePaciente2, fakePaciente3]
         self.__tela_paciente = TelaPaciente(self)
         self.__controlador_sistema = controlador_sistema
 
@@ -16,20 +19,14 @@ class ControladorPaciente:
 
         paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
                             dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],
-                            dados_paciente["complemento"], dados_paciente["data_nascimento"], dados_paciente["dose"])
+                            dados_paciente["complemento"], dados_paciente["data_nascimento"])
 
         if paciente not in self.__pacientes:
             self.__pacientes.append(paciente)
             return paciente
 
     def listar_pacientes(self):
-        lista_paciente = self.__pacientes
-        self.__tela_paciente.mostra_dados(lista_paciente)
-        #for paciente in self.__pacientes:
-            #self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
-                                              # "cpf": paciente.cpf, "endereco": paciente.endereco,
-                                              # "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
-
+        self.__tela_paciente.mostra_dados(self.__pacientes)
 
     def pega_paciente_por_nome(self):
         estilo.clear()
@@ -50,16 +47,14 @@ class ControladorPaciente:
         tipo_busca = self.__tela_paciente.mostra_opcao_busca()
         if tipo_busca == 1:
             paciente_escolhido = self.pega_paciente_por_nome()
-        else:
+        elif tipo_busca == 2:
             paciente_escolhido = self.pega_paciente_por_cpf()
         return paciente_escolhido
 
     def busca_paciente(self):
         estilo.clear()
         paciente = self.tipo_de_busca_paciente()
-        self.__tela_paciente.mostra_dados({"nome": paciente.nome, "telefone": paciente.telefone,
-                                           "cpf": paciente.cpf, "endereco": paciente.endereco,
-                                           "data_nascimento": paciente.data_nascimento, "dose": paciente.dose})
+        self.__tela_paciente.mostra_paciente(paciente)
 
     def editar_paciente(self):
         paciente = self.tipo_de_busca_paciente()

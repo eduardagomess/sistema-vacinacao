@@ -4,9 +4,10 @@ from entidade.endereco import Endereco
 
 
 class Paciente(Pessoa):
-    def __init__(self, nome: str, telefone: str, cpf: int, bairro: str, rua: str, numero: str, complemento: str, data_nascimento: datetime, dose: int):
+    def __init__(self, nome: str, telefone: str, cpf: int, bairro: str, rua: str, numero: str, complemento: str, data_nascimento: datetime):
         super().__init__(nome, telefone, cpf)
-        self.__dose = dose
+        self.__dose = None
+        self.__tipo_dose = None
         self.__data_nascimento = data_nascimento
         self.__endereco = Endereco(bairro, rua, numero, complemento)
 
@@ -17,6 +18,14 @@ class Paciente(Pessoa):
     @dose.setter
     def dose(self, dose):
         self.__dose = dose
+
+    @property
+    def tipo_dose(self):
+        return self.__tipo_dose
+
+    @tipo_dose.setter
+    def tipo_dose(self, tipo):
+        self.__tipo_dose = tipo
 
     @property
     def data_nascimento(self) -> datetime:

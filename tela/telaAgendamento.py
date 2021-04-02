@@ -57,6 +57,12 @@ class TelaAgendamento(AbstractTela):
         hora = int(self.pegar_num("Insira o numero referente a hora escolhida: "))
         return [dia[opcao], horarios_disponiveis[hora]]
 
+    def pega_tipo_dose(self):
+        print("------TIPO DE VACINA -------")
+        print('1- coronaVac')
+        print('2- AstraZeneca')
+        tipo = int(input("onsira o numero do tipo da vacina"))
+        return tipo
 
     def mostra_dados(self, dados):
         print("Nome do paciente: ", dados["paciente"])
