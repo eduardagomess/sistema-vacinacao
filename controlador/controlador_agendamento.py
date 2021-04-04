@@ -1,4 +1,5 @@
 from tela.tela_agendamento import TelaAgendamento
+from tela.tela_relatorio import TelaRelatorio
 from utils import estilo
 import time
 
@@ -9,6 +10,7 @@ class ControladorAgendamento:
         self.__agenda = {"Segunda": [], "Terca": [], "Quarta": [],"Quinta": [], "Sexta": []}
         self.__agendamentos = {}
         self.__tela_agendamento = TelaAgendamento(self)
+        self.__tela_relatorio = TelaRelatorio(self)
         self.__controlador_sistema = controlador_sistema
         self.__lista_pacientes = []
         self.__lista_enfermeiro = []
@@ -91,10 +93,14 @@ class ControladorAgendamento:
 
     def abre_tela(self):
         estilo.clear()
-        opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento, 4: self.listar_agendamentos, 5: self.retornar_sistema}
+        opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento, 4: self.listar_agendamentos, 5: self.gera_relatorio,
+                  6: self.retornar_sistema}
         continua = True
         while continua:
             opcao_selecionada = self.__tela_agendamento.mostra_opcoes()
             if opcao_selecionada == 5:
                 continua = False
             opcoes[opcao_selecionada]()
+
+    def gera_relatorio(self):
+        self.__tela_relatorio.mostra_relatorio(self.__agendamentos)

@@ -13,8 +13,9 @@ class TelaAgendamento(AbstractTela):
         print("2 - Editar agendamento")
         print("3 - Excluir agendamento")
         print("4 - Listar agendamentos")
-        print("5 - Retornar a tela principal")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5])
+        print("5 - Relatório de agendamentos")
+        print("6 - Retornar a tela principal")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
 
     def pegar_dados_agendamento(self, agenda):
         print(self.titulo("---------------- AGENDAMENTO ----------------"))
