@@ -12,7 +12,7 @@ class TelaSistema(AbstractTela):
         print("Escolha uma das opções abaixo:")
         print("1 - Área de pacientes")
         print("2 - Área de enfermeiros")
-        print("3 - Área de vacinas")
+        print("3 - Área de vacinas - estoque")
         print("4 - Área de prontuários")
         print("5 - Área de agendamentos")
         print("6 - Sair do sistema \n")
