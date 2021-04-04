@@ -34,8 +34,12 @@ class ControladorPaciente:
         for paciente in self.__pacientes:
             if paciente.nome == nome:
                 return paciente
-        self.__tela_paciente.mostra_mensagem()
-        return None
+        opcao_paciente = self.__tela_paciente.mostra_mensagem()
+        if opcao_paciente == 1:
+            paciente_novo = self.inserir_paciente()
+            return paciente_novo
+        else:
+            return self.retornar_sistema()
 
     def pega_paciente_por_cpf(self):
         estilo.clear()
@@ -43,7 +47,6 @@ class ControladorPaciente:
         for paciente in self.__pacientes:
             if paciente.cpf == cpf:
                 return paciente
-        self.__tela_paciente.mostra_mensagem()
         return None
 
     def tipo_de_busca_paciente(self):
@@ -58,7 +61,13 @@ class ControladorPaciente:
     def busca_paciente(self):
         estilo.clear()
         paciente = self.tipo_de_busca_paciente()
-        self.__tela_paciente.mostra_paciente(paciente)
+        if paciente == None:
+            opcao = self.__tela_paciente.mostra_mensagem()
+            if opcao == 1:
+                paciente = self.inserir_paciente()
+                self.__tela_paciente.mostra_paciente(paciente)
+            else:
+                self.retornar_sistema()
 
     def editar_paciente(self):
         paciente = self.tipo_de_busca_paciente()

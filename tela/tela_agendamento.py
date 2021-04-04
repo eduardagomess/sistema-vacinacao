@@ -74,11 +74,10 @@ class TelaAgendamento(AbstractTela):
             print("Nome do Enfermeiro(a): ", self.info(agendamentos[agendamento]["enfermeiro"].nome))
         print(input(("\nAperte enter para continuar: ")))
 
-    def mostra_msg_paciente_nao_castrado(self):
-        print(self.erro("PACIENTE NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO"))
 
     def mostra_msg_enfermeiro_nao_castrado(self):
         print(self.erro("ENFERMEIRO NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO"))
+
 
     def mostra_opcao_alteracao(self):
         print(self.titulo("------ ALTAREÇÃO DE ANGENDAMENTO --------"))

@@ -112,4 +112,7 @@ class TelaPaciente(AbstractTela):
 
     def mostra_mensagem(self):
         print(self.erro("PACIENTE NÃO CADASTRADO"))
-        print(input(("Aperte enter para realizar o cadastro: ")))
+        print(self.info("Escolha uma das opções abaixo: "))
+        print("1 - Cadastrar paciente")
+        print("2 - Retornar a tela principal")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
