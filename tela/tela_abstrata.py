@@ -103,7 +103,7 @@ class AbstractTela(ABC):
                 datetime.datetime.strptime(data_nascimento, formatacao)
                 return data_nascimento
             except ValueError:
-                print("Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
+                print(self.erro("Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA"))
 
     def pegar_complemento(self, mensagem: str = ""):
         while True:
