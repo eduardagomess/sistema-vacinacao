@@ -1,4 +1,4 @@
-from excecao import erroDeTipo
+from excecao import erro_de_tipo
 
 
 class Estoque:
@@ -6,11 +6,11 @@ class Estoque:
         if isinstance(tipo, str):
             self.__tipo = tipo
         else:
-            raise erroDeTipo
+            raise erro_de_tipo
         if isinstance(quantidade, int):
             self.__quantidade = quantidade
         else:
-            raise erroDeTipo
+            raise erro_de_tipo
         self.__vacinas_aplicadas = []
         self.__vacinas_total = []
 
@@ -31,18 +31,18 @@ class Estoque:
         if isinstance(tipo, str):
             self.__tipo = tipo
         else:
-            raise erroDeTipo
+            raise erro_de_tipo
 
     @quantidade.setter
     def quantidade(self, quantidade):
         if isinstance(quantidade, int):
             self.__quantidade = quantidade
         else:
-            raise erroDeTipo
+            raise erro_de_tipo
 
     @vacinas_aplicadas.setter
     def vacinas_aplicadas(self, vacinas_aplicadas):
         if isinstance(vacinas_aplicadas, int):
             self.__vacinas_aplicadas = vacinas_aplicadas
         else:
-            raise erroDeTipo
+            raise erro_de_tipo

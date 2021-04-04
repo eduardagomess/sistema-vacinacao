@@ -1,9 +1,9 @@
-from tela.telaSistema import TelaSistema
-from controlador.controladorEstoque import ControladorEstoque
-from controlador.controladorVacinacao import ControladorVacinacao
-from controlador.controladorAgendamento import ControladorAgendamento
-from controlador.controladorPaciente import ControladorPaciente
-from controlador.controladorEnfermeiro import ControladorEnfermeiro
+from tela.tela_sistema import TelaSistema
+from controlador.controlador_estoque import ControladorEstoque
+from controlador.controlador_vacinacao import ControladorVacinacao
+from controlador.controlador_agendamento import ControladorAgendamento
+from controlador.controlador_paciente import ControladorPaciente
+from controlador.controlador_enfermeiro import ControladorEnfermeiro
 from utils import estilo
 
 

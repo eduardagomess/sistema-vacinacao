@@ -1,17 +1,17 @@
 from entidade.enfermeiro import Enfermeiro
 from entidade.paciente import Paciente
-from excecao import NaoCadastrado
+from excecao import nao_cadastrado
 
 class Vacinacao:
     def __init__(self, id, paciente: Paciente, enfermeiro: Enfermeiro, numero_dose, tipo_dose):
         if isinstance(paciente, Paciente):
             self.__paciente = paciente
         else:
-            raise NaoCadastrado()
+            raise nao_cadastrado()
         if isinstance(enfermeiro, Enfermeiro):
             self.__enfermeiro = enfermeiro
         else:
-            raise NaoCadastrado()
+            raise nao_cadastrado()
         #teste de id
         self.__id = id
         if self.__numero_dose == "1" or "2":

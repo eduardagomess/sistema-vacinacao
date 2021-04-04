@@ -1,7 +1,7 @@
 from entidade.vacinacao import Vacinacao
 from entidade.paciente import Paciente
 from entidade.enfermeiro import Enfermeiro
-from excessoes.naoCadastrado import NaoCadastrado
+from excecao.nao_cadastrado import NaoCadastrado
 
 
 class ControladorVacinacao:

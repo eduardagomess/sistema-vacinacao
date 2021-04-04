@@ -1,5 +1,5 @@
 from entidade.enfermeiro import Enfermeiro
-from tela.telaEnfermeiro import TelaEnfermeiro
+from tela.tela_enfermeiro import TelaEnfermeiro
 from utils import estilo
 from utils.faker.Enfermeiro import fakeEnfermeiro
 from utils.faker.Enfermeiro import fakeEnfermeiro2

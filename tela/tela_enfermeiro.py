@@ -1,4 +1,4 @@
-from tela.telaAbstrata import AbstractTela
+from tela.tela_abstrata import AbstractTela
 
 
 class TelaEnfermeiro(AbstractTela):

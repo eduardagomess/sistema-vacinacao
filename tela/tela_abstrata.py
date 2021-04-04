@@ -14,9 +14,11 @@ class AbstractTela(ABC):
     def __init__(self):
         pass
 
+    def info_correta(self, message: str) -> str:
+        return f'\033[32m{message}\033[1m'
+
     def mostra_info(self, message: str) -> str:
         return f'\033[30m{message}\033[1m'
-
 
     def aviso(self, message: str) -> str:
         return f'\033[93m{message}\033[0m'

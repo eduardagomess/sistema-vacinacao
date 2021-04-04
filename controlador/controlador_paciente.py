@@ -1,4 +1,4 @@
-from tela.telaPaciente import TelaPaciente
+from tela.tela_paciente import TelaPaciente
 from entidade.paciente import Paciente
 from utils import estilo
 from utils.faker.Paciente import fakePaciente
