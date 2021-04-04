@@ -15,7 +15,6 @@ class ControladorAgendamento:
         self.__lista_pacientes = []
         self.__lista_enfermeiro = []
 
-
     def inserir_agendamento(self):
         estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
@@ -40,6 +39,10 @@ class ControladorAgendamento:
             self.__agenda[dia].append(hora)
             self.__agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
 
+    def buscar_agendamento(self):
+        controlador_paciente = self.__controlador_sistema.controlador_paciente
+        paciente = controlador_paciente.tipo_de_busca_paciente()
+        return self.__agendamentos[paciente.nome]
 
     def editar_agendamento(self):
         estilo.clear()
@@ -91,6 +94,9 @@ class ControladorAgendamento:
     def retornar_sistema(self):
         return self.__controlador_sistema
 
+    def gera_relatorio(self):
+        self.__tela_relatorio.mostra_relatorio(self.__agendamentos)
+
     def abre_tela(self):
         estilo.clear()
         opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento, 4: self.listar_agendamentos, 5: self.gera_relatorio,
@@ -98,9 +104,8 @@ class ControladorAgendamento:
         continua = True
         while continua:
             opcao_selecionada = self.__tela_agendamento.mostra_opcoes()
-            if opcao_selecionada == 5:
+            if opcao_selecionada == 6:
                 continua = False
             opcoes[opcao_selecionada]()
 
-    def gera_relatorio(self):
-        self.__tela_relatorio.mostra_relatorio(self.__agendamentos)
+

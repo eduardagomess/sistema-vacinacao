@@ -16,7 +16,7 @@ class ControladorPaciente:
         estilo.clear()
         opcao_cadastro = 1
         dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
-
+        print(dados_paciente)
         paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
                             dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],
                             dados_paciente["complemento"], dados_paciente["data_nascimento"])

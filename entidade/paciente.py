@@ -6,7 +6,7 @@ from entidade.endereco import Endereco
 class Paciente(Pessoa):
     def __init__(self, nome: str, telefone: str, cpf: int, bairro: str, rua: str, numero: str, complemento: str, data_nascimento: datetime):
         super().__init__(nome, telefone, cpf)
-        self.__dose = None
+        self.__dose = 0
         self.__tipo_dose = None
         self.__data_nascimento = data_nascimento
         self.__endereco = Endereco(bairro, rua, numero, complemento)
