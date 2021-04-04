@@ -29,7 +29,7 @@ class TelaVacinacao(AbstractTela):
 
     def mostra_vacina(self, vacinacao):
         for vacina in vacinacao:
-            print("\n Nome do paciente: ", self.info(vacina.paciente.nome))
+            print("\nNome do paciente: ", self.info(vacina.paciente.nome))
             print("Nome do enfermeiro: ", self.info(vacina.enfermeiro.nome))
             print("Tipo da vacina: ", self.info(vacina.tipo_dose))
             print("Estágio da dose: ", self.info(vacina.dose))

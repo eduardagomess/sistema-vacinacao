@@ -65,7 +65,7 @@ class TelaPaciente(AbstractTela):
             print("CPF do paciente: ", self.info(paciente.cpf))
             print("Endereço do paciente: ", self.info(paciente.endereco))
             print("Data de nascimento do paciente: ", self.info(paciente.data_nascimento))
-            if paciente.dose == None and paciente.tipo_dose == None:
+            if paciente.dose == 0 and paciente.tipo_dose == None:
                 print(self.erro("Paciente ainda não vacinado"))
             else:
                 print("O paciente está no estãgio: ", self.info(str(paciente.dose)))
@@ -109,3 +109,7 @@ class TelaPaciente(AbstractTela):
 
     def busca_paciente_cpf(self):
         return self.pegar_cpf("Insira o cpf do paciente: ")
+
+    def mostra_mensagem(self):
+        print(self.erro("PACIENTE NÃO CADASTRADO"))
+        print(input(("Aperte enter para realizar o cadastro: ")))
