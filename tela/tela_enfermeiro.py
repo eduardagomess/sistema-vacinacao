@@ -3,9 +3,9 @@ from tela.tela_abstrata import AbstractTela
 
 class TelaEnfermeiro(AbstractTela):
 
-    def __init__(self, controlador_sistema):
+    def __init__(self, controlador_enfermeiro):
         super().__init__()
-        self.__controlador_sistema = controlador_sistema
+        self.__controlador_enfermeiro = controlador_enfermeiro
 
     def mostra_opcoes(self):
         print(self.colorir_titulo("------ ÁREA DE ENFERMEIROS --------"))

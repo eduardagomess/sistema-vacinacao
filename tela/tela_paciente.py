@@ -78,7 +78,7 @@ class TelaPaciente(AbstractTela):
                 else:
                     print("O paciente está no estãgio: ", self.colorir_info(str(paciente.dose)))
                     print("Tipo da vacina usada no paciente: ", self.colorir_info(str(paciente.tipo_dose)))
-            print(input(("\nAperte enter para continuar: ")))
+            print(input(("Aperte enter para continuar: ")))
 
 
     def mostra_opcao_alteracao_cadastro(self):
