@@ -8,7 +8,7 @@ class TelaAgendamento(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print(self.titulo("----------- AGENDAMENTOS---------------"))
+        print(self.colorir_titulo("----------- AGENDAMENTOS---------------"))
         print("1 - Inserir agendamento")
         print("2 - Editar agendamento")
         print("3 - Excluir agendamento")
@@ -18,7 +18,7 @@ class TelaAgendamento(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
 
     def pegar_dados_agendamento(self, agenda):
-        print(self.titulo("---------------- AGENDAMENTO ----------------"))
+        print(self.colorir_titulo("---------------- AGENDAMENTO ----------------"))
         dia = {1: "segunda", 2: "terca", 3: "quarta", 4: "quinta", 5: "sexta"}
         opcao = self.pega_dia()
         horarios_preenchidos = agenda[dia[opcao].title()]
@@ -57,9 +57,9 @@ class TelaAgendamento(AbstractTela):
         identificador = 0
         for horario_disponivel in horarios_disponiveis:
             if count % 10 == 0:
-                print(f'\n{self.info(f"({identificador})")} {horario_disponivel}', end=" ")
+                print(f'\n{self.colorir_info(f"({identificador})")} {horario_disponivel}', end=" ")
             else:
-                print(f'{self.info(f"({identificador})")}  {horario_disponivel}', end=" ")
+                print(f'{self.colorir_info(f"({identificador})")}  {horario_disponivel}', end=" ")
             identificador += 1
             count += 1
         print("\n")
@@ -67,20 +67,20 @@ class TelaAgendamento(AbstractTela):
 
     def mostra_dados(self, agendamentos):
         for agendamento in agendamentos:
-            print("\nNome do paciente: ", self.info(agendamentos[agendamento]["paciente"].nome))
-            print("Informações do agendamento:  ", self.info("A vacina está marcada para " +
+            print("\nNome do paciente: ", self.colorir_info(agendamentos[agendamento]["paciente"].nome))
+            print("Informações do agendamento:  ", self.colorir_info("A vacina está marcada para " +
                                                           agendamentos[agendamento]["agendamento"][0] + " às " +
                                                           agendamentos[agendamento]["agendamento"][1]))
-            print("Nome do Enfermeiro(a): ", self.info(agendamentos[agendamento]["enfermeiro"].nome))
+            print("Nome do Enfermeiro(a): ", self.colorir_info(agendamentos[agendamento]["enfermeiro"].nome))
         print(input(("\nAperte enter para continuar: ")))
 
 
     def mostra_msg_enfermeiro_nao_castrado(self):
-        print(self.erro("ENFERMEIRO NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO"))
+        print(self.colorir_erro("ENFERMEIRO NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO"))
 
 
     def mostra_opcao_alteracao(self):
-        print(self.titulo("------ ALTAREÇÃO DE ANGENDAMENTO --------"))
+        print(self.colorir_titulo("------ ALTAREÇÃO DE ANGENDAMENTO --------"))
         print("Escolha a opção que você deseja alterar:  ")
         print("1 - alterar o dia da vacinação")
         print("2 - alterar o horario da vacinação")
@@ -89,7 +89,7 @@ class TelaAgendamento(AbstractTela):
         return int(input("Insira o número da opção escolhida: "))
 
     def pega_novos_dados(self, opcao, agendamentos, paciente, agenda):
-        print(self.titulo("\n------ INSERIR NOVO DADO PARA ALTERAR O AGENDAMENTO --------"))
+        print(self.colorir_titulo("\n------ INSERIR NOVO DADO PARA ALTERAR O AGENDAMENTO --------"))
         opcoes_mudanca = {1: "dia", 2: "hora", 3: "dia e hora", 4: "enfermeiro"}
         dia = {1: "Segunda", 2: "Terca", 3: "Quarta", 4: "Quinta", 5: "Sexta"}
 
@@ -99,22 +99,22 @@ class TelaAgendamento(AbstractTela):
             if hora not in agenda[dia_escolhido]:
                 return [opcoes_mudanca[opcao], dia_escolhido]
             else:
-                print(self.erro("HORÁRIO INDISPONIVEL"))
-                print(self.info_correta("\nESCOLHA OUTRO HORÁRIO ENTRA AS OPÇÕES ABAIXO"))
+                print(self.colorir_erro("HORÁRIO INDISPONIVEL"))
+                print(self.colorir_info_correta("\nESCOLHA OUTRO HORÁRIO ENTRA AS OPÇÕES ABAIXO"))
                 horarios_preenchidos = agenda[dia_escolhido]
                 horarios_disponiveis = self.mostra_horas(horarios_preenchidos)
                 hora = int(self.pegar_num("Insira o numero referente a hora escolhida: "))
-                print(self.info("\nAGENDAMENTO ALTERADO!"))
+                print(self.colorir_info("\nAGENDAMENTO ALTERADO!"))
                 return [dia[opcao], horarios_disponiveis[hora]]
 
 
         elif opcao == 2:
-            print(self.info("ESCOLHA UM HORÁRIO ENTRA AS OPÇÕES ABAIXO"))
+            print(self.colorir_info("ESCOLHA UM HORÁRIO ENTRA AS OPÇÕES ABAIXO"))
             dia_agendado = agendamentos[paciente.nome]["agendamento"][0]
             horarios_preenchidos = agenda[dia_agendado]
             horarios_disponiveis = self.mostra_horas(horarios_preenchidos)
             hora = int(self.pegar_num("Insira o numero referente a hora escolhida: "))
-            print(self.info("\nAGENDAMENTO ALTERADO!"))
+            print(self.colorir_info("\nAGENDAMENTO ALTERADO!"))
             return [opcoes_mudanca[opcao], horarios_disponiveis[hora]]
 
         elif opcao == 3:
@@ -128,9 +128,9 @@ class TelaAgendamento(AbstractTela):
             return [opcoes_mudanca[opcao]]
 
     def mostra_mensagem_agendamento_exlcuido(self):
-        print(self.info("ANGENDAMENTO EXCLUÍDO COM SUCESSO!"))
+        print(self.colorir_info("ANGENDAMENTO EXCLUÍDO COM SUCESSO!"))
         print(input(("Aperte enter para continuar: ")))
 
     def mostra_msg_sem_agendamento(self):
-        print(self.erro("NÃO HÁ AGENDAMENTOS!"))
+        print(self.colorir_erro("NÃO HÁ AGENDAMENTOS!"))
         print(input(("Aperte enter para continuar: ")))

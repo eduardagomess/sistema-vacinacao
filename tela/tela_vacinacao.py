@@ -8,7 +8,7 @@ class TelaVacinacao(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print(self.titulo("------ ÁREA DE VACINAS --------"))
+        print(self.colorir_titulo("------ ÁREA DE VACINAS --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir vacina")
         print("2 - Listar vacinas")
@@ -19,7 +19,7 @@ class TelaVacinacao(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
 
     def mostra_opcao_tipo_vacina(self):
-        print(self.titulo("------ TIPO DE VACINA --------"))
+        print(self.colorir_titulo("------ TIPO DE VACINA --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - CoronaVac")
         print("2 - Pfizer")
@@ -29,15 +29,15 @@ class TelaVacinacao(AbstractTela):
 
     def mostra_vacina(self, vacinacao):
         for vacina in vacinacao:
-            print("\nNome do paciente: ", self.info(vacina.paciente.nome))
-            print("Nome do enfermeiro: ", self.info(vacina.enfermeiro.nome))
-            print("Tipo da vacina: ", self.info(vacina.tipo_dose))
-            print("Estágio da dose: ", self.info(vacina.dose))
+            print("\nNome do paciente: ", self.colorir_info(vacina.paciente.nome))
+            print("Nome do enfermeiro: ", self.colorir_info(vacina.enfermeiro.nome))
+            print("Tipo da vacina: ", self.colorir_info(vacina.tipo_dose))
+            print("Estágio da dose: ", self.colorir_info(vacina.dose))
         print(input(("\nAperte enter para continuar: ")))
 
     def mostra_dose_paciente(self, paciente):
-        print("\n Nome do paciente: ", self.info(paciente.nome))
-        print("Tipo da vacina: ", self.info(paciente.tipo_dose))
-        print("Estágio da dose: ", self.info(paciente.dose))
+        print("\n Nome do paciente: ", self.colorir_info(paciente.nome))
+        print("Tipo da vacina: ", self.colorir_info(paciente.tipo_dose))
+        print("Estágio da dose: ", self.colorir_info(paciente.dose))
         print(input(("\nAperte enter para continuar: ")))
 

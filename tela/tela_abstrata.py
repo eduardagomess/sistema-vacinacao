@@ -14,25 +14,25 @@ class AbstractTela(ABC):
     def __init__(self):
         pass
 
-    def info_correta(self, message: str) -> str:
+    def colorir_info_correta(self, message: str) -> str:
         return f'\033[32m{message}\033[1m'
 
-    def mostra_info(self, message: str) -> str:
+    def colorir_info_amotra(self, message: str) -> str:
         return f'\033[30m{message}\033[1m'
 
-    def aviso(self, message: str) -> str:
+    def colorir_aviso(self, message: str) -> str:
         return f'\033[93m{message}\033[0m'
 
-    def erro(self, message: str) -> str:
+    def colorir_erro(self, message: str) -> str:
         return f'\033[91m{message}\033[0m'
 
-    def info(self, message: str) -> str:
+    def colorir_info(self, message: str) -> str:
         return f'\033[96m{message}\033[0m'
 
-    def titulo(self, message: str) -> str:
+    def colorir_titulo(self, message: str) -> str:
         return f'\033[94m{message}\033[0m'
 
-    def escolha(self, message: str) -> str:
+    def colorir_escolha(self, message: str) -> str:
         return f'\033[95m{message}\033[0m'
 
     def pegar_opcao(self, mensagem: str = "", inteiros_validos: [] = None):

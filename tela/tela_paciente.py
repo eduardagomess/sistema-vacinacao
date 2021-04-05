@@ -8,7 +8,7 @@ class TelaPaciente(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print(self.titulo("------ ÁREA DE PACIENTES --------"))
+        print(self.colorir_titulo("------ ÁREA DE PACIENTES --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir paciente")
         print("2 - Listar pacientes")
@@ -33,7 +33,7 @@ class TelaPaciente(AbstractTela):
                           "complemento", "data_nascimento", "dose"]
 
         if opcao == 1:
-            print(self.titulo(" ---- CADASTRAR PACIENTE  ----"))
+            print(self.colorir_titulo(" ---- CADASTRAR PACIENTE  ----"))
 
             lista_dados_requeridos = list(dados_requeridos.values())
             dados_paciente = []
@@ -60,21 +60,21 @@ class TelaPaciente(AbstractTela):
 
     def mostra_dados(self, dados_paciente):
         for paciente in dados_paciente:
-            print("\n Nome do paciente: ", self.info(paciente.nome))
-            print("Telefone do paciente: ", self.info(paciente.telefone))
-            print("CPF do paciente: ", self.info(paciente.cpf))
-            print("Endereço do paciente: ", self.info(paciente.endereco))
-            print("Data de nascimento do paciente: ", self.info(paciente.data_nascimento))
+            print("\nNome do paciente: ", self.colorir_info(paciente.nome))
+            print("Telefone do paciente: ", self.colorir_info(paciente.telefone))
+            print("CPF do paciente: ", self.colorir_info(paciente.cpf))
+            print("Endereço do paciente: ", self.colorir_info(paciente.endereco))
+            print("Data de nascimento do paciente: ", self.colorir_info(paciente.data_nascimento))
             if paciente.dose == 0 and paciente.tipo_dose == None:
-                print(self.erro("Paciente ainda não vacinado"))
+                print(self.colorir_erro("Paciente ainda não vacinado"))
             else:
-                print("O paciente está no estãgio: ", self.info(str(paciente.dose)))
-                print("Tipo da vacina usada no paciente: ", self.info(str(paciente.tipo_dose)))
+                print("O paciente está no estãgio: ", self.colorir_info(str(paciente.dose)))
+                print("Tipo da vacina usada no paciente: ", self.colorir_info(str(paciente.tipo_dose)))
         print(input(("\nAperte enter para continuar: ")))
 
 
     def mostra_opcao_alteracao_cadastro(self):
-        print(self.titulo("------ ALTAREÇÃO DE CADASTRO DO PACIENTE --------"))
+        print(self.colorir_titulo("------ ALTAREÇÃO DE CADASTRO DO PACIENTE --------"))
         print("Escolha a opção que você deseja alterar:  ")
         print("0 - alterar o nome do paciente")
         print("1 - alterar o telefone do paciente")
@@ -85,22 +85,22 @@ class TelaPaciente(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [0, 1, 2, 3, 4, 5])
 
     def mostra_opcao_busca(self):
-        print(self.titulo("------ OPÇÃO DE BUSCA DE PACIENTE ----------"))
+        print(self.colorir_titulo("------ OPÇÃO DE BUSCA DE PACIENTE ----------"))
         print("1 - buscar pelo nome do paciente")
         print("2 - busca pelo cpf do paciente")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def mostra_paciente(self, paciente):
-        print("\nNome do paciente: ", self.info(paciente.nome))
-        print("Telefone do paciente: ", self.info(paciente.telefone))
-        print("CPF do paciente: ", self.info(paciente.cpf))
-        print("Endereço do paciente: ", self.info(paciente.endereco))
-        print("Data de nascimento do paciente: ", self.info(paciente.data_nascimento))
+        print("\nNome do paciente: ", self.colorir_info(paciente.nome))
+        print("Telefone do paciente: ", self.colorir_info(paciente.telefone))
+        print("CPF do paciente: ", self.colorir_info(paciente.cpf))
+        print("Endereço do paciente: ", self.colorir_info(paciente.endereco))
+        print("Data de nascimento do paciente: ", self.colorir_info(paciente.data_nascimento))
         if paciente.dose == 0 and paciente.tipo_dose == None:
-            print(self.erro("Paciente ainda não vacinado"))
+            print(self.colorir_erro("Paciente ainda não vacinado"))
         else:
-            print("O paciente está no estãgio: ", self.info(str(paciente.dose)))
-            print("Tipo da vacina usada no paciente: ", self.info(str(paciente.tipo_dose)))
+            print("O paciente está no estãgio: ", self.colorir_info(str(paciente.dose)))
+            print("Tipo da vacina usada no paciente: ", self.colorir_info(str(paciente.tipo_dose)))
 
         print(input(("\nAperte enter para continuar: ")))
 
@@ -111,12 +111,12 @@ class TelaPaciente(AbstractTela):
         return self.pegar_cpf("Insira o cpf do paciente: ")
 
     def pega_opcao_paciente_sem_cadastro(self):
-        print(self.erro("PACIENTE NÃO CADASTRADO"))
-        print(self.info("Escolha uma das opções abaixo: "))
+        print(self.colorir_erro("PACIENTE NÃO CADASTRADO"))
+        print(self.colorir_info("Escolha uma das opções abaixo: "))
         print("1 - Cadastrar paciente")
         print("2 - Retornar a tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def mostra_mensagem_paciente_exlcuido(self):
-        print(self.info("PACIENTE EXCLUÍDO COM SUCESSO!"))
+        print(self.colorir_info("PACIENTE EXCLUÍDO COM SUCESSO!"))
         print(input(("Aperte enter para continuar: ")))

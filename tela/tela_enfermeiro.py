@@ -8,7 +8,7 @@ class TelaEnfermeiro(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print(self.titulo("------ ÁREA DE ENFERMEIROS --------"))
+        print(self.colorir_titulo("------ ÁREA DE ENFERMEIROS --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir enfermeiro")
         print("2 - Listar enfermeiros")
@@ -29,14 +29,14 @@ class TelaEnfermeiro(AbstractTela):
         dados_cadastro = ["nome", "telefone", "cpf", "coren"]
 
         if opcao == 1:
-            print(self.info(" ---- CADASTRAR ENFERMEIRO ----"))
+            print(self.colorir_info(" ---- CADASTRAR ENFERMEIRO ----"))
             lista_dados_requeridos = list(dados_requeridos.values())
             dados_enfermeiro = []
             for dado in range(len(lista_dados_requeridos)):
                 dados_enfermeiro.append(lista_dados_requeridos[dado](mensagens[dado]))
             return dict(zip(dados_cadastro, dados_enfermeiro))
         else:
-            print(self.info("------ INSERIR NOVO DADO PARA ALTERAR CADASTRO --------"))
+            print(self.colorir_info("------ INSERIR NOVO DADO PARA ALTERAR CADASTRO --------"))
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
             opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf", 3: "coren"}
             dado = dados_requeridos[opcao_escolhida](mensagens[opcao_escolhida])
@@ -44,21 +44,21 @@ class TelaEnfermeiro(AbstractTela):
 
     def mostra_dados_enfermeiros(self, lista_enfermeiros):
         for enfermeiro in lista_enfermeiros:
-            print("Nome do enfermeiro: ", self.info(enfermeiro.nome))
-            print("Telefone do enfermeiro: ", self.info(enfermeiro.telefone))
-            print("CPF do enfermeiro: ", self.info(enfermeiro.cpf))
-            print("COREN do enfermeiro: ", self.info(str(enfermeiro.coren)) + "\n")
+            print("Nome do enfermeiro: ", self.colorir_info(enfermeiro.nome))
+            print("Telefone do enfermeiro: ", self.colorir_info(enfermeiro.telefone))
+            print("CPF do enfermeiro: ", self.colorir_info(enfermeiro.cpf))
+            print("COREN do enfermeiro: ", self.colorir_info(str(enfermeiro.coren)) + "\n")
         print(input(("Aperte enter para continuar: ")))
 
     def mostra_enfermeiro(self, enfermeiro):
-        print("\nNome do enfermeiro: ", self.info(enfermeiro.nome))
-        print("Telefone do enfermeiro: ", self.info(enfermeiro.telefone))
-        print("CPF do enfermeiro: ", self.info(enfermeiro.cpf))
-        print("COREN do enfermeiro: ", self.info(str(enfermeiro.coren)))
+        print("\nNome do enfermeiro: ", self.colorir_info(enfermeiro.nome))
+        print("Telefone do enfermeiro: ", self.colorir_info(enfermeiro.telefone))
+        print("CPF do enfermeiro: ", self.colorir_info(enfermeiro.cpf))
+        print("COREN do enfermeiro: ", self.colorir_info(str(enfermeiro.coren)))
         print(input(("Aperte enter para continuar: ")))
 
     def mostra_opcao_busca(self):
-        print(self.info("------ OPÇÃO DE BUSCA DO ENFERMEIRO ----------"))
+        print(self.colorir_info("------ OPÇÃO DE BUSCA DO ENFERMEIRO ----------"))
         print("1 - buscar pelo nome")
         print("2 - buscar pelo cpf")
         print("3 - buscar pelo COREN")
@@ -86,22 +86,22 @@ class TelaEnfermeiro(AbstractTela):
 
     def mostra_pacientes(self, pacientes):
         if pacientes == None:
-            print(self.erro("Ainda não há pacientes atendidos pelo enfermeiro"))
+            print(self.colorir_erro("Ainda não há pacientes atendidos pelo enfermeiro"))
         else:
             for paciente in pacientes:
-                print("Nome do paciente: ", self.info(paciente.nome))
-                print("Nome do paciente: ", self.info(paciente.cpf))
+                print("Nome do paciente: ", self.colorir_info(paciente.nome))
+                print("Nome do paciente: ", self.colorir_info(paciente.cpf))
         print(input(("Aperte enter para continuar: ")))
 
     def pega_opcao_enfermeiro_sem_cadastro(self):
-        print(self.erro("ENFERMEIRO NÃO CADASTRADO"))
-        print(self.info("Escolha uma das opções abaixo: "))
+        print(self.colorir_erro("ENFERMEIRO NÃO CADASTRADO"))
+        print(self.colorir_info("Escolha uma das opções abaixo: "))
         print("1 - Cadastrar enfermeiro")
         print("2 - Retornar a tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def mostra_mensagem_enfermeiro_exlcuido(self):
-        print(self.info("ENFERMEIRO EXCLUÍDO COM SUCESSO!"))
+        print(self.colorir_info("ENFERMEIRO EXCLUÍDO COM SUCESSO!"))
         print(input(("Aperte enter para continuar: ")))
 
 

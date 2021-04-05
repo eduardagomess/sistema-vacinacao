@@ -8,7 +8,7 @@ class TelaSistema(AbstractTela):
         self.__controlador_sistema = controlador_sistema
 
     def mostra_opcoes(self):
-        print(self.titulo("------ SISTEMA DE VACINAÇÃO --------"))
+        print(self.colorir_titulo("------ SISTEMA DE VACINAÇÃO --------"))
         print("Escolha uma das opções abaixo:")
         print("1 - Área de pacientes")
         print("2 - Área de enfermeiros")
