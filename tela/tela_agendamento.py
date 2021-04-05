@@ -3,9 +3,9 @@ from tela.tela_abstrata import AbstractTela
 
 class TelaAgendamento(AbstractTela):
 
-    def __init__(self, controlador_sistema):
+    def __init__(self, controlador_agendamento):
         super().__init__()
-        self.__controlador_sistema = controlador_sistema
+        self.__controlador_agendamento= controlador_agendamento
 
     def mostra_opcoes(self):
         print(self.colorir_titulo("----------- AGENDAMENTOS---------------"))
