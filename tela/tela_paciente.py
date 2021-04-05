@@ -30,7 +30,7 @@ class TelaPaciente(AbstractTela):
                                  7: "Insira a data de nascimento do paciente (DD/MM/AAAA): "}
 
         dados_cadastro = ["nome", "telefone", "cpf", "bairro", "rua", "numero",
-                          "complemento", "data_nascimento", "dose"]
+                          "complemento", "data_nascimento"]
 
         if opcao == 1:
             print(self.colorir_titulo(" ---- CADASTRAR PACIENTE  ----"))
@@ -42,18 +42,18 @@ class TelaPaciente(AbstractTela):
                 dados_paciente.append(lista_dados_requeridos[dado](mensagem_requerimento[dado]))
             return dict(zip(dados_cadastro, dados_paciente))
 
-        else:
+        elif opcao == 2:
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
 
             opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf", 3: "bairro", 4: "rua",
                               5: "numero", 6: "complemento", 7: "data_nascimento"}
 
             if opcao_escolhida == 3:
-                dados_endereco = [dados_requeridos[opcao_escolhida](mensagem_requerimento[3]),
-                                  dados_requeridos[opcao_escolhida](mensagem_requerimento[4]),
-                                  dados_requeridos[opcao_escolhida](mensagem_requerimento[5]),
-                                  dados_requeridos[opcao_escolhida](mensagem_requerimento[5])]
-                return [opcoes_mudanca[opcao_escolhida], dados_endereco]
+                dados_endereco = [dados_requeridos[3](mensagem_requerimento[3]),
+                                  dados_requeridos[4](mensagem_requerimento[4]),
+                                  dados_requeridos[5](mensagem_requerimento[5]),
+                                  dados_requeridos[6](mensagem_requerimento[6])]
+                return ["endereco", dados_endereco]
             else:
                 dado = dados_requeridos[opcao_escolhida](mensagem_requerimento[opcao_escolhida])
                 return [opcoes_mudanca[opcao_escolhida], dado]
@@ -81,8 +81,7 @@ class TelaPaciente(AbstractTela):
         print("2 - alterar o cpf do paciente")
         print("3 - alterar o endereço do paciente")
         print("4 - alterar a data de nascimento do paciente")
-        print("5 - alterar o estágio da dose do paciente")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [0, 1, 2, 3, 4, 5])
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [0, 1, 2, 3, 4])
 
     def mostra_opcao_busca(self):
         print(self.colorir_titulo("------ OPÇÃO DE BUSCA DE PACIENTE ----------"))

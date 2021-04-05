@@ -1,14 +1,11 @@
 from tela.tela_paciente import TelaPaciente
 from entidade.paciente import Paciente
 from utils import estilo
-from utils.faker.Paciente import fakePaciente
-from utils.faker.Paciente import fakePaciente2
-from utils.faker.Paciente import fakePaciente3
 
 
 class ControladorPaciente:
     def __init__(self, controlador_sistema):
-        self.__pacientes = [fakePaciente, fakePaciente2, fakePaciente3]
+        self.__pacientes = []
         self.__tela_paciente = TelaPaciente(self)
         self.__controlador_sistema = controlador_sistema
 
@@ -16,9 +13,8 @@ class ControladorPaciente:
         estilo.clear()
         opcao_cadastro = 1
         dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
-        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
-                            dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],
-                            dados_paciente["complemento"], dados_paciente["data_nascimento"])
+        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
+        paciente.determinar_endereco(dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"])
 
         if paciente not in self.__pacientes:
             self.__pacientes.append(paciente)
@@ -75,8 +71,10 @@ class ControladorPaciente:
             else:
                 self.retornar_sistema()
         else:
+
             opcao_cadastro = 2
             dado_novo = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
+            print(dado_novo)
             if dado_novo[0] == "nome":
                 paciente.nome = dado_novo[1]
             elif dado_novo[0] == "telefone":
@@ -87,8 +85,6 @@ class ControladorPaciente:
                 paciente.determinar_endereco(dado_novo[1][0], dado_novo[1][1], dado_novo[1][2], dado_novo[1][3])
             elif dado_novo[0] == "data_nascimento":
                 paciente.data_nascimento = dado_novo[1]
-            else:
-                paciente.dose = dado_novo[1]
 
     def excluir_paciente(self):
         paciente = self.tipo_de_busca_paciente()

@@ -1,14 +1,12 @@
 from entidade.enfermeiro import Enfermeiro
 from tela.tela_enfermeiro import TelaEnfermeiro
 from utils import estilo
-from utils.faker.Enfermeiro import fakeEnfermeiro
-from utils.faker.Enfermeiro import fakeEnfermeiro2
-from utils.faker.Enfermeiro import fakeEnfermeiro3
+
 
 class ControladorEnfermeiro:
 
     def __init__(self, controlador_sistema):
-        self.__enfermeiros = [fakeEnfermeiro, fakeEnfermeiro2, fakeEnfermeiro3]
+        self.__enfermeiros = []
         self.__tela_enfermeiro = TelaEnfermeiro(self)
         self.__controlador_sistema = controlador_sistema
 
