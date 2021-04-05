@@ -13,10 +13,20 @@ class ControladorEnfermeiro:
     def inserir_enfermeiro(self):
         estilo.clear()
         dados_enfermeiro = self.__tela_enfermeiro.pega_dados_enfermeiro(1)
-        enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
-        if enfermeiro not in self.__enfermeiros:
-            self.__enfermeiros.append(enfermeiro)
-            return enfermeiro
+        nao_cadastrado = True
+
+        for enfermeiro in self.__enfermeiros:
+            if enfermeiro.coren == dados_enfermeiro["coren"]:
+                nao_cadastrado = False
+
+        if nao_cadastrado:
+            novo_enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
+            self.__enfermeiros.append(novo_enfermeiro)
+            return novo_enfermeiro
+        else:
+            estilo.clear()
+            self.__tela_enfermeiro.mostra_msg_enfermeiro_cadastro()
+            estilo.clear()
 
     def listar_enfermeiros(self):
         if len(self.__enfermeiros) == 0:

@@ -126,6 +126,10 @@ class TelaEnfermeiro(AbstractTela):
         print(self.colorir_info("PACIENTE NÃO ENCONTRADO"))
         print(input(("Aperte enter para continuar: ")))
 
+    def mostra_msg_enfermeiro_cadastro(self):
+        print(self.colorir_info("ENFERMEIRO JÁ ESTÁ CADASTRADO"))
+        print(input(("Aperte enter para continuar: ")))
+
 
 
 
