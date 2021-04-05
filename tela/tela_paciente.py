@@ -45,32 +45,40 @@ class TelaPaciente(AbstractTela):
         elif opcao == 2:
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
 
-            opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf", 3: "bairro", 4: "rua",
-                              5: "numero", 6: "complemento", 7: "data_nascimento"}
+            opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf", 3: "endereco", 7: "data_nascimento"}
 
             if opcao_escolhida == 3:
                 dados_endereco = [dados_requeridos[3](mensagem_requerimento[3]),
                                   dados_requeridos[4](mensagem_requerimento[4]),
                                   dados_requeridos[5](mensagem_requerimento[5]),
                                   dados_requeridos[6](mensagem_requerimento[6])]
-                return ["endereco", dados_endereco]
+                return [opcoes_mudanca[opcao_escolhida], dados_endereco]
+
+            elif opcao_escolhida == 4:
+                opcao_escolhida = 7
+                dado = dados_requeridos[opcao_escolhida](mensagem_requerimento[opcao_escolhida])
+                return [opcoes_mudanca[opcao_escolhida], dado]
             else:
                 dado = dados_requeridos[opcao_escolhida](mensagem_requerimento[opcao_escolhida])
                 return [opcoes_mudanca[opcao_escolhida], dado]
 
     def mostra_dados(self, dados_paciente):
-        for paciente in dados_paciente:
-            print("\nNome do paciente: ", self.colorir_info(paciente.nome))
-            print("Telefone do paciente: ", self.colorir_info(paciente.telefone))
-            print("CPF do paciente: ", self.colorir_info(paciente.cpf))
-            print("Endereço do paciente: ", self.colorir_info(paciente.endereco))
-            print("Data de nascimento do paciente: ", self.colorir_info(paciente.data_nascimento))
-            if paciente.dose == 0 and paciente.tipo_dose == None:
-                print(self.colorir_erro("Paciente ainda não vacinado"))
-            else:
-                print("O paciente está no estãgio: ", self.colorir_info(str(paciente.dose)))
-                print("Tipo da vacina usada no paciente: ", self.colorir_info(str(paciente.tipo_dose)))
-        print(input(("\nAperte enter para continuar: ")))
+        if dados_paciente == []:
+            print(self.colorir_erro("NÃO PACIENTES CADASTRADOS"))
+            print(input(self.colorir_info("Aperte enter para continuar: ")))
+        else:
+            for paciente in dados_paciente:
+                print("\nNome do paciente: ", self.colorir_info(paciente.nome))
+                print("Telefone do paciente: ", self.colorir_info(paciente.telefone))
+                print("CPF do paciente: ", self.colorir_info(paciente.cpf))
+                print("Endereço do paciente: ", self.colorir_info(paciente.endereco))
+                print("Data de nascimento do paciente: ", self.colorir_info(paciente.data_nascimento))
+                if paciente.dose == 0 and paciente.tipo_dose == None:
+                    print(self.colorir_erro("Paciente ainda não vacinado"))
+                else:
+                    print("O paciente está no estãgio: ", self.colorir_info(str(paciente.dose)))
+                    print("Tipo da vacina usada no paciente: ", self.colorir_info(str(paciente.tipo_dose)))
+            print(input(("\nAperte enter para continuar: ")))
 
 
     def mostra_opcao_alteracao_cadastro(self):

@@ -51,35 +51,42 @@ class ControladorAgendamento:
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
         paciente = controlador_paciente.tipo_de_busca_paciente()
-        tipo_de_alteracao = self.__tela_agendamento.mostra_opcao_alteracao()
-        dado_novo = self.__tela_agendamento.pega_novos_dados(tipo_de_alteracao, self.__agendamentos, paciente, self.__agenda)
-        hora = self.__agendamentos[paciente.nome]["agendamento"][1]
-        dia = self.__agendamentos[paciente.nome]["agendamento"][0].lower().capitalize()
-        self.__agenda[dia].remove(hora)
-
-        if dado_novo[0] == "dia":
-            dia_novo = dado_novo[1].lower().capitalize()
-            self.__agenda[dia_novo].append(hora)
-            self.__agendamentos[paciente.nome]["agendamento"][0] = dia_novo
-
-        elif dado_novo[0] == "hora":
-            if dado_novo[1] not in self.__agenda[dia]:
-                self.__agenda[dia].append(dado_novo[1])
-            self.__agendamentos[paciente.nome]["agendamento"][1] = dado_novo[1]
-
-        elif dado_novo[0] == "dia e hora":
-            dia_novo = dado_novo[1][0].lower().capitalize()
-            self.__agenda[dia_novo].append(hora)
-            self.__agendamentos[paciente.nome]["agendamento"][0] = dia_novo
-            if dado_novo[1][1] not in self.__agenda[dia]:
-                self.__agenda[dia].append(dado_novo[1][1])
-            self.__agendamentos[paciente.nome]["agendamento"][1] = dado_novo[1][1]
-
+        if paciente == None:
+            opcao = self.__tela_agendamento.pega_opcao_paciente_sem_cadastro()
+            if opcao == 1:
+                controlador_paciente.inserir_paciente()
+            else:
+                self.retornar_sistema()
         else:
-            enfermeiro = controlador_enfermeiro.busca_enfermeiro()
-            if enfermeiro == None:
-                enfermeiro = controlador_enfermeiro.inserir_enfermeiro()
-            self.__agendamentos[paciente.nome]["enfermeiro"] = enfermeiro
+            tipo_de_alteracao = self.__tela_agendamento.mostra_opcao_alteracao()
+            dado_novo = self.__tela_agendamento.pega_novos_dados(tipo_de_alteracao, self.__agendamentos, paciente, self.__agenda)
+            hora = self.__agendamentos[paciente.nome]["agendamento"][1]
+            dia = self.__agendamentos[paciente.nome]["agendamento"][0].lower().capitalize()
+            self.__agenda[dia].remove(hora)
+
+            if dado_novo[0] == "dia":
+                dia_novo = dado_novo[1].lower().capitalize()
+                self.__agenda[dia_novo].append(hora)
+                self.__agendamentos[paciente.nome]["agendamento"][0] = dia_novo
+
+            elif dado_novo[0] == "hora":
+                if dado_novo[1] not in self.__agenda[dia]:
+                    self.__agenda[dia].append(dado_novo[1])
+                self.__agendamentos[paciente.nome]["agendamento"][1] = dado_novo[1]
+
+            elif dado_novo[0] == "dia e hora":
+                dia_novo = dado_novo[1][0].lower().capitalize()
+                self.__agenda[dia_novo].append(hora)
+                self.__agendamentos[paciente.nome]["agendamento"][0] = dia_novo
+                if dado_novo[1][1] not in self.__agenda[dia]:
+                    self.__agenda[dia].append(dado_novo[1][1])
+                self.__agendamentos[paciente.nome]["agendamento"][1] = dado_novo[1][1]
+
+            else:
+                enfermeiro = controlador_enfermeiro.busca_enfermeiro()
+                if enfermeiro == None:
+                    enfermeiro = controlador_enfermeiro.inserir_enfermeiro()
+                self.__agendamentos[paciente.nome]["enfermeiro"] = enfermeiro
 
     def excluir_agendamento(self):
         estilo.clear()
