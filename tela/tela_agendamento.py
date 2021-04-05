@@ -5,7 +5,7 @@ class TelaAgendamento(AbstractTela):
 
     def __init__(self, controlador_agendamento):
         super().__init__()
-        self.__controlador_agendamento= controlador_agendamento
+        self.__controlador_agendamento = controlador_agendamento
 
     def mostra_opcoes(self):
         print(self.colorir_titulo("----------- AGENDAMENTOS---------------"))

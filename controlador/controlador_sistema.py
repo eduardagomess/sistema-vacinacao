@@ -4,6 +4,7 @@ from controlador.controlador_vacinacao import ControladorVacinacao
 from controlador.controlador_agendamento import ControladorAgendamento
 from controlador.controlador_paciente import ControladorPaciente
 from controlador.controlador_enfermeiro import ControladorEnfermeiro
+from controlador.controlador_tipo_vacina import ControladorTipoVacina
 from utils import estilo
 
 
@@ -14,6 +15,7 @@ class ControladorSistema:
         self.__controlador_agendamento = ControladorAgendamento(self)
         self.__controlador_paciente = ControladorPaciente(self)
         self.__controlador_enfermeiro = ControladorEnfermeiro(self)
+        self.__controlador_tipo_vacina = ControladorTipoVacina(self)
         self.__tela_sistema = TelaSistema(self)
 
     def inicializa_sistema(self):
@@ -34,13 +36,18 @@ class ControladorSistema:
     def acessar_agendamentos(self):
         self.__controlador_agendamento.abre_tela()
 
+    def acessar_tipo_vacina(self):
+        self.__controlador_tipo_vacina.abre_tela()
+
     @staticmethod
     def finaliza_sistema():
         exit(0)
 
     def abre_tela(self):
-        opcoes = {1: self.acessar_area_paciente, 2: self.acessar_area_enfermeiro, 3: self.acessar_estoque,
-                  4: self.acessar_registro_vacinacao, 5: self.acessar_agendamentos, 6: self.finaliza_sistema}
+        opcoes = {1: self.acessar_area_paciente, 2: self.acessar_area_enfermeiro,
+                  3: self.acessar_estoque, 4: self.acessar_registro_vacinacao,
+                  5: self.acessar_agendamentos, 6: self.acessar_tipo_vacina,
+                  7: self.finaliza_sistema}
         while True:
             estilo.clear()
             opcoes[self.__tela_sistema.mostra_opcoes()]()

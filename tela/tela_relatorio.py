@@ -3,9 +3,9 @@ from tela.tela_abstrata import AbstractTela
 
 class TelaRelatorio(AbstractTela):
 
-    def __init__(self, controlador_atendimento):
+    def __init__(self, controlador_agendamento):
         super().__init__()
-        self.__controlador = controlador_atendimento
+        self.__controlador_agendamento = controlador_agendamento
 
     def mostra_relatorio(self, agendamentos):
         print(self.colorir_info("RELATÓRIO DOS AGENDAMENTOS"))
