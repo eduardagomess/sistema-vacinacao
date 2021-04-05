@@ -75,7 +75,6 @@ class ControladorAgendamento:
                 enfermeiro = controlador_enfermeiro.inserir_enfermeiro()
             self.__agendamentos[paciente.nome]["enfermeiro"] = enfermeiro
 
-
     def excluir_agendamento(self):
         estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
@@ -98,17 +97,20 @@ class ControladorAgendamento:
         return self.__controlador_sistema
 
     def gera_relatorio(self):
-        self.__tela_relatorio.mostra_relatorio(self.__agendamentos)
+        estilo.clear()
+        if self.__agendamentos == {}:
+            self.__tela_agendamento.mostra_msg_sem_agendamento()
+        else:
+            self.__tela_relatorio.mostra_relatorio(self.__agendamentos)
+        estilo.clear()
 
     def abre_tela(self):
         estilo.clear()
-        opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento, 4: self.listar_agendamentos, 5: self.gera_relatorio,
-                  6: self.retornar_sistema}
+        opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento,
+                  4: self.listar_agendamentos, 5: self.gera_relatorio, 6: self.retornar_sistema}
         continua = True
         while continua:
             opcao_selecionada = self.__tela_agendamento.mostra_opcoes()
             if opcao_selecionada == 6:
                 continua = False
             opcoes[opcao_selecionada]()
-
-
