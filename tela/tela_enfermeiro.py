@@ -15,10 +15,9 @@ class TelaEnfermeiro(AbstractTela):
         print("3 - Alterar informações do enfermeiro")
         print("4 - Excluir enfermeiro")
         print("5 - Buscar enfermeiro")
-        print("6 - Buscar pacientes do enfermeiro")
-        print("7 - Listar pacientes do enfermeiro")
-        print("8 - Retornar a tela principal do sistema")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6, 7, 8])
+        print("6 - Listar pacientes do enfermeiro")
+        print("7 - Retornar a tela principal do sistema")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6, 7])
 
     def pega_dados_enfermeiro(self, opcao):
 
@@ -101,6 +100,20 @@ class TelaEnfermeiro(AbstractTela):
         print("2 - Retornar a tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
+    def pega_nome_paciente(self):
+        print(self.colorir_info(" ----- BUSCAR PACIENTE --------"))
+        print(self.colorir_info("Escolha uma das opções abaixo: "))
+        print("1 - Busca pelo nome")
+        print("2 - Busca pelo cpf")
+        tipo_busca = {1: "nome", 2 :"cpf"}
+        opcao = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
+        if opcao == 1:
+            nome = self.pegar_nome("Insira o nome do paciente: ")
+            return [tipo_busca[1], nome]
+        else:
+            cpf = self.pegar_nome("Insira o cpf do paciente: ")
+            return [tipo_busca[2], cpf]
+
     def mostra_mensagem_enfermeiro_exlcuido(self):
         print(self.colorir_info("ENFERMEIRO EXCLUÍDO COM SUCESSO!"))
         print(input(("Aperte enter para continuar: ")))
@@ -108,6 +121,11 @@ class TelaEnfermeiro(AbstractTela):
     def mostra_mgs_sem_enfermeiros(self):
         print(self.colorir_info("AINDA NÃO HÁ ENFERMEIROS PARA SEREM LISTADOS"))
         print(input(("Aperte enter para continuar: ")))
+
+    def mostra_msg_paciente_nao_encontrado(self):
+        print(self.colorir_info("PACIENTE NÃO ENCONTRADO"))
+        print(input(("Aperte enter para continuar: ")))
+
 
 
 

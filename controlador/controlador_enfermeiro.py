@@ -24,11 +24,14 @@ class ControladorEnfermeiro:
             self.__tela_enfermeiro.mostra_mgs_sem_enfermeiros()
             estilo.clear()
         else:
+            estilo.clear()
             self.__tela_enfermeiro.mostra_dados_enfermeiros(self.__enfermeiros)
 
     def listar_pacientes(self):
         enfermeiro = self.busca_enfermeiro()
-        if len(enfermeiro.lista_pacientes) == 0:
+        if enfermeiro == None:
+            self.__tela_enfermeiro.pega_opcao_enfermeiro_sem_cadastro()
+        elif len(enfermeiro.lista_pacientes) == 0:
             self.__tela_enfermeiro.mostra_pacientes(None)
         else:
             self.__tela_enfermeiro.mostra_pacientes(enfermeiro.lista_pacientes)
