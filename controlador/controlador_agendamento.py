@@ -21,22 +21,25 @@ class ControladorAgendamento:
         if paciente == None:
             opcao = self.__tela_agendamento.pega_opcao_paciente_sem_cadastro()
             if opcao == 1:
-                paciente = controlador_paciente.inserir_paciente()
+                controlador_paciente.inserir_paciente()
+                estilo.clear()
             else:
                 self.retornar_sistema()
-        dia, hora = self.__tela_agendamento.pegar_dados_agendamento(self.__agendamento.agenda)
-        dia = dia.lower().capitalize()
-        enfermeiro_escolhido = controlador_enfermeiro.busca_enfermeiro()
-        if enfermeiro_escolhido == None:
+                estilo.clear()
+        else:
+            dia, hora = self.__tela_agendamento.pegar_dados_agendamento(self.__agendamento.agenda)
+            dia = dia.lower().capitalize()
+            enfermeiro_escolhido = controlador_enfermeiro.busca_enfermeiro()
+            if enfermeiro_escolhido == None:
+                estilo.clear()
+                self.__tela_agendamento.mostra_msg_enfermeiro_nao_castrado()
+                time.sleep(1.5)
+                estilo.clear()
+                enfermeiro_escolhido = controlador_enfermeiro.inserir_enfermeiro()
+            if hora not in self.__agendamento.agenda[dia]:
+                self.__agendamento.agenda[dia].append(hora)
+                self.__agendamento.agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
             estilo.clear()
-            self.__tela_agendamento.mostra_msg_enfermeiro_nao_castrado()
-            time.sleep(1.5)
-            estilo.clear()
-            enfermeiro_escolhido = controlador_enfermeiro.inserir_enfermeiro()
-        if hora not in self.__agendamento.agenda[dia]:
-            self.__agendamento.agenda[dia].append(hora)
-            self.__agendamento.agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
-        estilo.clear()
 
     def buscar_agendamento(self):
         estilo.clear()
@@ -48,12 +51,16 @@ class ControladorAgendamento:
                 controlador_paciente.inserir_paciente()
             else:
                 self.retornar_sistema()
+                estilo.clear()
         else:
             if paciente.nome not in self.__agendamento.agendamentos:
                 self.__tela_agendamento.mostra_msg_paciente_sem_agendamento(paciente)
                 estilo.clear()
             else:
-                return self.__agendamento.agendamentos[paciente.nome]
+                agendamento = self.__agendamento.agendamentos[paciente.nome]
+                self.__tela_agendamento.mostra_agendamento(agendamento)
+                estilo.clear()
+                return agendamento
 
     def editar_agendamento(self):
         estilo.clear()
@@ -117,7 +124,6 @@ class ControladorAgendamento:
                 self.__tela_agendamento.mostra_msg_paciente_sem_agendamento(paciente)
                 estilo.clear()
             else:
-                print(self.__agendamento.agendamentos)
                 dia, hora = [str(w) for w in self.__agendamento.agendamentos[paciente.nome]["agendamento"]]
                 self.__agendamento.agenda[dia.lower().capitalize()].remove(hora)
                 del self.__agendamento.agendamentos[paciente.nome]
@@ -138,7 +144,7 @@ class ControladorAgendamento:
     def gera_relatorio(self):
         estilo.clear()
         if self.__agendamento.agendamentos == {}:
-            self.__tela_agendamento.mostra_msg_sem_agendamento()
+            self.__tela_agendamento.mostra_msg_sem_relatorio()
         else:
             self.__tela_relatorio.mostra_relatorio(self.__agendamento.agendamentos)
         estilo.clear()

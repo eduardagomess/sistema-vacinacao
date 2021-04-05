@@ -128,12 +128,12 @@ class ControladorEnfermeiro:
 
     def abre_tela(self):
         opcoes = {1: self.inserir_enfermeiro, 2: self.listar_enfermeiros, 3: self.editar_enfermeiro,
-                  4: self.excluir_enfermeiro, 5: self.busca_dado_enfermeiro, 6: self.listar_pacientes, 7:self.listar_pacientes, 8: self.retornar_sistema}
+                  4: self.excluir_enfermeiro, 5: self.busca_dado_enfermeiro, 6: self.listar_pacientes, 7: self.retornar_sistema}
         continua = True
         while continua:
             estilo.clear()
             opcao_selecionada = self.__tela_enfermeiro.mostra_opcoes()
-            if opcao_selecionada == 8:
+            if opcao_selecionada == 7:
                 continua = False
             opcoes[opcao_selecionada]()
 

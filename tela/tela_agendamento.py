@@ -76,6 +76,15 @@ class TelaAgendamento(AbstractTela):
         print(input(("\nAperte enter para continuar: ")))
 
 
+    def mostra_agendamento(self, agendamento):
+        print("\nNome do paciente: ", self.colorir_info(agendamento["paciente"].nome))
+        print("Informações do agendamento:  ", self.colorir_info("A vacina está marcada para " +
+                                                          agendamento["agendamento"][0] + " às " +
+                                                          agendamento["agendamento"][1]))
+        print("Nome do Enfermeiro(a): ", self.colorir_info(agendamento["enfermeiro"].nome))
+        print(input(("\nAperte enter para continuar: ")))
+
+
     def mostra_msg_enfermeiro_nao_castrado(self):
         print(self.colorir_erro("ENFERMEIRO NÃO ENCONTRADO, POR FAVOR, REALIZE O CADASTRO"))
 
@@ -139,6 +148,12 @@ class TelaAgendamento(AbstractTela):
     def mostra_msg_paciente_sem_agendamento(self, paciente):
         print(f'{self.colorir_erro("NÃO FOI ENCONTRADO AGENDAMENTO PARA O(A) PACIENTE")} {self.colorir_info(paciente.nome.upper())}')
         print(input("Aperte enter para continuar: "))
+
+    def mostra_msg_sem_relatorio(self):
+        print(self.colorir_erro("NÃO HÁ RELATÓRIO DISPONÍVE!"))
+        print(input(("Aperte enter para continuar: ")))
+
+
 
     def pega_opcao_paciente_sem_cadastro(self):
         print(self.colorir_erro("PACIENTE NÃO CADASTRADO"))
