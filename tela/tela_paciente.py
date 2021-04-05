@@ -45,7 +45,7 @@ class TelaPaciente(AbstractTela):
         else:
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
 
-            opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf ", 3: "bairro", 4: "rua",
+            opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf", 3: "bairro", 4: "rua",
                               5: "numero", 6: "complemento", 7: "data_nascimento"}
 
             if opcao_escolhida == 3:
@@ -110,7 +110,7 @@ class TelaPaciente(AbstractTela):
     def busca_paciente_cpf(self):
         return self.pegar_cpf("Insira o cpf do paciente: ")
 
-    def mostra_mensagem(self):
+    def pega_opcao_paciente_sem_cadastro(self):
         print(self.erro("PACIENTE NÃO CADASTRADO"))
         print(self.info("Escolha uma das opções abaixo: "))
         print("1 - Cadastrar paciente")

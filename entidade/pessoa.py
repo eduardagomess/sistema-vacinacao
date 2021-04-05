@@ -29,5 +29,9 @@ class Pessoa(ABC):
     def cpf(self) -> int:
         return self.__cpf
 
+    @cpf.setter
+    def cpf(self, cpf):
+        self.__cpf = cpf
+
 
 

@@ -16,7 +16,6 @@ class ControladorPaciente:
         estilo.clear()
         opcao_cadastro = 1
         dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
-        print(dados_paciente)
         paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"],
                             dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],
                             dados_paciente["complemento"], dados_paciente["data_nascimento"])
@@ -34,12 +33,7 @@ class ControladorPaciente:
         for paciente in self.__pacientes:
             if paciente.nome == nome:
                 return paciente
-        opcao_paciente = self.__tela_paciente.mostra_mensagem()
-        if opcao_paciente == 1:
-            paciente_novo = self.inserir_paciente()
-            return paciente_novo
-        else:
-            return self.retornar_sistema()
+        return None
 
     def pega_paciente_por_cpf(self):
         estilo.clear()
@@ -62,7 +56,7 @@ class ControladorPaciente:
         estilo.clear()
         paciente = self.tipo_de_busca_paciente()
         if paciente == None:
-            opcao = self.__tela_paciente.mostra_mensagem()
+            opcao = self.__tela_paciente.pega_opcao_paciente_sem_cadastro()
             if opcao == 1:
                 paciente = self.inserir_paciente()
                 self.__tela_paciente.mostra_paciente(paciente)
@@ -72,16 +66,22 @@ class ControladorPaciente:
     def editar_paciente(self):
         paciente = self.tipo_de_busca_paciente()
         if paciente == None:
-            self.inserir_paciente()
+            opcao = self.__tela_paciente.pega_opcao_paciente_sem_cadastro()
+            if opcao == 1:
+                paciente = self.inserir_paciente()
+                self.__tela_paciente.mostra_paciente(paciente)
+            else:
+                self.retornar_sistema()
         else:
             opcao_cadastro = 2
             dado_novo = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
-
             if dado_novo[0] == "nome":
                 paciente.nome = dado_novo[1]
             elif dado_novo[0] == "telefone":
                 paciente.telefone = dado_novo[1]
             elif dado_novo[0] == "cpf":
+                print(paciente.cpf)
+                print(dado_novo[1])
                 paciente.cpf = dado_novo[1]
             elif dado_novo[0] == "endereco":
                 paciente.determinar_endereco(dado_novo[1][0], dado_novo[1][1], dado_novo[1][2], dado_novo[1][3])
