@@ -33,5 +33,3 @@ class Pessoa(ABC):
     def cpf(self, cpf):
         self.__cpf = cpf
 
-
-

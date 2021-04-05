@@ -91,12 +91,12 @@ class TelaPaciente(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def mostra_paciente(self, paciente):
-        print("\n Nome do paciente: ", self.info(paciente.nome))
+        print("\nNome do paciente: ", self.info(paciente.nome))
         print("Telefone do paciente: ", self.info(paciente.telefone))
         print("CPF do paciente: ", self.info(paciente.cpf))
         print("Endereço do paciente: ", self.info(paciente.endereco))
         print("Data de nascimento do paciente: ", self.info(paciente.data_nascimento))
-        if paciente.dose == None and paciente.tipo_dose == None:
+        if paciente.dose == 0 and paciente.tipo_dose == None:
             print(self.erro("Paciente ainda não vacinado"))
         else:
             print("O paciente está no estãgio: ", self.info(str(paciente.dose)))
@@ -116,3 +116,7 @@ class TelaPaciente(AbstractTela):
         print("1 - Cadastrar paciente")
         print("2 - Retornar a tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
+
+    def mostra_mensagem_paciente_exlcuido(self):
+        print(self.info("PACIENTE EXCLUÍDO COM SUCESSO!"))
+        print(input(("Aperte enter para continuar: ")))

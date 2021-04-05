@@ -37,6 +37,7 @@ class ControladorEnfermeiro:
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.nome == nome:
                 return enfermeiro
+        return None
 
     def pega_cpf_enfermeiro(self):
         estilo.clear()
@@ -44,12 +45,14 @@ class ControladorEnfermeiro:
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.cpf == cpf:
                 return enfermeiro
+        return None
 
     def pega_coren_enfermeiro(self):
         coren = self.__tela_enfermeiro.busca_enfermeiro_coren()
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.coren == coren:
                 return enfermeiro
+        return None
 
     def busca_enfermeiro(self):
         estilo.clear()
@@ -61,23 +64,50 @@ class ControladorEnfermeiro:
     def busca_dado_enfermeiro(self):
         estilo.clear()
         enfermeiro = self.busca_enfermeiro()
-        self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
+        if enfermeiro == None:
+            opcao = self.__tela_enfermeiro.pega_opcao_enfermeiro_sem_cadastro()
+            if opcao == 1:
+                enfermeiro = self.inserir_enfermeiro(enfermeiro)
+                self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
+            else:
+                self.retornar_sistema()
+        else:
+            self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
 
     def editar_enfermeiro(self):
         enfermeiro = self.busca_enfermeiro()
-        dado_novo = self.__tela_enfermeiro.pega_dados_enfermeiro(2)
+        if enfermeiro == None:
+            opcao = self.__tela_enfermeiro.pega_opcao_enfermeiro_sem_cadastro()
+            if opcao == 1:
+                enfermeiro = self.inserir_enfermeiro()
+                self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
+            else:
+                self.retornar_sistema()
 
-        if dado_novo[0] == "nome":
-            enfermeiro.nome = dado_novo[1]
-        elif dado_novo[0] == "telefone":
-            enfermeiro.telefone = dado_novo[1]
-        elif dado_novo[0] == "cpf":
-            enfermeiro.cpf = dado_novo[1]
-        enfermeiro.dose = dado_novo[1]
+        else:
+            dado_novo = self.__tela_enfermeiro.pega_dados_enfermeiro(2)
+
+            if dado_novo[0] == "nome":
+                enfermeiro.nome = dado_novo[1]
+            elif dado_novo[0] == "telefone":
+                enfermeiro.telefone = dado_novo[1]
+            elif dado_novo[0] == "cpf":
+                enfermeiro.cpf = dado_novo[1]
+            else:
+                enfermeiro.dose = dado_novo[1]
 
     def excluir_enfermeiro(self):
         enfermeiro = self.busca_enfermeiro()
-        self.__enfermeiros.remove(enfermeiro)
+        if enfermeiro == None:
+            opcao = self.__tela_enfermeiro.pega_opcao_enfermeiro_sem_cadastro()
+            if opcao == 1:
+                enfermeiro = self.inserir_enfermeiro()
+                self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
+            else:
+                self.retornar_sistema()
+        else:
+            self.__enfermeiros.remove(enfermeiro)
+            self.__tela_enfermeiro.mostra_mensagem_enfermeiro_exlcuido()
 
     def retornar_sistema(self):
         return self.__controlador_sistema

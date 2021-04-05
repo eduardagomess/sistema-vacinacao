@@ -62,6 +62,8 @@ class ControladorPaciente:
                 self.__tela_paciente.mostra_paciente(paciente)
             else:
                 self.retornar_sistema()
+        else:
+            self.__tela_paciente.mostra_paciente(paciente)
 
     def editar_paciente(self):
         paciente = self.tipo_de_busca_paciente()
@@ -80,8 +82,6 @@ class ControladorPaciente:
             elif dado_novo[0] == "telefone":
                 paciente.telefone = dado_novo[1]
             elif dado_novo[0] == "cpf":
-                print(paciente.cpf)
-                print(dado_novo[1])
                 paciente.cpf = dado_novo[1]
             elif dado_novo[0] == "endereco":
                 paciente.determinar_endereco(dado_novo[1][0], dado_novo[1][1], dado_novo[1][2], dado_novo[1][3])
@@ -92,7 +92,16 @@ class ControladorPaciente:
 
     def excluir_paciente(self):
         paciente = self.tipo_de_busca_paciente()
-        self.__pacientes.remove(paciente)
+        if paciente == None:
+            opcao = self.__tela_paciente.pega_opcao_paciente_sem_cadastro()
+            if opcao == 1:
+                paciente = self.inserir_paciente()
+                self.__tela_paciente.mostra_paciente(paciente)
+            else:
+                self.retornar_sistema()
+        else:
+            self.__pacientes.remove(paciente)
+            self.__tela_paciente.mostra_mensagem_paciente_exlcuido()
 
     def retornar_sistema(self):
         return self.__controlador_sistema

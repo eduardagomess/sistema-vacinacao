@@ -29,14 +29,14 @@ class TelaEnfermeiro(AbstractTela):
         dados_cadastro = ["nome", "telefone", "cpf", "coren"]
 
         if opcao == 1:
-            print(" ---- CADASTRAR ENFERMEIRO ----")
+            print(self.info(" ---- CADASTRAR ENFERMEIRO ----"))
             lista_dados_requeridos = list(dados_requeridos.values())
             dados_enfermeiro = []
             for dado in range(len(lista_dados_requeridos)):
                 dados_enfermeiro.append(lista_dados_requeridos[dado](mensagens[dado]))
             return dict(zip(dados_cadastro, dados_enfermeiro))
         else:
-            print("------ Inserir novo dado para alteração do cadastro --------")
+            print(self.info("------ Inserir novo dado para alteração do cadastro --------"))
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
             opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf ", 3: "coren"}
             dado = dados_requeridos[opcao_escolhida](mensagens[opcao_escolhida])
@@ -92,5 +92,17 @@ class TelaEnfermeiro(AbstractTela):
                 print("Nome do paciente: ", self.info(paciente.nome))
                 print("Nome do paciente: ", self.info(paciente.cpf))
         print(input(("\nAperte enter para continuar: ")))
+
+    def pega_opcao_enfermeiro_sem_cadastro(self):
+        print(self.erro("ENFERMEIRO NÃO CADASTRADO"))
+        print(self.info("Escolha uma das opções abaixo: "))
+        print("1 - Cadastrar enfermeiro")
+        print("2 - Retornar a tela principal")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
+
+    def mostra_mensagem_enfermeiro_exlcuido(self):
+        print(self.info("ENFERMEIRO EXCLUÍDO COM SUCESSO!"))
+        print(input(("Aperte enter para continuar: ")))
+
 
 
