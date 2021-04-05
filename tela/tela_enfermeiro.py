@@ -16,8 +16,9 @@ class TelaEnfermeiro(AbstractTela):
         print("4 - Excluir enfermeiro")
         print("5 - Buscar enfermeiro")
         print("6 - Buscar pacientes do enfermeiro")
-        print("7 - Retornar a tela principal do sistema")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6, 7])
+        print("7 - Listar pacientes do enfermeiro")
+        print("8 - Retornar a tela principal do sistema")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6, 7, 8])
 
     def pega_dados_enfermeiro(self, opcao):
 
@@ -86,7 +87,7 @@ class TelaEnfermeiro(AbstractTela):
 
     def mostra_pacientes(self, pacientes):
         if pacientes == None:
-            print(self.colorir_erro("Ainda não há pacientes atendidos pelo enfermeiro"))
+            print(self.colorir_erro("AINDA NÃO HÁ PACIENTES AGENDADOS PARA O(A) ENFEMEIRO(A)"))
         else:
             for paciente in pacientes:
                 print("Nome do paciente: ", self.colorir_info(paciente.nome))
@@ -102,6 +103,10 @@ class TelaEnfermeiro(AbstractTela):
 
     def mostra_mensagem_enfermeiro_exlcuido(self):
         print(self.colorir_info("ENFERMEIRO EXCLUÍDO COM SUCESSO!"))
+        print(input(("Aperte enter para continuar: ")))
+
+    def mostra_mgs_sem_enfermeiros(self):
+        print(self.colorir_info("AINDA NÃO HÁ ENFERMEIROS PARA SEREM LISTADOS"))
         print(input(("Aperte enter para continuar: ")))
 
 

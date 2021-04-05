@@ -50,7 +50,7 @@ class ControladorAgendamento:
                 self.retornar_sistema()
         else:
             if paciente.nome not in self.__agendamento.agendamentos:
-                self.__tela_agendamento.mostra_msg_sem_agendamento(paciente)
+                self.__tela_agendamento.mostra_msg_paciente_sem_agendamento(paciente)
                 estilo.clear()
             else:
                 return self.__agendamento.agendamentos[paciente.nome]
@@ -68,7 +68,7 @@ class ControladorAgendamento:
                 self.retornar_sistema()
         else:
             if paciente.nome not in self.__agendamento.agendamentos:
-                self.__tela_agendamento.mostra_msg_sem_agendamento(paciente)
+                self.__tela_agendamento.mostra_msg_paciente_sem_agendamento(paciente)
                 estilo.clear()
             else:
                 tipo_de_alteracao = self.__tela_agendamento.mostra_opcao_alteracao()
@@ -114,7 +114,7 @@ class ControladorAgendamento:
                 estilo.clear()
         else:
             if paciente.nome not in self.__agendamento.agendamentos:
-                self.__tela_agendamento.mostra_msg_sem_agendamento(paciente)
+                self.__tela_agendamento.mostra_msg_paciente_sem_agendamento(paciente)
                 estilo.clear()
             else:
                 print(self.__agendamento.agendamentos)

@@ -136,6 +136,10 @@ class TelaAgendamento(AbstractTela):
         print(self.colorir_erro("NÃO HÁ AGENDAMENTOS!"))
         print(input(("Aperte enter para continuar: ")))
 
+    def mostra_msg_paciente_sem_agendamento(self, paciente):
+        print(f'{self.colorir_erro("NÃO FOI ENCONTRADO AGENDAMENTO PARA O(A) PACIENTE")} {self.colorir_info(paciente.nome.upper())}')
+        print(input("Aperte enter para continuar: "))
+
     def pega_opcao_paciente_sem_cadastro(self):
         print(self.colorir_erro("PACIENTE NÃO CADASTRADO"))
         print(self.colorir_info("Escolha uma das opções abaixo: "))
@@ -143,6 +147,4 @@ class TelaAgendamento(AbstractTela):
         print("2 - Retornar a tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
-    def mostra_msg_sem_agendamento(self, paciente):
-        print(f'{self.colorir_erro("NÃO FOI ENCONTRADO AGENDAMENTO PARA O(A) PACIENTE")} {self.colorir_info(paciente.nome.upper())}')
-        print(input("Aperte enter para continuar: "))
+
