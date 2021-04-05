@@ -14,8 +14,9 @@ class TelaAgendamento(AbstractTela):
         print("3 - Excluir agendamento")
         print("4 - Listar agendamentos")
         print("5 - Relatório de agendamentos")
-        print("6 - Retornar a tela principal")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
+        print("6 - Buscar agendamento")
+        print("7 - Retornar a tela principal")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6, 7])
 
     def pegar_dados_agendamento(self, agenda):
         print(self.colorir_titulo("---------------- AGENDAMENTO ----------------"))
@@ -141,3 +142,7 @@ class TelaAgendamento(AbstractTela):
         print("1 - Cadastrar paciente")
         print("2 - Retornar a tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
+
+    def mostra_msg_sem_agendamento(self, paciente):
+        print(f'{self.colorir_erro("NÃO FOI ENCONTRADO AGENDAMENTO PARA O(A) PACIENTE")} {self.colorir_info(paciente.nome.upper())}')
+        print(input("Aperte enter para continuar: "))

@@ -1,14 +1,15 @@
 class Agendamento:
 
-    def __init__(self, paciente, enfermeiro):
-        self.__agedamentos = {}
-        self.__agenda = []
-        self.__paciente = paciente
-        self.__enfermeiro = enfermeiro
+    def __init__(self):
+        self.__agenda = {"Segunda": [], "Terca": [], "Quarta": [],
+                         "Quinta": [], "Sexta": []}
+        self.__agendamentos = {}
+        self.__lista_pacientes = []
+        self.__lista_enfermeiro = []
 
     @property
     def agendamentos(self):
-        return self.__agedamentos
+        return self.__agendamentos
 
     @property
     def agenda(self):
