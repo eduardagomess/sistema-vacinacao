@@ -21,7 +21,7 @@ class TelaEnfermeiro(AbstractTela):
 
     def pega_dados_enfermeiro(self, opcao):
 
-        dados_requeridos = {0: self.pegar_nome, 1: self.pegar_telefone, 2: self.pegar_cpf, 3: self.pegar_num}
+        dados_requeridos = {0: self.pegar_nome, 1: self.pegar_telefone, 2: self.pegar_cpf, 3: self.pegar_coren}
 
         mensagens = {0: "Insira o nome do enfermeiro: ", 1: "Insira o telefone do enfermeiro: ",
                      2: "Insira o cpf do enfermeiro: ", 3: "Insira o COREN do enfermeiro: "}

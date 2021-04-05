@@ -3,6 +3,7 @@ from excecao.nome_invalido import NomeInvalido
 from excecao.caracter_numerico import NomeComCaracterNumerico
 from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
 from excecao.telefone_invalido import TelefoneComNumeroInvalido
+from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
 from excecao.dose_invalida import DoseInvalida
 import datetime
@@ -138,6 +139,20 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido (0,1 ou 2)"))
             except DoseInvalida:
                 print(self.colorir_erro("Valor incorreto, insira apenas números (0,1 ou 2)"))
+
+    def pegar_coren(self, mensagem: str = ""):
+        while True:
+            coren= input(mensagem)
+            try:
+                if not coren.isdigit():
+                    raise CaracterAlfabeticoExcecao
+                elif len(coren) != 6:
+                    raise CorenInvalido
+                return int(coren)
+            except CaracterAlfabeticoExcecao:
+                print(self.colorir_erro("Valor incorreto, insira apenas números"))
+            except CorenInvalido:
+                print(self.colorir_erro("Valor incorreto, o COREN deve conter 6 digitos, formatação: 123456"))
 
 
 
