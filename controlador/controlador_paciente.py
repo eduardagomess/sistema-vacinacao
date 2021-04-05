@@ -3,6 +3,7 @@ from entidade.paciente import Paciente
 from utils import estilo
 
 
+
 class ControladorPaciente:
     def __init__(self, controlador_sistema):
         self.__pacientes = []
@@ -13,12 +14,19 @@ class ControladorPaciente:
         estilo.clear()
         opcao_cadastro = 1
         dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
-        paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
-        paciente.determinar_endereco(dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"])
-
-        if paciente not in self.__pacientes:
-            self.__pacientes.append(paciente)
-            return paciente
+        nao_cadastrado = True
+        for paciente in self.__pacientes:
+            if paciente.cpf == dados_paciente["cpf"]:
+                nao_cadastrado = False
+        if nao_cadastrado:
+            novo_paciente = Paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
+            novo_paciente.determinar_endereco(dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],dados_paciente["complemento"])
+            self.__pacientes.append(novo_paciente)
+            return novo_paciente
+        else:
+            estilo.clear()
+            self.__tela_paciente.mostra_msg_paciente_cadastro()
+            estilo.clear()
 
     def listar_pacientes(self):
         self.__tela_paciente.mostra_dados(self.__pacientes)

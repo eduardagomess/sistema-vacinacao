@@ -127,3 +127,7 @@ class TelaPaciente(AbstractTela):
     def mostra_mensagem_paciente_exlcuido(self):
         print(self.colorir_info("PACIENTE EXCLUÍDO COM SUCESSO!"))
         print(input(("Aperte enter para continuar: ")))
+
+    def mostra_msg_paciente_cadastro(self):
+        print(self.colorir_info("PACIENTE JÁ ESTÁ CADASTRADO!"))
+        print(input(("Aperte enter para continuar: ")))
