@@ -67,7 +67,7 @@ class ControladorEnfermeiro:
         if enfermeiro == None:
             opcao = self.__tela_enfermeiro.pega_opcao_enfermeiro_sem_cadastro()
             if opcao == 1:
-                enfermeiro = self.inserir_enfermeiro(enfermeiro)
+                enfermeiro = self.inserir_enfermeiro()
                 self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
             else:
                 self.retornar_sistema()
@@ -83,10 +83,9 @@ class ControladorEnfermeiro:
                 self.__tela_enfermeiro.mostra_enfermeiro(enfermeiro)
             else:
                 self.retornar_sistema()
-
         else:
+            estilo.clear()
             dado_novo = self.__tela_enfermeiro.pega_dados_enfermeiro(2)
-
             if dado_novo[0] == "nome":
                 enfermeiro.nome = dado_novo[1]
             elif dado_novo[0] == "telefone":
@@ -94,7 +93,7 @@ class ControladorEnfermeiro:
             elif dado_novo[0] == "cpf":
                 enfermeiro.cpf = dado_novo[1]
             else:
-                enfermeiro.dose = dado_novo[1]
+                enfermeiro.coren = dado_novo[1]
 
     def excluir_enfermeiro(self):
         enfermeiro = self.busca_enfermeiro()

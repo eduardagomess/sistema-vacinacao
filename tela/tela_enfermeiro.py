@@ -36,9 +36,9 @@ class TelaEnfermeiro(AbstractTela):
                 dados_enfermeiro.append(lista_dados_requeridos[dado](mensagens[dado]))
             return dict(zip(dados_cadastro, dados_enfermeiro))
         else:
-            print(self.info("------ Inserir novo dado para alteração do cadastro --------"))
+            print(self.info("------ INSERIR NOVO DADO PARA ALTERAR CADASTRO --------"))
             opcao_escolhida = self.mostra_opcao_alteracao_cadastro()
-            opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf ", 3: "coren"}
+            opcoes_mudanca = {0: "nome", 1: "telefone", 2: "cpf", 3: "coren"}
             dado = dados_requeridos[opcao_escolhida](mensagens[opcao_escolhida])
             return [opcoes_mudanca[opcao_escolhida], dado]
 
@@ -48,17 +48,17 @@ class TelaEnfermeiro(AbstractTela):
             print("Telefone do enfermeiro: ", self.info(enfermeiro.telefone))
             print("CPF do enfermeiro: ", self.info(enfermeiro.cpf))
             print("COREN do enfermeiro: ", self.info(str(enfermeiro.coren)) + "\n")
-        print(input(("\nAperte enter para continuar: ")))
+        print(input(("Aperte enter para continuar: ")))
 
     def mostra_enfermeiro(self, enfermeiro):
         print("\nNome do enfermeiro: ", self.info(enfermeiro.nome))
         print("Telefone do enfermeiro: ", self.info(enfermeiro.telefone))
         print("CPF do enfermeiro: ", self.info(enfermeiro.cpf))
         print("COREN do enfermeiro: ", self.info(str(enfermeiro.coren)))
-        print(input(("\nAperte enter para continuar: ")))
+        print(input(("Aperte enter para continuar: ")))
 
     def mostra_opcao_busca(self):
-        print("------ OPÇÃO DE BUSCA DO ENFERMEIRO ----------")
+        print(self.info("------ OPÇÃO DE BUSCA DO ENFERMEIRO ----------"))
         print("1 - buscar pelo nome")
         print("2 - buscar pelo cpf")
         print("3 - buscar pelo COREN")
@@ -91,7 +91,7 @@ class TelaEnfermeiro(AbstractTela):
             for paciente in pacientes:
                 print("Nome do paciente: ", self.info(paciente.nome))
                 print("Nome do paciente: ", self.info(paciente.cpf))
-        print(input(("\nAperte enter para continuar: ")))
+        print(input(("Aperte enter para continuar: ")))
 
     def pega_opcao_enfermeiro_sem_cadastro(self):
         print(self.erro("ENFERMEIRO NÃO CADASTRADO"))
