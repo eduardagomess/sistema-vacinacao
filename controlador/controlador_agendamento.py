@@ -32,8 +32,10 @@ class ControladorAgendamento:
         if hora not in self.__agenda[dia]:
             self.__agenda[dia].append(hora)
             self.__agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
+        estilo.clear()
 
     def buscar_agendamento(self):
+        estilo.clear()
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         paciente = controlador_paciente.tipo_de_busca_paciente()
         return self.__agendamentos[paciente.nome]
@@ -81,9 +83,16 @@ class ControladorAgendamento:
         dia, hora = [str(w) for w in self.__agendamentos[paciente.nome]["agendamento"]]
         self.__agenda[dia.lower().capitalize()].remove(hora)
         del self.__agendamentos[paciente.nome]
+        self.__tela_agendamento.mostra_mensagem_agendamento_exlcuido()
+        estilo.clear()
 
     def listar_agendamentos(self):
-        self.__tela_agendamento.mostra_dados(self.__agendamentos)
+        estilo.clear()
+        if self.__agendamentos == {}:
+            self.__tela_agendamento.mostra_msg_sem_agendamento()
+        else:
+            self.__tela_agendamento.mostra_dados(self.__agendamentos)
+        estilo.clear()
 
     def retornar_sistema(self):
         return self.__controlador_sistema

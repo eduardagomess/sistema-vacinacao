@@ -126,3 +126,11 @@ class TelaAgendamento(AbstractTela):
 
         elif opcao == 4:
             return [opcoes_mudanca[opcao]]
+
+    def mostra_mensagem_agendamento_exlcuido(self):
+        print(self.info("ANGENDAMENTO EXCLUÍDO COM SUCESSO!"))
+        print(input(("Aperte enter para continuar: ")))
+
+    def mostra_msg_sem_agendamento(self):
+        print(self.erro("NÃO HÁ AGENDAMENTOS!"))
+        print(input(("Aperte enter para continuar: ")))
