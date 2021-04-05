@@ -134,3 +134,10 @@ class TelaAgendamento(AbstractTela):
     def mostra_msg_sem_agendamento(self):
         print(self.colorir_erro("NÃO HÁ AGENDAMENTOS!"))
         print(input(("Aperte enter para continuar: ")))
+
+    def pega_opcao_paciente_sem_cadastro(self):
+        print(self.colorir_erro("PACIENTE NÃO CADASTRADO"))
+        print(self.colorir_info("Escolha uma das opções abaixo: "))
+        print("1 - Cadastrar paciente")
+        print("2 - Retornar a tela principal")
+        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])

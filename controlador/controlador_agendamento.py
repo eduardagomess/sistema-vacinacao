@@ -20,6 +20,12 @@ class ControladorAgendamento:
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
         paciente = controlador_paciente.tipo_de_busca_paciente()
+        if paciente == None:
+            opcao = self.__tela_agendamento.pega_opcao_paciente_sem_cadastro()
+            if opcao == 1:
+                paciente = controlador_paciente.inserir_paciente()
+            else:
+                self.retornar_sistema()
         dia, hora = self.__tela_agendamento.pegar_dados_agendamento(self.__agenda)
         dia = dia.lower().capitalize()
         enfermeiro_escolhido = controlador_enfermeiro.busca_enfermeiro()
