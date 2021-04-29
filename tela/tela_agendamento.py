@@ -153,8 +153,6 @@ class TelaAgendamento(AbstractTela):
         print(self.colorir_erro("NÃO HÁ RELATÓRIO DISPONÍVE!"))
         print(input(("Aperte enter para continuar: ")))
 
-
-
     def pega_opcao_paciente_sem_cadastro(self):
         print(self.colorir_erro("PACIENTE NÃO CADASTRADO"))
         print(self.colorir_info("Escolha uma das opções abaixo: "))
