@@ -1,4 +1,3 @@
-from entidade import vacina
 from tela.tela_tipo_vacina import TelaTipoVacina
 from entidade.vacina import TipoVacina
 from utils import estilo
@@ -39,10 +38,12 @@ class ControladorTipoVacina:
             opcao = 2
             dado_a_editar = self.__tela_tipo_vacina.pega_dados_vacina(opcao)
             print(dado_a_editar)
+            print(dado_a_editar[0])
+            print(dado_a_editar[1])
             if dado_a_editar[0] == "nome":
-                tipo_vacina.nome = dado_a_editar[1]
+                tipo_vacina.nome = str(dado_a_editar[1])
             elif dado_a_editar[0] == "num_doses":
-                tipo_vacina.num_doses = dado_a_editar[1]
+                tipo_vacina.num_doses = str(dado_a_editar[1])
 
     def listar_tipo_vacina(self):
         self.__tela_tipo_vacina.mostra_dados(self.__tipos_de_vacinas)
@@ -52,14 +53,12 @@ class ControladorTipoVacina:
         for tipo_de_vacina in self.__tipos_de_vacinas:
             if tipo_de_vacina.nome == nome:
                 return tipo_de_vacina
-        return None
 
     def buscar_vacina_por_qtd_dose(self):
         dose = self.__tela_tipo_vacina.busca_vacina_qtd_dose()
         for tipo_de_vacina in self.__tipos_de_vacinas:
-            if tipo_de_vacina.dose == dose:
+            if tipo_de_vacina.num_doses == dose:
                 return tipo_de_vacina
-        return None
 
     def tipo_busca_tipo_vacina(self):
         tipo_busca = self.__tela_tipo_vacina.mostra_opcao_busca()

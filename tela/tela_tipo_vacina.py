@@ -28,6 +28,7 @@ class TelaTipoVacina(AbstractTela):
 
         if opcao == 1:
             print(self.colorir_titulo(" ----- CADASTRAR VACINA ----- "))
+
             lista_dados = list(dados.values())
             dados_vacina = []
 
@@ -37,10 +38,11 @@ class TelaTipoVacina(AbstractTela):
 
         elif opcao == 2:
             opcao_escolhida  = self.mostra_opcao_editar()
+
             opcoes_mudanca = {0: "nome", 1: "num_doses"}
 
             dado = dados[opcao_escolhida](mensagem[opcao_escolhida])
-            return [opcoes_mudanca[opcao_escolhida], dado]
+            return [opcoes_mudanca[opcao_escolhida], str(dado)]
 
     def mostra_vacina_cadastrada(self):
         print(self.colorir_info("ESTA VACINA JÁ ESTÁ CADASTRADA!"))
@@ -58,8 +60,8 @@ class TelaTipoVacina(AbstractTela):
             print(input("Aperte enter para continuar: "))
         else:
             for vacina in tipos_de_vacinas:
-                print("\nNome da vacina: {}".format(self.pegar_nome(vacina.nome)))
-                print("Número de doses da vacina: {}".format(self.pegar_num(vacina.num_doses)))
+                print("\nNome da vacina: {}".format(vacina.nome))
+                print("Número de doses da vacina: {}".format(vacina.num_doses))
 
     def mostra_opcao_busca(self):
         print(self.colorir_titulo(" ----- OPÇÃO DE BUSCA DE VACINA ----- "))
@@ -88,6 +90,6 @@ class TelaTipoVacina(AbstractTela):
     def mostra_opcao_editar(self):
         print(self.colorir_info(" ----- ALTERAÇÃO DE VACINA ----- "))
         print("Escolha a opção que deseja alterar")
-        print("1 - Nome da vacina")
-        print("2 - Doses a serem tomadas da vacina")
-        return self.pegar_opcao("Insira o número da opção desejada: ", [1, 2])
+        print("0 - Nome da vacina")
+        print("1 - Doses a serem tomadas da vacina")
+        return self.pegar_opcao("Insira o número da opção desejada: ", [0, 1])
