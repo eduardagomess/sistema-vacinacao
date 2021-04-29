@@ -1,7 +1,5 @@
 from tela.tela_tipo_vacina import TelaTipoVacina
 from entidade.vacina import TipoVacina
-from utils import estilo
-
 
 class ControladorTipoVacina:
 
@@ -20,14 +18,17 @@ class ControladorTipoVacina:
         if nao_cadastrado:
             novo_tipo_vacina = TipoVacina(dados_vacina["nome"], dados_vacina["num_doses"])
             self.__tipos_de_vacinas.append(novo_tipo_vacina)
+            self.__tela_tipo_vacina.mostra_resposta_cadastrada()
+            self.__tela_tipo_vacina.mostra_tipo_vacina(novo_tipo_vacina)
+            return novo_tipo_vacina
         else:
             print("\n")
             self.__tela_tipo_vacina.mostra_vacina_cadastrada()
-            estilo.clear()
+
 
     def editar_tipo_vacina(self):
         tipo_vacina = self.tipo_busca_tipo_vacina()
-        if tipo_vacina == None:
+        if tipo_vacina is None:
             opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
             if opcao == 1:
                 tipo_vacina = self.inserir_tipo_vacina()
@@ -37,15 +38,13 @@ class ControladorTipoVacina:
         else:
             opcao = 2
             dado_a_editar = self.__tela_tipo_vacina.pega_dados_vacina(opcao)
-            print(dado_a_editar)
-            print(dado_a_editar[0])
-            print(dado_a_editar[1])
             if dado_a_editar[0] == "nome":
                 tipo_vacina.nome = str(dado_a_editar[1])
             elif dado_a_editar[0] == "num_doses":
                 tipo_vacina.num_doses = str(dado_a_editar[1])
 
     def listar_tipo_vacina(self):
+        self.__tela_tipo_vacina.titulo_busca()
         self.__tela_tipo_vacina.mostra_dados(self.__tipos_de_vacinas)
 
     def buscar_vacina_por_nome(self):
@@ -53,23 +52,10 @@ class ControladorTipoVacina:
         for tipo_de_vacina in self.__tipos_de_vacinas:
             if tipo_de_vacina.nome == nome:
                 return tipo_de_vacina
-
-    def buscar_vacina_por_qtd_dose(self):
-        dose = self.__tela_tipo_vacina.busca_vacina_qtd_dose()
-        for tipo_de_vacina in self.__tipos_de_vacinas:
-            if tipo_de_vacina.num_doses == dose:
-                return tipo_de_vacina
-
-    def tipo_busca_tipo_vacina(self):
-        tipo_busca = self.__tela_tipo_vacina.mostra_opcao_busca()
-        if tipo_busca == 1:
-            tipo_de_vacina_desejada = self.buscar_vacina_por_nome()
-        elif tipo_busca == 2:
-            tipo_de_vacina_desejada = self.buscar_vacina_por_qtd_dose()
-        return tipo_de_vacina_desejada
+        return None
 
     def buscar_tipo_vacina(self):
-        tipo_vacina = self.tipo_busca_tipo_vacina()
+        tipo_vacina = self.buscar_vacina_por_nome()
         if tipo_vacina == None:
             opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
             if opcao == 1:

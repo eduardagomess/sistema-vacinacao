@@ -1,4 +1,6 @@
+from entidade import paciente, enfermeiro, vacinacao
 from entidade.vacinacao import Vacinacao
+
 
 class TipoVacina():
     def __init__(self, nome: str, num_doses: str):
@@ -22,6 +24,5 @@ class TipoVacina():
     def num_doses(self, num_doses):
         self.__num_doses = num_doses
 
-#ARRUMAR
-    def determinar_vacinacao(self):
-        self.__vacinacao = Vacinacao()
+    def determinar_vacinacao(self, paciente, enfermeiro, dose, tipo_dose):
+        self.__vacinacao = Vacinacao(paciente, enfermeiro, dose, tipo_dose)

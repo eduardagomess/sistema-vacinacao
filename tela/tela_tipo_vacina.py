@@ -1,3 +1,4 @@
+from entidade import vacina
 from tela.tela_abstrata import AbstractTela
 from utils import estilo
 
@@ -22,8 +23,8 @@ class TelaTipoVacina(AbstractTela):
 
     def pega_dados_vacina(self, opcao):
 
-        dados = {0: self.pegar_nome, 1: self.pegar_num}
-        mensagem = {0: "Insira o nome da vacina:", 1: "Insira a quantidade de doses com que a vacina trabalha: "}
+        dados = {0: self.pegar_nome_vacina, 1: self.pegar_dose_vacina}
+        mensagem = {0: "Insira o nome da vacina:", 1: "Insira a quantidade de aplicações que a vacina requer: "}
         dados_cadastro = ["nome", "num_doses"]
 
         if opcao == 1:
@@ -49,10 +50,8 @@ class TelaTipoVacina(AbstractTela):
         print(input("Aperte enter para continuar: "))
 
     def busca_vacina_nome(self):
-        return self.pegar_nome("Insira o nome da vacina: ")
-
-    def busca_vacina_qtd_dose(self):
-        return self.pegar_num("Insira o número de doses desejadas: ")
+        print(self.colorir_info("----- BUSCANDO VACINA ATRAVÉS DO NOME... -----"))
+        return self.pegar_nome_vacina("Insira o nome da vacina que você procura: ")
 
     def mostra_dados(self, tipos_de_vacinas):
         if tipos_de_vacinas == []:
@@ -60,27 +59,30 @@ class TelaTipoVacina(AbstractTela):
             print(input("Aperte enter para continuar: "))
         else:
             for vacina in tipos_de_vacinas:
-                print("\nNome da vacina: {}".format(vacina.nome))
-                print("Número de doses da vacina: {}".format(vacina.num_doses))
+                print("Nome da vacina: {}".format(self.colorir_info(vacina.nome)))
+                print("Número de doses da vacina: {}".format(self.colorir_info(vacina.num_doses)))
 
     def mostra_opcao_busca(self):
         print(self.colorir_titulo(" ----- OPÇÃO DE BUSCA DE VACINA ----- "))
         print("1 - buscar por nome")
-        print("2 - buscar por número de doses")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def pega_opcao_tipo_nao_cadastrado(self):
-        print(self.colorir_erro("VACINA NÃO CADASTRADA"))
+        print(self.colorir_erro("VACINA NÃO CADASTRADA!"))
         print(self.colorir_info("Escolha uma das opções abaixo: "))
         print("1 - Cadastrar vacina")
         print("2 - Retornar à tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def mostra_tipo_vacina(self, tipo_vacina):
-        pass
+        print("Nome da vacina: {}".format(self.colorir_info(tipo_vacina.nome)))
+        print("Número de aplicações que a vacina requer: {}".format(self.colorir_info(tipo_vacina.num_doses)))
+
+    def titulo_busca(self):
+        print(self.colorir_info(" ----- VACINAS ENCONTRADAS -----  \n"))
 
     def mostra_mensagem_exclusao(self):
-        print(self.colorir_info(("VACINA EXCLUÍDA COM SUCESSO!")))
+        print(self.colorir_info("VACINA EXCLUÍDA COM SUCESSO!"))
         print(input("Aperte enter para continuar: "))
 
     def mostra_vacina_inexistente(self):
@@ -89,7 +91,11 @@ class TelaTipoVacina(AbstractTela):
 
     def mostra_opcao_editar(self):
         print(self.colorir_info(" ----- ALTERAÇÃO DE VACINA ----- "))
-        print("Escolha a opção que deseja alterar")
+        print("Escolha a informação que deseja alterar")
         print("0 - Nome da vacina")
         print("1 - Doses a serem tomadas da vacina")
         return self.pegar_opcao("Insira o número da opção desejada: ", [0, 1])
+        self.mostra_resposta_cadastrada()
+
+    def mostra_resposta_cadastrada(self):
+        print(self.colorir_info(" Resposta cadastrada com sucesso! "))

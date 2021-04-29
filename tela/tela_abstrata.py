@@ -68,6 +68,16 @@ class AbstractTela(ABC):
             except NomeInvalido:
                 print(self.colorir_erro("Preencha o nome com no mínimo 5 caracteres"))
 
+    def pegar_nome_vacina(self, mensagem: str = ""):
+        while True:
+            nome_vacina = input(mensagem)
+            try:
+                if len(nome_vacina.replace(" ", "")) < 5:
+                    raise NomeInvalido
+                return nome_vacina.title()
+            except NomeInvalido:
+                print(self.colorir_erro("Preencha o nome com no mínimo 5 caracteres"))
+
     def pegar_telefone(self,  mensagem: str = ""):
         while True:
             telefone = input(mensagem)
@@ -140,6 +150,20 @@ class AbstractTela(ABC):
             except DoseInvalida:
                 print(self.colorir_erro("Valor incorreto, insira apenas números (0,1 ou 2)"))
 
+    def pegar_dose_vacina(self, mensagem: str = ""):
+        while True:
+            valor_lido = input(mensagem)
+            try:
+                if not valor_lido.isdigit():
+                    raise CaracterAlfabeticoExcecao
+                elif int(valor_lido) not in [1,2]:
+                    raise DoseInvalida
+                return valor_lido
+            except CaracterAlfabeticoExcecao:
+                print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido (1 ou 2)"))
+            except DoseInvalida:
+                print(self.colorir_erro("Valor incorreto, insira apenas números (1 ou 2)"))
+
     def pegar_coren(self, mensagem: str = ""):
         while True:
             coren= input(mensagem)
@@ -153,13 +177,3 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, insira apenas números"))
             except CorenInvalido:
                 print(self.colorir_erro("Valor incorreto, o COREN deve conter 6 digitos, formatação: 123456"))
-
-
-
-
-
-
-
-
-
-
