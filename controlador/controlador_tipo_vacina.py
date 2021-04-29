@@ -1,6 +1,6 @@
-from entidade import tipo_vacina
+from entidade import vacina
 from tela.tela_tipo_vacina import TelaTipoVacina
-from entidade.tipo_vacina import TipoVacina
+from entidade.vacina import TipoVacina
 from utils import estilo
 
 
@@ -12,7 +12,6 @@ class ControladorTipoVacina:
         self.__tela_tipo_vacina = TelaTipoVacina(self)
 
     def inserir_tipo_vacina(self):
-        estilo.clear()
         opcao = 1
         dados_vacina = self.__tela_tipo_vacina.pega_dados_vacina(opcao)
         nao_cadastrado = True
@@ -28,7 +27,6 @@ class ControladorTipoVacina:
             estilo.clear()
 
     def editar_tipo_vacina(self):
-        estilo.clear()
         tipo_vacina = self.tipo_busca_tipo_vacina()
         if tipo_vacina == None:
             opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
@@ -47,7 +45,6 @@ class ControladorTipoVacina:
                 tipo_vacina.num_doses = dado_a_editar[1]
 
     def listar_tipo_vacina(self):
-        estilo.clear()
         self.__tela_tipo_vacina.mostra_dados(self.__tipos_de_vacinas)
 
     def buscar_vacina_por_nome(self):
@@ -65,7 +62,6 @@ class ControladorTipoVacina:
         return None
 
     def tipo_busca_tipo_vacina(self):
-        estilo.clear()
         tipo_busca = self.__tela_tipo_vacina.mostra_opcao_busca()
         if tipo_busca == 1:
             tipo_de_vacina_desejada = self.buscar_vacina_por_nome()
@@ -73,8 +69,7 @@ class ControladorTipoVacina:
             tipo_de_vacina_desejada = self.buscar_vacina_por_qtd_dose()
         return tipo_de_vacina_desejada
 
-    def busca_tipo_vacina(self):
-        estilo.clear()
+    def buscar_tipo_vacina(self):
         tipo_vacina = self.tipo_busca_tipo_vacina()
         if tipo_vacina == None:
             opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
@@ -104,7 +99,6 @@ class ControladorTipoVacina:
         return self.__controlador_sistema
 
     def abre_tela(self):
-        estilo.clear()
         opcoes = {1: self.inserir_tipo_vacina, 2: self.editar_tipo_vacina, 3: self.listar_tipo_vacina,
                   4: self.buscar_tipo_vacina, 5: self.excluir_tipo_vacina, 6: self.retornar_sistema}
         continua = True

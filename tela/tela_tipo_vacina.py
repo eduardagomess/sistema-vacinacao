@@ -1,5 +1,5 @@
 from tela.tela_abstrata import AbstractTela
-
+from utils import estilo
 
 class TelaTipoVacina(AbstractTela):
 
