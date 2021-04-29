@@ -2,8 +2,7 @@ from entidade.enfermeiro import Enfermeiro
 from entidade.paciente import Paciente
 
 class Vacinacao:
-    def __init__(self, id, paciente: Paciente, enfermeiro: Enfermeiro, dose, tipo_dose):
-        self.__id = id
+    def __init__(self, paciente: Paciente, enfermeiro: Enfermeiro, dose, tipo_dose):
         self.__paciente = paciente
         self.__enfermeiro = enfermeiro
         self.__dose = dose
@@ -24,7 +23,3 @@ class Vacinacao:
     @property
     def tipo_dose(self):
         return self.__tipo_dose
-
-    @property
-    def id(self):
-        return self.__id
