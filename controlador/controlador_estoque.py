@@ -87,16 +87,17 @@ class ControladorEstoque():
             else:
                 self.retornar_sistema()
         else:
-            self.__tela_tipo_vacina.mostra_tipo_vacina(tipo_vacina)
+            self.__tela_estoque.mostra_tipo_vacina(tipo_vacina)
 
     def excluir_estoque(self):
-        tipo_vacina = self.buscar_tipo_vacina()
-        if tipo_vacina == None:
-            opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
+        tipo_vacina = self.buscar_vacina_por_nome()
+        if tipo_vacina is None:
+            opcao = self.__tela_estoque.pega_opcao_tipo_nao_cadastrado()
             if opcao == 1:
-                self.__tela_tipo_vacina.mostra_vacina_inexistente()
+                self.__tela_estoque.mostra_vacina_inexistente()
                 self.retornar_sistema()
         else:
-            controlador_vacina = self.__controlador_sistema.controlador_tipo_vacina
-            controlador_vacina.tipos_de_vacinas.remove(tipo_vacina['qtd'])
-            self.__tela_tipo_vacina.mostra_mensagem_exclusao()
+            for vacina in self.__estoque:
+                if vacina.nome == tipo_vacina.nome:
+                    self.__estoque.remove(vacina)
+                    self.__tela_estoque.mostra_mensagem_exclusao()
