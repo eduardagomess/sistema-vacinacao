@@ -1,48 +1,18 @@
 from excecao import erro_de_tipo
+from entidade.vacina import TipoVacina
 
 
-class Estoque:
-    def __init__(self, tipo: str, quantidade: int):
-        if isinstance(tipo, str):
-            self.__tipo = tipo
-        else:
-            raise erro_de_tipo
-        if isinstance(quantidade, int):
-            self.__quantidade = quantidade
-        else:
-            raise erro_de_tipo
-        self.__vacinas_aplicadas = []
-        self.__vacinas_total = []
+class Estoque(TipoVacina):
+    def __init__(self, nome: str, num_doses, qtd: int):
+        super().__init__(nome, num_doses, qtd)
+        self.__nome = nome
+        self.__qtd = qtd
+        self.__num_doses = num_doses
 
     @property
-    def tipo(self):
-        return self.__tipo
+    def qtd(self):
+        return self.__qtd
 
-    @property
-    def quantidade(self):
-        return self.__quantidade
-
-    @property
-    def vacinas_aplicadas(self):
-        return self.__vacinas_aplicadas
-
-    @tipo.setter
-    def tipo(self, tipo):
-        if isinstance(tipo, str):
-            self.__tipo = tipo
-        else:
-            raise erro_de_tipo
-
-    @quantidade.setter
-    def quantidade(self, quantidade):
-        if isinstance(quantidade, int):
-            self.__quantidade = quantidade
-        else:
-            raise erro_de_tipo
-
-    @vacinas_aplicadas.setter
-    def vacinas_aplicadas(self, vacinas_aplicadas):
-        if isinstance(vacinas_aplicadas, int):
-            self.__vacinas_aplicadas = vacinas_aplicadas
-        else:
-            raise erro_de_tipo
+    @qtd.setter
+    def qtd(self, qtd):
+        self.__qtd = qtd

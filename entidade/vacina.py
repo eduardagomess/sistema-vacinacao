@@ -3,7 +3,7 @@ from entidade.vacinacao import Vacinacao
 
 
 class TipoVacina():
-    def __init__(self, nome: str, num_doses: str, qtd: str):
+    def __init__(self, nome: str, num_doses: int, qtd: int):
         self.__nome = nome
         self.__num_doses = num_doses
         self.__qtd = qtd
@@ -15,6 +15,7 @@ class TipoVacina():
 
     @property
     def num_doses(self):
+        self.__num_doses = int(self.__num_doses)
         return self.__num_doses
 
     @property

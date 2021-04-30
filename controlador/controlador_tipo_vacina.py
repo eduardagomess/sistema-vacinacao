@@ -4,7 +4,7 @@ from entidade.vacina import TipoVacina
 class ControladorTipoVacina:
 
     def __init__(self, controlador_sistema):
-        self.__tipos_de_vacinas = []
+        self.tipos_de_vacinas = []
         self.__controlador_sistema = controlador_sistema
         self.__tela_tipo_vacina = TelaTipoVacina(self)
 
@@ -12,12 +12,12 @@ class ControladorTipoVacina:
         opcao = 1
         dados_vacina = self.__tela_tipo_vacina.pega_dados_vacina(opcao)
         nao_cadastrado = True
-        for tipo_de_vacina in self.__tipos_de_vacinas:
+        for tipo_de_vacina in self.tipos_de_vacinas:
             if tipo_de_vacina.nome == dados_vacina["nome"]:
                 nao_cadastrado = False
         if nao_cadastrado:
             novo_tipo_vacina = TipoVacina(dados_vacina["nome"], dados_vacina["num_doses"], dados_vacina['qtd'])
-            self.__tipos_de_vacinas.append(novo_tipo_vacina)
+            self.tipos_de_vacinas.append(novo_tipo_vacina)
             self.__tela_tipo_vacina.mostra_resposta_cadastrada()
             return novo_tipo_vacina
         else:
@@ -45,11 +45,11 @@ class ControladorTipoVacina:
 
     def listar_tipo_vacina(self):
         self.__tela_tipo_vacina.titulo_busca()
-        self.__tela_tipo_vacina.mostra_dados(self.__tipos_de_vacinas)
+        self.__tela_tipo_vacina.mostra_dados(self.tipos_de_vacinas)
 
     def buscar_vacina_por_nome(self):
         nome = self.__tela_tipo_vacina.busca_vacina_nome()
-        for tipo_de_vacina in self.__tipos_de_vacinas:
+        for tipo_de_vacina in self.tipos_de_vacinas:
             if tipo_de_vacina.nome == nome:
                 return tipo_de_vacina
 
@@ -94,7 +94,7 @@ class ControladorTipoVacina:
             else:
                 self.retornar_sistema()
         else:
-            self.__tipos_de_vacinas.remove(tipo_vacina)
+            self.tipos_de_vacinas.remove(tipo_vacina)
             self.__tela_tipo_vacina.mostra_mensagem_exclusao()
 
 
@@ -110,4 +110,3 @@ class ControladorTipoVacina:
             if opcao_selecionada == 7:
                 continua = False
             opcoes[opcao_selecionada]()
-

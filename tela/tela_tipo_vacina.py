@@ -1,4 +1,3 @@
-from entidade import vacina
 from tela.tela_abstrata import AbstractTela
 from utils import estilo
 
@@ -92,6 +91,7 @@ class TelaTipoVacina(AbstractTela):
         print("Nome da vacina: {}".format(self.colorir_info(tipo_vacina.nome)))
         print("Número de aplicações que a vacina requer: {}".format(self.colorir_info(tipo_vacina.num_doses)))
         print("Número de doses em estoque: {}".format(self.colorir_info(tipo_vacina.qtd)))
+        print(self.colorir_info("-----------"))
 
     def titulo_busca(self):
         print(self.colorir_info(" ----- VACINAS ENCONTRADAS -----  \n"))

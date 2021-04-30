@@ -64,6 +64,10 @@ class ControladorSistema:
         return self.__controlador_enfermeiro
 
     @property
+    def controlador_tipo_vacina(self):
+        return self.__controlador_tipo_vacina
+
+    @property
     def tela_sistema(self):
         return self.__tela_sistema
 

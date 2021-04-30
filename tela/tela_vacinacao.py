@@ -10,11 +10,11 @@ class TelaVacinacao(AbstractTela):
     def mostra_opcoes(self):
         print(self.colorir_titulo("------ ÁREA DE VACINAS --------"))
         print("Escolha uma das opções abaixo: ")
-        print("1 - Incluir vacina")
-        print("2 - Listar vacinas")
-        print("3 - Editar vacina")
-        print("4 - Excluir vacina")
-        print("5 - Mostrar situação de vacina do pacientee")
+        print("1 - Incluir vacinação")
+        print("2 - Listar vacinações")
+        print("3 - Editar vacinação")
+        print("4 - Excluir vacinação")
+        print("5 - Mostrar situação de vacina do paciente")
         print("6 - Retornar a tela principal do sistema")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
 

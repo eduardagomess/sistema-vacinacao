@@ -110,7 +110,7 @@ class TelaAgendamento(AbstractTela):
                 return [opcoes_mudanca[opcao], dia_escolhido]
             else:
                 print(self.colorir_erro("HORÁRIO INDISPONIVEL"))
-                print(self.colorir_info_correta("\nESCOLHA OUTRO HORÁRIO ENTRA AS OPÇÕES ABAIXO"))
+                print(self.colorir_info_correta("\nESCOLHA OUTRO HORÁRIO ENTRE AS OPÇÕES ABAIXO"))
                 horarios_preenchidos = agenda[dia_escolhido]
                 horarios_disponiveis = self.mostra_horas(horarios_preenchidos)
                 hora = int(self.pegar_num("Insira o numero referente a hora escolhida: "))
@@ -138,7 +138,7 @@ class TelaAgendamento(AbstractTela):
             return [opcoes_mudanca[opcao]]
 
     def mostra_mensagem_agendamento_exlcuido(self):
-        print(self.colorir_info("ANGENDAMENTO EXCLUÍDO COM SUCESSO!"))
+        print(self.colorir_info("AGENDAMENTO EXCLUÍDO COM SUCESSO!"))
         print(input(("Aperte enter para continuar: ")))
 
     def mostra_msg_sem_agendamento(self):
@@ -150,7 +150,7 @@ class TelaAgendamento(AbstractTela):
         print(input("Aperte enter para continuar: "))
 
     def mostra_msg_sem_relatorio(self):
-        print(self.colorir_erro("NÃO HÁ RELATÓRIO DISPONÍVE!"))
+        print(self.colorir_erro("NÃO HÁ RELATÓRIO DISPONÍVEL!"))
         print(input(("Aperte enter para continuar: ")))
 
     def pega_opcao_paciente_sem_cadastro(self):
