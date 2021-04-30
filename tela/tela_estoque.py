@@ -21,9 +21,11 @@ class TelaEstoque(AbstractTela):
         return opcao
 
     def pega_dados_estoque(self, opcao):
-        dados = {0: self.pegar_nome_vacina, 2: self.pegar_num, 3: self.pegar_data_nascimento}
+        dados = {0: self.pegar_nome_vacina, 1: self.pegar_num, 2: self.pegar_data_nascimento}
         mensagem = {0: "Insira o nome da vacina:", 1: "Insira a quantidade de doses recebidas: ", 2: "Insira a data de recebimento: "}
+        mensagem_edicao = {0: "Insira a quantidade de doses a somar: ", 1: "Insira a quantidade de doses a retirar: "}
         dados_cadastro = ["nome", "qtd", "data_recebimento"]
+        dados_alteracao = {0: self.pegar_num, 1: self.pegar_num}
 
 
         if opcao == 1:
@@ -35,9 +37,15 @@ class TelaEstoque(AbstractTela):
             for dado in range(len(lista_dados)):
                 dados_estoque.append(lista_dados[dado](mensagem[dado]))
             return dict(zip(dados_cadastro, dados_estoque))
-        else:
-            pass
 
+        elif opcao == 2:
+            opcao_escolhida  = self.mostra_opcao_alterar_quantidade()
+
+            opcoes_mudanca = {0: "qtd_somar", 1: "qtd_subtrair"}
+
+            dado = dados_alteracao[opcao_escolhida](mensagem_edicao[opcao_escolhida])
+            self.mostra_resposta_cadastrada()
+            return [opcoes_mudanca[opcao_escolhida], int(dado)]
 
     def busca_vacina_nome(self):
         print(self.colorir_info("----- BUSCANDO VACINA ATRAVÉS DO NOME... -----"))
@@ -48,15 +56,16 @@ class TelaEstoque(AbstractTela):
         print(self.colorir_erro("Cadastre-a primeiro."))
         print(input("Aperte enter para continuar: "))
 
-    def mostra_dados(self, tipos_de_vacinas):
-        if tipos_de_vacinas == []:
-            print(self.colorir_erro("NÃO HÁ VACINAS CADASTRADAS!"))
+    def mostra_dados(self, estoque):
+        if estoque == []:
+            print(self.colorir_erro("O ESTOQUE ESTÁ VAZIO!"))
             print(input("Aperte enter para continuar: "))
         else:
-            for vacina in tipos_de_vacinas:
+            for vacina in estoque:
                 print("Nome da vacina: {}".format(self.colorir_info(vacina.nome)))
                 print("Número de aplicações que a vacina requer: {}".format(self.colorir_info(vacina.num_doses)))
                 print("Número de doses em estoque: {}".format(self.colorir_info(vacina.qtd)))
+                print("Data de recebimento de lote: {}".format(self.colorir_info((vacina.data_recebimento))))
 
     def mostra_opcao_alterar_quantidade(self):
         print(self.colorir_info(" ----- ALTERAÇÃO DE ESTOQUE ----- "))
@@ -86,7 +95,6 @@ class TelaEstoque(AbstractTela):
         print("1 - Cadastrar vacina")
         print("2 - Retornar à tela principal")
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
-
 
 """        elif opcao == 2:
             mensagem_alteracao = {0: "Insira a quantidade de doses a serem adicionadas ao sistema: ",

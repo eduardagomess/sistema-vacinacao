@@ -1,4 +1,5 @@
 from controlador import controlador_sistema
+from entidade import estoque
 from entidade.estoque import Estoque
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
 from tela.tela_estoque import TelaEstoque
@@ -31,8 +32,9 @@ class ControladorEstoque():
         nao_cadastrado = True
         for tipo_de_vacina in controlador_vacina.tipos_de_vacinas:
             if tipo_de_vacina.nome == dados_vacina["nome"]:
+                doses = tipo_de_vacina.num_doses
                 nao_cadastrado = False
-                novo_registro_estoque = Estoque(dados_vacina["nome"], dados_vacina["qtd"], dados_vacina['data_recebimento'])
+                novo_registro_estoque = Estoque(dados_vacina["nome"],  doses, dados_vacina["qtd"], dados_vacina['data_recebimento'])
                 self.__estoque.append(novo_registro_estoque)
                 self.__tela_estoque.mostra_resposta_cadastrada()
         if nao_cadastrado:
@@ -46,15 +48,17 @@ class ControladorEstoque():
             self.__tela_estoque.mostra_vacina_inexistente()
         else:
             opcao = 2
-            dado_a_editar = self.__tela_tipo_vacina.pega_dados_vacina(opcao)
-            if dado_a_editar[0] == "qtd_somar":
-                tipo_vacina.qtd += int(dado_a_editar[1])
-            elif dado_a_editar[0] == "qtd_subtrair":
-                tipo_vacina.qtd -= int(dado_a_editar[1])
+            dado_a_editar = self.__tela_estoque.pega_dados_estoque(opcao)
+            for vacina in self.__estoque:
+                if vacina.nome == tipo_vacina.nome:
+                    if dado_a_editar[0] == "qtd_somar":
+                        vacina.qtd += int(dado_a_editar[1])
+                    elif dado_a_editar[0] == "qtd_subtrair":
+                        vacina.qtd -= int(dado_a_editar[1])
 
     def listar_vacina(self):
-        controlador_vacina = self.__controlador_sistema.controlador_tipo_vacina
-        controlador_vacina.listar_tipo_vacina()
+        self.__tela_estoque.titulo_busca()
+        self.__tela_estoque.mostra_dados(self.__estoque)
 
     def buscar_vacina(self):
         controlador_vacina = self.__controlador_sistema.controlador_tipo_vacina
