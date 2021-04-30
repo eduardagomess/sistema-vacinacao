@@ -90,7 +90,7 @@ class TelaAgendamento(AbstractTela):
 
 
     def mostra_opcao_alteracao(self):
-        print(self.colorir_titulo("------ ALTAREÇÃO DE ANGENDAMENTO --------"))
+        print(self.colorir_titulo("------ ALTERAÇÃO DE ANGENDAMENTO --------"))
         print("Escolha a opção que você deseja alterar:  ")
         print("1 - alterar o dia da vacinação")
         print("2 - alterar o horario da vacinação")
