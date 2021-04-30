@@ -16,7 +16,7 @@ class ControladorTipoVacina:
             if tipo_de_vacina.nome == dados_vacina["nome"]:
                 nao_cadastrado = False
         if nao_cadastrado:
-            novo_tipo_vacina = TipoVacina(dados_vacina["nome"], dados_vacina["num_doses"])
+            novo_tipo_vacina = TipoVacina(dados_vacina["nome"], dados_vacina["num_doses"]. dados_vacina['qtd'])
             self.__tipos_de_vacinas.append(novo_tipo_vacina)
             self.__tela_tipo_vacina.mostra_resposta_cadastrada()
             self.__tela_tipo_vacina.mostra_tipo_vacina(novo_tipo_vacina)
@@ -66,6 +66,18 @@ class ControladorTipoVacina:
         else:
             self.__tela_tipo_vacina.mostra_tipo_vacina(tipo_vacina)
 
+    def alterar_quantidade(self):
+        tipo_vacina = self.tipo_busca_tipo_vacina()
+        if tipo_vacina == None:
+            opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
+            if opcao == 1:
+                tipo_vacina = self.inserir_tipo_vacina()
+                self.__tela_tipo_vacina.mostra_tipo_vacina(tipo_vacina)
+            else:
+                self.retornar_sistema()
+        else:
+            pass
+
     def excluir_tipo_vacina(self):
         tipo_vacina = self.tipo_busca_tipo_vacina()
         if tipo_vacina == None:
@@ -85,11 +97,11 @@ class ControladorTipoVacina:
 
     def abre_tela(self):
         opcoes = {1: self.inserir_tipo_vacina, 2: self.editar_tipo_vacina, 3: self.listar_tipo_vacina,
-                  4: self.buscar_tipo_vacina, 5: self.excluir_tipo_vacina, 6: self.retornar_sistema}
+                  4: self.buscar_tipo_vacina, 5: self.excluir_tipo_vacina, 6: self.alterar_quantidade, 7: self.retornar_sistema}
         continua = True
         while continua:
             opcao_selecionada = self.__tela_tipo_vacina.mostra_opcoes()
-            if opcao_selecionada == 6:
+            if opcao_selecionada == 7:
                 continua = False
             opcoes[opcao_selecionada]()
 
