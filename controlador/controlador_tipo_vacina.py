@@ -63,25 +63,6 @@ class ControladorTipoVacina:
         else:
             self.__tela_tipo_vacina.mostra_tipo_vacina(tipo_vacina)
 
-
-    """def alterar_quantidade(self):
-        tipo_vacina = self.buscar_vacina_por_nome()
-        if tipo_vacina is None:
-            opcao = self.__tela_tipo_vacina.pega_opcao_tipo_nao_cadastrado()
-            if opcao == 1:
-                tipo_vacina = self.inserir_tipo_vacina()
-                self.__tela_tipo_vacina.mostra_tipo_vacina(tipo_vacina)
-            else:
-                self.retornar_sistema()
-        else:
-            opcao = 6
-            dado_a_editar = self.__tela_tipo_vacina.pega_dados_vacina(opcao)
-            if dado_a_editar[0] == "qtd_somar":
-                tipo_vacina.qtd += int(dado_a_editar[1])
-            elif dado_a_editar[0] == "qtd_subtrair":
-                tipo_vacina.qtd -= int(dado_a_editar[1])"""
-
-
     def excluir_tipo_vacina(self):
         tipo_vacina = self.buscar_vacina_por_nome()
         if tipo_vacina == None:
@@ -94,7 +75,6 @@ class ControladorTipoVacina:
         else:
             self.tipos_de_vacinas.remove(tipo_vacina)
             self.__tela_tipo_vacina.mostra_mensagem_exclusao()
-
 
     def retornar_sistema(self):
         return self.__controlador_sistema
