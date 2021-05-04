@@ -1,22 +1,42 @@
-from tela.tela_abstrata import AbstractTela
+import PySimpleGUI as sg 
 
 
-class TelaSistema(AbstractTela):
-
+class TelaSistema():
     def __init__(self, controlador_sistema):
-        super().__init__()
         self.__controlador_sistema = controlador_sistema
+        self.__window = None
+        self.init_components()
 
-    def mostra_opcoes(self):
-        print(self.colorir_titulo("------ SISTEMA DE VACINAÇÃO --------"))
-        print("Escolha uma das opções abaixo:")
-        print("1 - Área de pacientes")
-        print("2 - Área de enfermeiros")
-        print("3 - Área de estoque")
-        print("4 - Área de prontuários")
-        print("5 - Área de agendamentos")
-        print("6 - Área de registro de tipo vacina")
-        print("7 - Sair do sistema \n")
+    def init_components(self):
+        sg.theme('DarkBlue')
+        layout =[
 
-        opcao = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6, 7])
-        return opcao
+            [sg.Text('Sistema de Vacinação', size=(20, 1), font=("Helvetica", 15))],
+            [sg.Radio('Área de pacientes', "AREA", key=1)],
+            [sg.Radio('Área de enfermeiros', "AREA", key=2)],
+            [sg.Radio('Área de estoque', "AREA", key=3)], 
+            [sg.Radio('Área de prontuários', "AREA", key=4)],
+            [sg.Radio('Área de agendamentos', "AREA", key=5)],
+            [sg.Radio('Área de registro de vacinas', "AREA", key=6)],
+            [sg.Button('Aplicar'), sg.Button('Sair')]
+        ]
+
+        self.__window = sg.Window("Tela inicial").layout(layout)
+    
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
+
+    def close(self):
+        self.__window.Close()
+
+    def msg(self, msg: str):
+        self.__window.MsgBoxOK(msg)
+
+
+#Essa tela substitui a tela_sistema. Copiar código do init componentes e jogar no mostra_opcoes.
+#1 - janelas diferentes ficam em arquivos diferentes? para msgs simples nao, mas p cada nova entidade pelo menos um arquivo
+#3 - onde o singleton entraria nesse projeto? Controlador sistema. Não é obrigatório.
+#4 - tipo_vacina precisa de registro? como acessaria?
+#todos os daos *podem* ser singletons
+#sistemas multiusuários tipicamente têm controladores singletons (flask)
