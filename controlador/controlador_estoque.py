@@ -6,7 +6,8 @@ from tela.tela_estoque import TelaEstoque
 from entidade.vacina import TipoVacina
 from tela.tela_tipo_vacina import TelaTipoVacina
 
-class ControladorEstoque():
+
+class ControladorEstoque:
 
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
@@ -32,10 +33,8 @@ class ControladorEstoque():
         nao_cadastrado = True
         for tipo_de_vacina in controlador_vacina.tipos_de_vacinas:
             if tipo_de_vacina.nome == dados_vacina["nome"]:
-                doses = tipo_de_vacina.num_doses
                 nao_cadastrado = False
-                #repetição - vacina podia ser passado no construtor de estoque
-                novo_registro_estoque = Estoque(dados_vacina["nome"],  doses, dados_vacina["qtd"], dados_vacina['data_recebimento'], dados_vacina['lote'])
+                novo_registro_estoque = Estoque(dados_vacina["nome"], dados_vacina["qtd"], dados_vacina['data_recebimento'], dados_vacina['lote'])
                 self.__estoque.append(novo_registro_estoque)
                 self.__tela_estoque.mostra_resposta_cadastrada()
         if nao_cadastrado:
@@ -88,31 +87,21 @@ class ControladorEstoque():
         if lote is None:
             self.__tela_estoque.lote_inexistente()
         else:
-            for vacina in self.__estoque:
-                if lote.nome == vacina.nome:
-                    self.__estoque.remove(vacina)
+            for estoque in self.__estoque:
+                if lote.nome == estoque.nome:
+                    self.__estoque.remove(estoque)
                     self.__tela_estoque.mostra_mensagem_exclusao()
 
     def pega_vacina_nome(self):
         nome = self.__tela_estoque.buscar_vacina_nome().title()
-        for vacina in self.__estoque:
-            if vacina.nome == nome:
-                return vacina
+        for estoque in self.__estoque:
+            if estoque.tipo_vacina.nome == nome:
+                return estoque
         return None
 
     def pega_vacina_lote(self):
         lote = self.__tela_estoque.buscar_vacina_lote().title()
-        for vacina in self.__estoque:
-            if vacina.lote == lote:
-                return vacina
+        for estoque in self.__estoque:
+            if estoque.lote == lote:
+                return estoque
         return None
-
-"""    def buscar_vacina(self):
-        tipo_busca = self.__tela_estoque.mostra_opcao_busca()
-        if tipo_busca is None:
-            self.__tela_estoque.mostra_vacina_inexistente()
-        elif tipo_busca == 1:
-            busca = self.pega_vacina_nome()
-        elif tipo_busca == 2:
-            busca = self.pega_vacina_lote()
-        return busca"""

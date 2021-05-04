@@ -3,15 +3,12 @@ from entidade.vacina import TipoVacina
 from datetime import datetime
 
 
-class Estoque(TipoVacina):
-    def __init__(self, nome: str, num_doses, qtd: int, data_recebimento: datetime, lote: str): #, tipo_vacina)
-        super().__init__(nome, num_doses)
-        self.__nome = nome
+class Estoque:
+    def __init__(self, tipo_vacina: TipoVacina, qtd: int, data_recebimento: datetime, lote: str):
         self.__qtd = qtd
-        self.__num_doses = num_doses
         self.__data_recebimento = data_recebimento
         self.__lote = lote
-        #self.__tipo_vacina = tipo_vacina
+        self.__tipo_vacina = tipo_vacina
 
     @property
     def qtd(self):

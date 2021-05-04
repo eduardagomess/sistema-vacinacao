@@ -9,6 +9,8 @@ class ControladorPaciente:
         self.__pacientes = []
         self.__tela_paciente = TelaPaciente(self)
         self.__controlador_sistema = controlador_sistema
+        #^essa parte se torna inutil se usarmos Singleton no controlador sistema.
+        # Não é obrigatório usar no projeto.
 
     def inserir_paciente(self):
         estilo.clear()
@@ -109,6 +111,7 @@ class ControladorPaciente:
 
     def retornar_sistema(self):
         return self.__controlador_sistema
+        #return ControladorSistema()
 
     def abre_tela(self):
         opcoes = {1: self.inserir_paciente, 2: self.listar_pacientes, 3: self.editar_paciente, 4: self.excluir_paciente, 5: self.busca_paciente, 6: self.retornar_sistema}
