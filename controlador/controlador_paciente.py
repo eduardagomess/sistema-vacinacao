@@ -1,5 +1,7 @@
 from tela.tela_paciente import TelaPaciente
 from entidade.paciente import Paciente
+from tela.tela_inserir_paciente import TelaInserirPaciente
+from tela.tela_opcoes import TelaOpcoesPaciente
 from utils import estilo
 
 
@@ -8,14 +10,14 @@ class ControladorPaciente:
     def __init__(self, controlador_sistema):
         self.__pacientes = []
         self.__tela_paciente = TelaPaciente(self)
+        self.__tela_inserir_paciente = TelaInserirPaciente(self)
+        self.__tela_opcoes = TelaOpcoesPaciente(self)
         self.__controlador_sistema = controlador_sistema
-        #^essa parte se torna inutil se usarmos Singleton no controlador sistema.
-        # Não é obrigatório usar no projeto.
 
     def inserir_paciente(self):
-        estilo.clear()
-        opcao_cadastro = 1
-        dados_paciente = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
+       
+        dados_paciente = self.__tela_inserir_paciente.open()
+        print(dados_paciente)
         nao_cadastrado = True
         for paciente in self.__pacientes:
             if paciente.cpf == dados_paciente["cpf"]:
@@ -25,10 +27,9 @@ class ControladorPaciente:
             novo_paciente.determinar_endereco(dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],dados_paciente["complemento"])
             self.__pacientes.append(novo_paciente)
             return novo_paciente
-        else:
-            estilo.clear()
-            self.__tela_paciente.mostra_msg_paciente_cadastro()
-            estilo.clear()
+        """else
+           self.__tela_paciente.mostra_msg_paciente_cadastro()"""
+       
 
     def listar_pacientes(self):
         self.__tela_paciente.mostra_dados(self.__pacientes)
@@ -50,8 +51,9 @@ class ControladorPaciente:
         return None
 
     def tipo_de_busca_paciente(self):
-        estilo.clear()
-        tipo_busca = self.__tela_paciente.mostra_opcao_busca()
+        
+        tipo_busca = self.__tela_opcoes.open()
+        print(tipo_busca)
         if tipo_busca == 1:
             paciente_escolhido = self.pega_paciente_por_nome()
         elif tipo_busca == 2:
@@ -81,9 +83,7 @@ class ControladorPaciente:
             else:
                 self.retornar_sistema()
         else:
-
-            opcao_cadastro = 2
-            dado_novo = self.__tela_paciente.pega_dados_paciente(opcao_cadastro)
+            dado_novo = self.__tela_paciente.alterar_opcoes_paciente()
             print(dado_novo)
             if dado_novo[0] == "nome":
                 paciente.nome = dado_novo[1]
@@ -111,14 +111,12 @@ class ControladorPaciente:
 
     def retornar_sistema(self):
         return self.__controlador_sistema
-        #return ControladorSistema()
-
+       
     def abre_tela(self):
-        opcoes = {1: self.inserir_paciente, 2: self.listar_pacientes, 3: self.editar_paciente, 4: self.excluir_paciente, 5: self.busca_paciente, 6: self.retornar_sistema}
-        continua = True
-        while continua:
-            estilo.clear()
-            opcao_selecionada = self.__tela_paciente.mostra_opcoes()
-            if opcao_selecionada == 6:
-                continua = False
-            opcoes[opcao_selecionada]()
+        opcoes = {1: self.inserir_paciente, 2: self.listar_pacientes, 3: self.editar_paciente, 4: self.excluir_paciente, 5: self.busca_paciente}
+        while True:
+            button, values = self.__tela_paciente.open()
+            if button == "Sair":
+                self.finaliza_sistema()
+            else:
+                [opcoes[num]() for num in values.values() if num]
