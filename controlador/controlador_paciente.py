@@ -15,7 +15,7 @@ class ControladorPaciente:
         self.__controlador_sistema = controlador_sistema
 
     def inserir_paciente(self):
-       
+        self.__tela_inserir_paciente.init_components()
         dados_paciente = self.__tela_inserir_paciente.open()
         print(dados_paciente)
         nao_cadastrado = True
@@ -51,14 +51,15 @@ class ControladorPaciente:
         return None
 
     def tipo_de_busca_paciente(self):
-        
-        tipo_busca = self.__tela_opcoes.open()
-        print(tipo_busca)
+        self.__tela_opcoes.init_components()
+        button, value = self.__tela_opcoes.open()
+        print(value)
+        print("higor")
         if tipo_busca == 1:
             paciente_escolhido = self.pega_paciente_por_nome()
         elif tipo_busca == 2:
             paciente_escolhido = self.pega_paciente_por_cpf()
-        return paciente_escolhido
+        return paciente_escolhidotipo_buscatipo_busca
 
     def busca_paciente(self):
         estilo.clear()
@@ -74,6 +75,7 @@ class ControladorPaciente:
             self.__tela_paciente.mostra_paciente(paciente)
 
     def editar_paciente(self):
+        print("oi")
         paciente = self.tipo_de_busca_paciente()
         if paciente == None:
             opcao = self.__tela_paciente.pega_opcao_paciente_sem_cadastro()
@@ -119,4 +121,9 @@ class ControladorPaciente:
             if button == "Sair":
                 self.finaliza_sistema()
             else:
-                [opcoes[num]() for num in values.values() if num]
+                count = 1
+                for i in values.values():
+                    if i:
+                        opcoes[count]()
+                    count += 1
+        

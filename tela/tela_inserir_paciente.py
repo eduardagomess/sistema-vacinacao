@@ -6,9 +6,9 @@ class TelaInserirPaciente():
     def __init__(self, controlador_paciente):
         self.__controlador_paciente = controlador_paciente
         self.__window = None
-        self.cadastro()  
+        self.init_components()  
     
-    def cadastro(self):
+    def init_components(self):
         layout = [
             [sg.Text('Preencha os campos a seguir')],  
             [sg.Text('Nome', size=(30, 1)), sg.InputText('nome',  key='nome')], 

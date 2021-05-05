@@ -6,10 +6,10 @@ class TelaOpcoesPaciente():
     def __init__(self, controlador_paciente):
         self.__controlador_paciente = controlador_paciente
         self.__window = None
-        self.mostra_opcao_busca()
+        self.init_components()
 
     
-    def mostra_opcao_busca(self):
+    def init_components(self):
         layout =[
             [sg.Text('Editar Pacientes', size=(20, 1), font=("Helvetica", 15))],
             [sg.Radio('Nome', "AREA", key=1)],

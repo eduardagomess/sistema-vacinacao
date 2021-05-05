@@ -81,5 +81,8 @@ class ControladorSistema:
             if button == "Sair" or button == None:
                 self.finaliza_sistema()
             else:
-                [opcoes[num]() for num in values.values() if num]
-                        
+                count = 1
+                for i in values.values():
+                    if i:
+                        opcoes[count]()
+                    count += 1
