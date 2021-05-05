@@ -11,14 +11,13 @@ from utils import estilo
 class ControladorSistema:
 
     def __init__(self):
+        self.__tela_sistema = TelaSistema(self)
         self.__controlador_estoque = ControladorEstoque(self)
         self.__controlador_vacinacao = ControladorVacinacao(self)
         self.__controlador_agendamento = ControladorAgendamento(self)
         self.__controlador_paciente = ControladorPaciente(self)
         self.__controlador_enfermeiro = ControladorEnfermeiro(self)
         self.__controlador_tipo_vacina = ControladorTipoVacina(self)
-        self.__tela_sistema = TelaSistema(self)
-
 
     def inicializa_sistema(self):
         self.abre_tela()
@@ -79,7 +78,7 @@ class ControladorSistema:
                   5: self.acessar_agendamentos, 6: self.acessar_tipo_vacina}
         while True:
             button, values = self.__tela_sistema.open()
-            if button == "Sair":
+            if button == "Sair" or button == None:
                 self.finaliza_sistema()
             else:
                 [opcoes[num]() for num in values.values() if num]

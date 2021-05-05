@@ -38,6 +38,3 @@ class TipoVacina():
 
     def determinar_vacinacao(self, paciente, enfermeiro, dose, tipo_dose):
         self.__vacinacao = Vacinacao(paciente, enfermeiro, dose, tipo_dose)
-
-    def determinar_vacinacao(self, paciente, enfermeiro, dose, tipo_dose):
-        self.__vacinacao = Vacinacao(paciente, enfermeiro, dose, tipo_dose)
