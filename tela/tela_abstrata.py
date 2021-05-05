@@ -13,7 +13,7 @@ class AbstractTela(ABC):
 
     @abstractmethod
     def __init__(self):
-        pass
+        self.__window = None
 
     def colorir_info_correta(self, message: str) -> str:
         return f'\033[32m{message}\033[1m'
@@ -177,3 +177,13 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, insira apenas números"))
             except CorenInvalido:
                 print(self.colorir_erro("Valor incorreto, o COREN deve conter 6 digitos, formatação: 123456"))
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
+
+    def close(self):
+        self.__window.Close()
+
+    def msg(self, msg: str):
+        self.__window.MsgBoxOK(msg)

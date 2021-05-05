@@ -1,51 +1,33 @@
 from tela.tela_abstrata import AbstractTela
+import PySimpleGUI as sg
 
 
-class TelaEstoque(AbstractTela):
+class TelaMenuEstoque(AbstractTela):
     def __init__(self, controlador_estoque):
         super().__init__()
         self.__controlador_estoque = controlador_estoque
+        self.__window = None
+        self.init_components()
 
+    def init_components(self):
+        sg.theme('DarkBlue')
+        layout =[
+
+            [sg.Text('Sistema de Vacinação', size=(20, 1), font=("Helvetica", 15))],
+            [sg.Radio('Adicionar estoque', "AREA", key=1)],
+            [sg.Radio('Editar estoque', "AREA", key=2)],
+            [sg.Radio('Listar estoque', "AREA", key=3)],
+            [sg.Radio('Buscar estoque de uma vacina', "AREA", key=4)],
+            [sg.Radio('Excluir estoque', "AREA", key=5)],
+            [sg.Button('Aplicar'), sg.Button('Sair')]
+        ]
+        self.__window = sg.Window('Controle de Estoque').Layout(layout)
 
     def mostra_opcoes(self):
-        print(self.colorir_titulo("------ ÁREA DE CONTROLE DE ESTOQUE --------"))
-        print("Escolha uma das opções abaixo:")
-        print("1 - Adicionar estoque")
-        print("2 - Editar estoque")
-        print("3 - Listar estoque")
-        print("4 - Buscar estoque de uma vacina")
-        print("5 - Excluir estoque")
-        print("6 - Retornar a tela principal do sistema")
-
-        opcao = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
-        return opcao
-
-    def pega_dados_estoque(self, opcao):
-        dados = {0: self.pegar_nome_vacina, 1: self.pegar_num, 2: self.pegar_data_nascimento, 3: self.pegar_nome_vacina}
-        mensagem = {0: "Insira o nome da vacina:", 1: "Insira a quantidade de doses recebidas: ", 2: "Insira a data de recebimento: ", 3: "Insira o número de lote: "}
-        mensagem_edicao = {0: "Insira a quantidade de doses a somar: ", 1: "Insira a quantidade de doses a retirar: "}
-        dados_cadastro = ["nome", "qtd", "data_recebimento", "lote"]
-        dados_alteracao = {0: self.pegar_num, 1: self.pegar_num}
-
-
-        if opcao == 1:
-            print(self.colorir_titulo(" ----- CADASTRAR ESTOQUE ----- "))
-
-            lista_dados = list(dados.values())
-            dados_estoque = []
-
-            for dado in range(len(lista_dados)):
-                dados_estoque.append(lista_dados[dado](mensagem[dado]))
-            return dict(zip(dados_cadastro, dados_estoque))
-
-        elif opcao == 2:
-            opcao_escolhida = self.mostra_opcao_alterar_quantidade()
-
-            opcoes_mudanca = {0: "qtd_somar", 1: "qtd_subtrair"}
-
-            dado = dados_alteracao[opcao_escolhida](mensagem_edicao[opcao_escolhida])
-            self.mostra_resposta_cadastrada()
-            return [opcoes_mudanca[opcao_escolhida], int(dado)]
+        botao, valores = self.__window.Read()
+        if botao is None or botao == "Sair":
+            botao = 6
+        return int(botao)
 
     def buscar_vacina_nome(self):
         print(self.colorir_info("----- BUSCANDO VACINA ATRAVÉS DO NOME... -----"))
@@ -60,6 +42,7 @@ class TelaEstoque(AbstractTela):
         print(self.colorir_erro("Cadastre-a primeiro."))
         print(input("Aperte enter para continuar: "))
 
+#Vai para outro arquivo
     def mostra_dados(self, estoque):
         if estoque == []:
             print(self.colorir_erro("O ESTOQUE ESTÁ VAZIO!"))
@@ -87,16 +70,15 @@ class TelaEstoque(AbstractTela):
         return self.pegar_opcao("Insira o número da opção desejada: ", [0, 1])
 
     def mostra_resposta_cadastrada(self):
-        print(self.colorir_info(" Resposta cadastrada com sucesso! "))
+        AbstractTela.msg(self, " Resposta cadastrada com sucesso! ")
 
     def mostra_mensagem_exclusao(self):
-        print(self.colorir_info("ESTOQUE EXCLUÍDO COM SUCESSO!"))
-        print(input("Aperte enter para continuar: "))
+        AbstractTela.msg(self, "ESTOQUE EXCLUÍDO COM SUCESSO!")
 
     def mostra_lote_existente(self):
-        print(self.colorir_erro("LOTE JÁ CADASTRADO!"))
-        print(input("Aperte enter para continuar: "))
+        AbstractTela.msg(self, "LOTE JÁ CADASTRADO!")
 
+#rever
     def titulo_busca(self):
         print(self.colorir_info(" ----- VACINAS ENCONTRADAS -----  \n"))
 
@@ -113,8 +95,7 @@ class TelaEstoque(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
 
     def lote_inexistente(self):
-        print(self.colorir_erro("LOTE INEXISTENTE!"))
-        print(input("Aperte enter para continuar: "))
+        AbstractTela.msg(self,"LOTE INEXISTENTE!")
 
     def mostra_opcao_busca(self):
         print(" ----- MÉTODO DE BUSCA... -----")
@@ -123,4 +104,19 @@ class TelaEstoque(AbstractTela):
         return self.pegar_opcao("Insira o número da opção escolhida: ", [0, 1])
 
     def mostra_vacinas_insuficientes(self):
-        print(self.colorir_erro("NÃO É POSSÍVEL EXCLUIR MAIS VACINAS DO QUE HÁ EM ESTOQUE!"))
+        AbstractTela.msg(self, "NÃO É POSSÍVEL EXCLUIR MAIS VACINAS DO QUE HÁ EM ESTOQUE!")
+
+
+"""    def pega_dados_estoque(self):
+        layout = [
+         [sg.Text('Insira os dados a seguir')],
+         [sg.Text('Nome da vacina: ', size=(15, 1)), sg.InputText('nome')],
+         [sg.Text('Quantidade de doses recebidas: ', size=(15, 1)), sg.InputText('qtd')],
+         [sg.Text('Data de recebimento: ', size=(15, 1)), sg.InputText('data_recebimento')],
+         [sg.Text('Número de lote: ', size=(15, 1)), sg.InputText('lote')]
+         [sg.Submit(), sg.Cancel()]
+         ]
+        window = sg.Window('Cadastro de estoque').Layout(layout)
+        button, values = window.Read()
+
+        self.__window = sg.Window("Tela inicial").layout(layout)"""

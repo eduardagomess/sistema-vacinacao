@@ -2,7 +2,8 @@ from controlador import controlador_sistema
 from entidade import estoque
 from entidade.estoque import Estoque
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
-from tela.tela_estoque import TelaEstoque
+from tela.tela_acoes_estoque import TelaAcoesEstoque
+from tela.tela_menu_estoque import TelaMenuEstoque
 from entidade.vacina import TipoVacina
 from tela.tela_tipo_vacina import TelaTipoVacina
 
@@ -10,10 +11,11 @@ from tela.tela_tipo_vacina import TelaTipoVacina
 class ControladorEstoque:
 
     def __init__(self, controlador_sistema):
+        self.__tela_acoes_estoque = TelaAcoesEstoque
         self.__controlador_sistema = controlador_sistema
         self.__controlador_vacina = ControladorTipoVacina
         self.__vacinas_aplicadas = []
-        self.__tela_estoque = TelaEstoque(controlador_estoque=ControladorEstoque)
+        self.__tela_estoque = TelaMenuEstoque(controlador_estoque=ControladorEstoque)
         self.__tela_tipo_vacina = TelaTipoVacina(self)
         self.__estoque = []
 
@@ -29,7 +31,7 @@ class ControladorEstoque:
     def adicionar_estoque(self):
         opcao = 1
         controlador_vacina = self.__controlador_sistema.controlador_tipo_vacina
-        dados_vacina = self.__tela_estoque.pega_dados_estoque(opcao)
+        dados_vacina = self.__tela_acoes_estoque.pega_dados_estoque(opcao)
         nao_cadastrado = True
         for tipo_de_vacina in controlador_vacina.tipos_de_vacinas:
             if tipo_de_vacina.nome == dados_vacina["nome"]:
@@ -48,7 +50,7 @@ class ControladorEstoque:
             self.__tela_estoque.lote_inexistente()
         else:
             opcao = 2
-            dado_a_editar = self.__tela_estoque.pega_dados_estoque(opcao)
+            dado_a_editar = self.__tela_acoes_estoque.pega_dados_estoque(opcao)
             for vacina in self.__estoque:
                 if vacina.nome == lote.nome:
                     if dado_a_editar[0] == "qtd_somar":
