@@ -27,14 +27,16 @@ class TelaMenuEstoque(AbstractTela):
     def open(self):
         botao, valores = self.__window.Read()
         if botao is None or botao == "Sair":
-            botao = 6
+            self.__window.close()
         return botao, valores
+
+    def close(self):
+        self.__window.Close()
 
 #Vai para outro arquivo
     def mostra_dados(self, estoque):
         if estoque == []:
-            print(self.colorir_erro("O ESTOQUE ESTÁ VAZIO!"))
-            print(input("Aperte enter para continuar: "))
+            self.msg("O ESTOQUE ESTÁ VAZIO!")
         else:
             for vacina in estoque:
                 print("Nome da vacina: {}".format(self.colorir_info(vacina.nome)))
@@ -49,13 +51,6 @@ class TelaMenuEstoque(AbstractTela):
             print("Número de doses em estoque: {}".format(self.colorir_info(vacina.qtd)))
             print("Data de recebimento de lote: {}".format(self.colorir_info(vacina.data_recebimento)))
             print("Número de lote: {}".format(self.colorir_info(vacina.lote)))
-
-    def mostra_opcao_alterar_quantidade(self):
-        print(self.colorir_info(" ----- ALTERAÇÃO DE ESTOQUE ----- "))
-        print("Escolha a informação que deseja alterar")
-        print("0 - Adicionar doses ao sistema")
-        print("1 - Retirar doses do estoque")
-        return self.pegar_opcao("Insira o número da opção desejada: ", [0, 1])
 
 #MENSAGENS
     def mostra_vacina_inexistente(self):

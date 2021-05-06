@@ -1,7 +1,8 @@
 import PySimpleGUI as sg
+from tela.tela_abstrata import AbstractTela
 
 
-class TelaRegistroTipoVacina:
+class TelaRegistroTipoVacina(AbstractTela):
 
     def __init__(self, controlador_tipo_vacina):
         self.__controlador_tipo_vacina = controlador_tipo_vacina
@@ -13,8 +14,7 @@ class TelaRegistroTipoVacina:
         layout = [
             [sg.Text('Insira os dados a seguir')],
             [sg.Text('Nome da vacina: ', size=(15, 1)), sg.InputText('nome', key='nome')],
-            [sg.Text('Quantidade de doses que a vacina requer: ', size=(15, 1)),
-             sg.InputText('número de doses', key='num_doses')],
+            [sg.Text('Quantidade de doses que a vacina requer: ', size=(15, 1)), sg.InputText('número de doses', key='num_doses')],
             [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window('Sistema de Vacinação').Layout(layout)
@@ -22,6 +22,9 @@ class TelaRegistroTipoVacina:
     def open(self):
         button, values = self.__window.Read()
         return values
+
+    def close(self):
+        self.__window.Close()
 
 
 """            for dado in range(len(lista_dados)):

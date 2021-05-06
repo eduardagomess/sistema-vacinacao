@@ -31,10 +31,6 @@ class TelaMenuTipoVacina(AbstractTela):
     def msg(self, msg: str):
         sg.popup_ok(msg)
 
-    def busca_vacina_nome(self):
-        print(self.colorir_info("----- BUSCANDO VACINA ATRAVÉS DO NOME... -----"))
-        return self.pegar_nome_vacina("Insira o nome da vacina que você procura: ")
-
     def mostra_dados(self, tipos_de_vacinas):
         if not tipos_de_vacinas:
             sg.popup_ok("NÃO HÁ VACINAS CADASTRADAS!")
@@ -43,19 +39,12 @@ class TelaMenuTipoVacina(AbstractTela):
                 sg.Text(("Nome da vacina: {}".format(self.colorir_info(vacina.nome)) +
                          ("Número de aplicações que a vacina requer: {}".format(self.colorir_info(vacina.num_doses)))))
 
-    def pega_opcao_tipo_nao_cadastrado(self):
-        print(self.colorir_erro("VACINA NÃO CADASTRADA!"))
-        print(self.colorir_info("Escolha uma das opções abaixo: "))
-        print("1 - Cadastrar vacina")
-        print("2 - Retornar à tela principal")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
-
     def mostra_tipo_vacina(self, tipo_vacina):
         self.msg(
-            ("Nome da vacina: {}".format(tipo_vacina.nome)) +
-            ("Número de aplicações que a vacina requer: {}".format(tipo_vacina.num_doses)) +
+            ("Nome da vacina: {}".format(tipo_vacina.nome)) + "\n" + "Número de aplicações que a vacina requer: {}".format(tipo_vacina.num_doses) + "\n"
             "-----------"
         )
+        return tipo_vacina
 
     def mostra_vacina_inexistente(self):
         print(self.colorir_erro("ESSA VACINA NÃO FOI ENCONTRADA!"))

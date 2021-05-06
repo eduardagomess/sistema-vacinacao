@@ -5,7 +5,6 @@ from controlador.controlador_agendamento import ControladorAgendamento
 from controlador.controlador_paciente import ControladorPaciente
 from controlador.controlador_enfermeiro import ControladorEnfermeiro
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
-from utils import estilo
 
 
 class ControladorSistema:
@@ -79,7 +78,7 @@ class ControladorSistema:
         while True:
             button, values = self.__tela_sistema.open()
             if button == "Sair" or button is None:
-                self.finaliza_sistema()
+                self.__tela_sistema.close()
             else:
                 count = 1
                 for i in values.values():

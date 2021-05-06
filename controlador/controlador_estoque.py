@@ -3,8 +3,7 @@ from controlador.controlador_tipo_vacina import ControladorTipoVacina
 from tela.estoque.tela_busca_estoque import TelaBuscaEstoque
 from tela.estoque.tela_registro_estoque import TelaCadastraEstoque
 from tela.estoque.tela_menu_estoque import TelaMenuEstoque
-from tela.tipo_vacina.tela_menu_tipo_vacina import TelaMenuTipoVacina
-
+from tela.estoque.tela_edita_estoque import TelaEditaEstoque
 
 class ControladorEstoque:
 
@@ -12,10 +11,10 @@ class ControladorEstoque:
         self.__tela_menu_estoque = TelaMenuEstoque(self)
         self.__tela_registro_estoque = TelaCadastraEstoque(self)
         self.__tela_busca_estoque = TelaBuscaEstoque(self)
+        self.__tela_edita_estoque = TelaEditaEstoque(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_vacina = ControladorTipoVacina
         self.__vacinas_aplicadas = []
-        self.__tela_tipo_vacina = TelaMenuTipoVacina(self)
         self.__estoque = []
 
     def abre_tela(self):
@@ -24,7 +23,7 @@ class ControladorEstoque:
         while True:
             button, values = self.__tela_menu_estoque.open()
             if button == "Sair" or button is None:
-                self.finaliza_sistema()
+                self.__tela_menu_estoque.close()
             else:
                 count = 1
                 for i in values.values():
@@ -37,15 +36,17 @@ class ControladorEstoque:
         controlador_vacina = self.__controlador_sistema.controlador_tipo_vacina
         dados_vacina = self.__tela_registro_estoque.open()
         nao_cadastrado = True
-        if nao_cadastrado:
-            self.__tela_menu_estoque.msg("ESSA VACINA NÃO FOI ENCONTRADA! \n Cadastre-a primeiro!")
         for tipo_de_vacina in controlador_vacina.tipos_de_vacinas:
             if tipo_de_vacina.nome == dados_vacina["nome"]:
                 nao_cadastrado = False
                 novo_registro_estoque = Estoque(dados_vacina["nome"], dados_vacina["qtd"],
                                                 dados_vacina['data_recebimento'], dados_vacina['lote'])
                 self.__estoque.append(novo_registro_estoque)
+                self.__tela_registro_estoque.close()
                 self.__tela_menu_estoque.mostra_resposta_cadastrada()
+            elif nao_cadastrado:
+                self.__tela_menu_estoque.msg("ESSA VACINA NÃO FOI ENCONTRADA! \n Cadastre-a primeiro!")
+                self.__tela_registro_estoque.close()
         else:
             print("\n")
 
@@ -54,8 +55,8 @@ class ControladorEstoque:
         if lote is None:
             self.__tela_menu_estoque.msg("LOTE JÁ CADASTRADO!")
         else:
-            opcao = 2
-            dado_a_editar = self.__tela_acoes_estoque.input_estoque()
+            self.__tela_edita_estoque.mostra_opcao_alterar_quantidade()
+            dado_a_editar = self.__tela_busca_estoque.open()
             for vacina in self.__estoque:
                 if vacina.nome == lote.nome:
                     if dado_a_editar[0] == "qtd_somar":
@@ -111,6 +112,3 @@ class ControladorEstoque:
             if estoque.lote == lote:
                 return estoque
         return None
-
-    def finaliza_sistema(self):
-        exit(0)

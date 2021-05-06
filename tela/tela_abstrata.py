@@ -7,6 +7,7 @@ from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
 from excecao.dose_invalida import DoseInvalida
 import datetime
+import PySimpleGUI as sg
 
 
 class AbstractTela(ABC):
@@ -149,9 +150,9 @@ class AbstractTela(ABC):
                     raise DoseInvalida
                 return valor_lido
             except CaracterAlfabeticoExcecao:
-                print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido (0,1 ou 2)"))
+                self.msg("Valor incorreto, digite um valor numérico inteiro válido (0,1 ou 2)")
             except DoseInvalida:
-                print(self.colorir_erro("Valor incorreto, insira apenas números (0,1 ou 2)"))
+                self.msg("Valor incorreto, insira apenas números (0,1 ou 2)")
 
     def pegar_dose_vacina(self, mensagem: str = ""):
         while True:
@@ -163,9 +164,9 @@ class AbstractTela(ABC):
                     raise DoseInvalida
                 return valor_lido
             except CaracterAlfabeticoExcecao:
-                print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido (1 ou 2)"))
+                self.msg("Valor incorreto, digite um valor numérico inteiro válido (1 ou 2)")
             except DoseInvalida:
-                print(self.colorir_erro("Valor incorreto, insira apenas números (1 ou 2)"))
+                self.msg("Valor incorreto, insira apenas números (1 ou 2)")
 
     def pegar_coren(self, mensagem: str = ""):
         while True:
@@ -186,3 +187,6 @@ class AbstractTela(ABC):
 
     def close(self):
         pass
+
+    def msg(self, msg):
+        sg.popup_ok(msg)
