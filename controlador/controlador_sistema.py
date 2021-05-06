@@ -12,8 +12,8 @@ class ControladorSistema:
 
     def __init__(self):
         self.__tela_sistema = TelaSistema(self)
-        self.__controlador_estoque = ControladorEstoque(self)
         self.__controlador_vacinacao = ControladorVacinacao(self)
+        self.__controlador_estoque = ControladorEstoque(self)
         self.__controlador_agendamento = ControladorAgendamento(self)
         self.__controlador_paciente = ControladorPaciente(self)
         self.__controlador_enfermeiro = ControladorEnfermeiro(self)
@@ -78,7 +78,7 @@ class ControladorSistema:
                   5: self.acessar_agendamentos, 6: self.acessar_tipo_vacina}
         while True:
             button, values = self.__tela_sistema.open()
-            if button == "Sair" or button == None:
+            if button == "Sair" or button is None:
                 self.finaliza_sistema()
             else:
                 count = 1

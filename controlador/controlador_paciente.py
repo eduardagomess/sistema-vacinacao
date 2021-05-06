@@ -125,5 +125,10 @@ class ControladorPaciente:
                 for i in values.values():
                     if i:
                         opcoes[count]()
+                    elif values is None:
+                        self.finaliza_sistema()
                     count += 1
-        
+
+    def finaliza_sistema(self):
+        exit(0)
+

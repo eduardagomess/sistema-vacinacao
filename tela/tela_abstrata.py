@@ -7,14 +7,13 @@ from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
 from excecao.dose_invalida import DoseInvalida
 import datetime
-import PySimpleGUI as sg
 
 
 class AbstractTela(ABC):
 
     @abstractmethod
     def __init__(self):
-        self.__window = None
+        pass
 
     def colorir_info_correta(self, message: str) -> str:
         return f'\033[32m{message}\033[1m'
@@ -183,11 +182,7 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, o COREN deve conter 6 digitos, formatação: 123456"))
 
     def open(self):
-        button, values = self.__window.Read()
-        return button, values
+        pass
 
     def close(self):
-        self.__window.Close()
-
-    def msg(self, msg: str):
-        self.__window.MsgBoxOK(msg)
+        pass
