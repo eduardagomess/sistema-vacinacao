@@ -84,5 +84,7 @@ class ControladorSistema:
                 count = 1
                 for i in values.values():
                     if i:
+                        self.__tela_sistema.close()
                         opcoes[count]()
+                        break
                     count += 1

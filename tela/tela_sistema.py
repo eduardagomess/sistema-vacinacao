@@ -24,6 +24,7 @@ class TelaSistema():
         self.__window = sg.Window("Tela inicial").layout(layout)
     
     def open(self):
+        self.init_components()
         button, values = self.__window.Read()
         return button, values
 
@@ -32,11 +33,3 @@ class TelaSistema():
 
     def msg(self, msg: str):
         self.__window.MsgBoxOK(msg)
-
-
-#Essa tela substitui a tela_sistema. Copiar código do init componentes e jogar no mostra_opcoes.
-#1 - janelas diferentes ficam em arquivos diferentes? para msgs simples nao, mas p cada nova entidade pelo menos um arquivo
-#3 - onde o singleton entraria nesse projeto? Controlador sistema. Não é obrigatório.
-#4 - tipo_vacina precisa de registro? como acessaria?
-#todos os daos *podem* ser singletons
-#sistemas multiusuários tipicamente têm controladores singletons (flask)
