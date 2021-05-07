@@ -18,6 +18,7 @@ class TelaBuscaPaciente():
         
     
     def open(self):
+        self.init_components()
         button, values = self.__window.Read()
         return button, values
 

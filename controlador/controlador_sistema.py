@@ -79,11 +79,12 @@ class ControladorSistema:
             button, values = self.__tela_sistema.open()
             if button == "Sair" or button is None:
                 self.__tela_sistema.close()
+                break
             else:
-                count = 1
+                index = 1
                 for i in values.values():
                     if i:
                         self.__tela_sistema.close()
-                        opcoes[count]()
+                        opcoes[index]()
                         break
-                    count += 1
+                    index += 1

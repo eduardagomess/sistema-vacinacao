@@ -7,22 +7,35 @@ class Endereco:
 
     @property
     def bairro(self):
-        retunr self.__bairro
+        return self.__bairro
     
     @property
     def rua(self):
-        retunr self.__rua
+        return self.__rua
 
     @property
     def numero (self):
-        retunr self.__numero
+        return self.__numero
 
     @property
     def complemento(self):
-        retunr self.__complemento
+        return self.__complemento
+
+    @bairro.setter
+    def bairro(self, bairro):
+        self.__bairro = bairro
     
+    @rua.setter
+    def rua(self, rua):
+        self.__rua = rua
 
-
-
+    @numero.setter
+    def numero(self, numero):
+        self.__numero = numero
+    
+    @complemento.setter
+    def complemento(self, complemento):
+        self.__complemento = complemento
+    
     def mostrar_endereco(self):
-        return f"{self.__bairro}, {self.__rua}, {self.__numero}, {self.__complemento}"
+        return f"{self.__bairro.title()}, {self.__rua.title()}, {self.__numero}, {self.__complemento.title()}"

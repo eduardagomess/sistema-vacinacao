@@ -13,7 +13,7 @@ class TelaOpcoes():
         sg.theme('DarkBlue')
         layout =[
 
-            [sg.Text('Área de Pacientes', size=(20, 1), font=("Helvetica", 15))],
+            [sg.Text('Alteração do cadastrao', size=(20, 1), font=("Helvetica", 15))],
             [sg.Radio('Alterar nome', "AREA", key="nome")],
             [sg.Radio('Alterar telefone', "AREA", key="telefone")],
             [sg.Radio('Alterar cpf', "AREA", key="cpf")], 
@@ -21,10 +21,10 @@ class TelaOpcoes():
             [sg.Radio('Alterar data de nascimento', "AREA", key="data_nascimento")],
             [sg.Button('Aplicar'), sg.Button('Sair')]
         ]
-
-        self.__window = sg.Window("Tela Paciente").layout(layout)
+        self.__window = sg.Window("Área paciente").layout(layout)
         
     def open(self):
+        self.init_components()
         button, values = self.__window.Read()
         return button, values
 
@@ -34,6 +34,3 @@ class TelaOpcoes():
     def msg(self, msg: str):
         self.__window.MsgBoxOK(msg)
    
-       
-
-    

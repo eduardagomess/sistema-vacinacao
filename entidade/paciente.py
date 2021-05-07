@@ -37,7 +37,7 @@ class Paciente(Pessoa):
 
     @property
     def endereco(self):
-        return self.__endereco.mostrar_endereco()
+        return self.__endereco
 
     def determinar_endereco(self, bairro: str, rua: str, numero: int, complemento: str):
         self.__endereco = Endereco(bairro, rua, numero, complemento)

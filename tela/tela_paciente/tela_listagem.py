@@ -15,7 +15,7 @@ class TelaListagem():
                 [sg.Text('Nome do paciente: ' + informacoes.nome.title(), size=(80, 1), font=("Helvetica", 15))],
                 [sg.Text('Telefone do paciente: ' + informacoes.telefone, size=(80, 1), font=("Helvetica", 15))],
                 [sg.Text('CPF do paciente: ' + informacoes.cpf, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('Endereço do paciente: ' + informacoes.endereco.title(), size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text('Endereço do paciente: ' + informacoes.endereco.mostrar_endereco(), size=(80, 1), font=("Helvetica", 15))],
                 [sg.Text('Data de nascimento do paciente: '+ informacoes.data_nascimento, size=(80, 1), font=("Helvetica", 15))],
                 [sg.Button('Sair')]
             ]

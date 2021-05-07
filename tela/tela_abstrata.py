@@ -11,35 +11,6 @@ import PySimpleGUI as sg
 
 
 class AbstractTela(ABC):
-
-<<<<<<< HEAD
-=======
-    @abstractmethod
-    def __init__(self):
-        pass
-
-    def colorir_info_correta(self, message: str) -> str:
-        return f'\033[32m{message}\033[1m'
-
-    def colorir_info_amotra(self, message: str) -> str:
-        return f'\033[30m{message}\033[1m'
-
-    def colorir_aviso(self, message: str) -> str:
-        return f'\033[93m{message}\033[0m'
-
-    def colorir_erro(self, message: str) -> str:
-        return f'\033[91m{message}\033[0m'
-
-    def colorir_info(self, message: str) -> str:
-        return f'\033[96m{message}\033[0m'
-
-    def colorir_titulo(self, message: str) -> str:
-        return f'\033[94m{message}\033[0m'
-
-    def colorir_escolha(self, message: str) -> str:
-        return f'\033[95m{message}\033[0m'
-
->>>>>>> e93846a09b89508aa7bfe4f7021e14951c8d2080
     def pegar_opcao(self, mensagem: str = "", inteiros_validos: [] = None):
         while True:
             valor_lido = input(mensagem)
