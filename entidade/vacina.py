@@ -24,9 +24,7 @@ class TipoVacina():
     @num_doses.setter
     def num_doses(self, num_doses):
         self.__num_doses = num_doses
-
         self.__num_doses = int(self.__num_doses)
-        return self.__num_doses
 
     @nome.setter
     def nome(self, nome):

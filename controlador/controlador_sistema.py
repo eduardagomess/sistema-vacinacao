@@ -5,15 +5,14 @@ from controlador.controlador_agendamento import ControladorAgendamento
 from controlador.controlador_paciente import ControladorPaciente
 from controlador.controlador_enfermeiro import ControladorEnfermeiro
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
-from utils import estilo
 
 
 class ControladorSistema:
 
     def __init__(self):
         self.__tela_sistema = TelaSistema(self)
-        self.__controlador_estoque = ControladorEstoque(self)
         self.__controlador_vacinacao = ControladorVacinacao(self)
+        self.__controlador_estoque = ControladorEstoque(self)
         self.__controlador_agendamento = ControladorAgendamento(self)
         self.__controlador_paciente = ControladorPaciente(self)
         self.__controlador_enfermeiro = ControladorEnfermeiro(self)
@@ -78,8 +77,8 @@ class ControladorSistema:
                   5: self.acessar_agendamentos, 6: self.acessar_tipo_vacina}
         while True:
             button, values = self.__tela_sistema.open()
-            if button == "Sair" or button == None:
-                self.finaliza_sistema()
+            if button == "Sair" or button is None:
+                self.__tela_sistema.close()
             else:
                 count = 1
                 for i in values.values():
