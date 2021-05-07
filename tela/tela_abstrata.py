@@ -29,8 +29,7 @@ class AbstractTela(ABC):
                 if inteiros_validos:
                     print(self.colorir_info("Valores válidos: "), (self.colorir_info(inteiros_validos)))
 
- 
-  
+
 
     def pegar_nome(self,  mensagem: str = ""):
         while True:

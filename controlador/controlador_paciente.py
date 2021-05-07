@@ -24,6 +24,7 @@ class ControladorPaciente:
         self.__tela_bucar_paciente = TelaBuscaPaciente(self)
         self.__tela_listagem = TelaListagem(self)
         self.__tela_opcoes_mudanca = TelaOpcoes(self)
+
         self.__tele_endereco = TelaEndereco(self)
         self.__controlador_sistema = controlador_sistema
 
@@ -148,8 +149,6 @@ class ControladorPaciente:
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"],dados_paciente["cpf"],  dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], None)
                     break
-                
-              
                 try:
                     for paciente in self.__pacientes:
                         if paciente.cpf == dados_paciente["cpf"]:
@@ -177,6 +176,7 @@ class ControladorPaciente:
                 self.__tela_listagem.close()
 
     def buscar_paciente(self):
+        self.__tela_bucar_paciente.init_components()
         button, value = self.__tela_bucar_paciente.open()
         self.__tela_bucar_paciente.close()
         if button == "Sair":
@@ -205,7 +205,6 @@ class ControladorPaciente:
 
     def editar_paciente(self):
         paciente = self.buscar_paciente()
-        print(paciente)
         dados = {"nome": paciente.nome, "telefone":paciente.telefone, "cpf":paciente.cpf,
         "bairro":paciente.endereco.bairro, "rua":paciente.endereco.rua, "numero":paciente.endereco.numero, "complemento":paciente.endereco.complemento, "data_nascimento": paciente.data_nascimento}
         if paciente == None:
@@ -392,6 +391,6 @@ class ControladorPaciente:
                         if index == 1:
                             opcoes[index](None, None, None, None, None, None, None, None) 
                         else:
-                             opcoes[index]()
+                            opcoes[index]()
                     index += 1
         

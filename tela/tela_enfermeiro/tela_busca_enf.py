@@ -11,10 +11,10 @@ class TelaBuscaPaciente():
     
     def init_components(self):
         layout =[
-                [sg.Text('Insira o nome ou cpf do paciente', size=(30, 1)), sg.InputText()],
+                [sg.Text('Insira o nome ou coren do enfermeiro', size=(30, 1)), sg.InputText()],
                 [sg.Button('Aplicar'), sg.Button('Sair')]
             ]
-        self.__window = sg.Window("Tela Paciente").layout(layout)
+        self.__window = sg.Window("Tela Enfermeiro").layout(layout)
  
     
     def open(self):

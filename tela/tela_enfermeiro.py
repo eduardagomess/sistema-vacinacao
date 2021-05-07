@@ -1,5 +1,5 @@
 from tela.tela_abstrata import AbstractTela
-
+import PySimpleGUI as sg
 
 class TelaEnfermeiro(AbstractTela):
 
