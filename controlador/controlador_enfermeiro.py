@@ -1,6 +1,6 @@
 from entidade.enfermeiro import Enfermeiro
 from tela.tela_enfermeiro.tela_inserir_enfermeiro import TelaInserirEnfermeiro
-from tela.tela_paciente.tela_listagem import TelaListagem
+from tela.tela_listagem import TelaListagem
 from tela.tela_enfermeiro.tela_busca_enf import TelaBuscaEnfermeiro
 from tela.tela_enfermeiro.tela_op_mudanca import TelaOpcoesMudanca
 from tela.tela_enfermeiro.tela_enfermeiro import TelaEnfermeiro

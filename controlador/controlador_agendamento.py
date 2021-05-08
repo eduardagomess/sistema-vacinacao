@@ -3,7 +3,7 @@ from tela.tela_agendamento.tela_agendamentoo import TelaAgendamento
 from tela.tela_agendamento.tela_inserir_agendamento_dia import TelaInserirDia
 from tela.tela_agendamento.tela_inserir_agendamento_hora import TelaInserirHora
 from tela.tela_agendamento.tela_mudanca_agendamento import TelaMudancaAgendamento
-from tela.tela_paciente.tela_listagem import TelaListagem
+from tela.tela_listagem import TelaListagem
 from entidade.agendamento import Agendamento
 from utils import estilo
 import PySimpleGUI as sg

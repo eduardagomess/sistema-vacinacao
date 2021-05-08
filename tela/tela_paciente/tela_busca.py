@@ -12,7 +12,7 @@ class TelaBuscaPaciente():
         sg.ChangeLookAndFeel('Reddit') 
         layout =[
 
-                [sg.Text('Insira o cpf do paciente', size=(20, 1), font=("Helvetica", 16)), sg.InputText()],
+                [sg.Text('Insira o cpf do paciente', size=(20, 1), font=("Helvetica", 16)), sg.InputText(font=("Helvetica", 15))],
                 [sg.Button('Aplicar', font=("Helvetica", 15),size=(5,1)), sg.Button('Sair', font=("Helvetica", 15),size=(5,1))]
             ]
         self.__window = sg.Window("Tela Paciente").layout(layout)

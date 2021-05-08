@@ -25,7 +25,6 @@ class TelaInserirPaciente():
         ] 
         self.__window = sg.Window('Cadastramento', size=(800,330)).layout(layout)
     
-
     def open(self):
         button, values = self.__window.Read()
         return button, values
