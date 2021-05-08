@@ -302,7 +302,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome, paciente.telefone, paciente.cpf, None, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 except NomeInvalido:
-                    ssg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, None,paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
@@ -323,7 +323,7 @@ class ControladorPaciente:
                 except NomeInvalido:
                     sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
                     self.__tela_inserir_paciente.close()
-                    self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, pacinete.endereco.bairro, None, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
+                    self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, None, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.endereco.rua = rua
                 self.__tela_inserir_paciente.close()
@@ -336,7 +336,7 @@ class ControladorPaciente:
                 except Exception:
                     sg.Popup("Número inválido","Valor incorreto, insira apenas números")
                     self.__tela_inserir_paciente.close()
-                    self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, pacinete.endereco.bairro, paciente.endereco.rua, None,paciente.endereco.complemento,paciente.data_nascimento)
+                    self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, None,paciente.endereco.complemento,paciente.data_nascimento)
                        
                 paciente.endereco.numero = numero
                 self.__tela_inserir_paciente.close()
@@ -348,7 +348,7 @@ class ControladorPaciente:
                 except Exception:
                     sg.Popup("Complemento Inválido","Valor incorreto, insira apenas letras e numeros")
                     self.__tela_inserir_paciente.close()
-                    self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, pacinete.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, None,paciente.data_nascimento)
+                    self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, None,paciente.data_nascimento)
                     
 
                 paciente.endereco.complemento = numero
@@ -362,7 +362,7 @@ class ControladorPaciente:
                     except ValueError:
                         sg.Popup("Data inválida","Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
                         self.__tela_inserir_paciente.close()
-                        self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, pacinete.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, None)
+                        self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, None)
                         
                     
                     paciente.data_nascimento = data_nascimento
@@ -394,4 +394,3 @@ class ControladorPaciente:
                         else:
                              opcoes[index]()
                     index += 1
-        

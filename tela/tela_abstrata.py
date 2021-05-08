@@ -11,6 +11,11 @@ import PySimpleGUI as sg
 
 
 class AbstractTela(ABC):
+
+    @abstractmethod
+    def __init__(self):
+        pass
+
     def pegar_opcao(self, mensagem: str = "", inteiros_validos: [] = None):
         while True:
             valor_lido = input(mensagem)
@@ -21,15 +26,13 @@ class AbstractTela(ABC):
                     raise ValueError
                 return int(valor_lido)
             except CaracterAlfabeticoExcecao:
-                print(self.colorir_erro("Valor incorreto, insira apenas números"))
+                sg.popup("Valor incorreto, insira apenas números")
                 if inteiros_validos:
                     print(self.colorir_info("Valores válidos: "), (self.colorir_info(inteiros_validos)))
             except ValueError:
                 print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido"))
                 if inteiros_validos:
                     print(self.colorir_info("Valores válidos: "), (self.colorir_info(inteiros_validos)))
-
- 
   
 
     def pegar_nome(self,  mensagem: str = ""):
@@ -42,19 +45,34 @@ class AbstractTela(ABC):
                     raise NomeInvalido
                 return nome.title()
             except NomeComCaracterNumerico:
-                print(self.colorir_erro("Valor incorreto, insira apenas letras"))
+                sg.popup("Valor incorreto, insira apenas letras")
             except NomeInvalido:
-                print(self.colorir_erro("Preencha o nome com no mínimo 5 caracteres"))
+                sg.popup("Preencha o nome com no mínimo 5 caracteres")
 
     def pegar_nome_vacina(self, mensagem: str = ""):
-        while True:
-            nome_vacina = input(mensagem)
-            try:
-                if len(nome_vacina.replace(" ", "")) < 5:
-                    raise NomeInvalido
-                return nome_vacina.title()
-            except NomeInvalido:
-                print(self.colorir_erro("Preencha o nome com no mínimo 5 caracteres"))
+        nome_vacina = mensagem
+        try:
+            if len(nome_vacina.replace(" ", "")) < 5:
+                raise NomeInvalido
+            return nome_vacina.title()
+        except NomeInvalido:
+            sg.popup("Preencha o nome com no mínimo 5 caracteres")
+            return False
+
+    def pegar_dose_vacina(self, mensagem: str = ""):
+        valor_lido = mensagem
+        try:
+            if not valor_lido.isdigit():
+                raise CaracterAlfabeticoExcecao
+            elif int(valor_lido) not in [1,2]:
+                raise DoseInvalida
+            return valor_lido
+        except CaracterAlfabeticoExcecao:
+            sg.popup("Valor incorreto, digite um valor numérico inteiro válido (1 ou 2)")
+            return False
+        except DoseInvalida:
+            sg.popup("Valor incorreto, insira apenas números (1 ou 2)")
+            return False
 
     def pegar_telefone(self,  mensagem: str = ""):
         while True:
@@ -116,7 +134,7 @@ class AbstractTela(ABC):
 
     def pegar_dose(self, mensagem: str = ""):
         while True:
-            valor_lido = input(mensagem)
+            valor_lido = mensagem
             try:
                 if not valor_lido.isdigit():
                     raise CaracterAlfabeticoExcecao
@@ -127,20 +145,6 @@ class AbstractTela(ABC):
                 self.msg("Valor incorreto, digite um valor numérico inteiro válido (0,1 ou 2)")
             except DoseInvalida:
                 self.msg("Valor incorreto, insira apenas números (0,1 ou 2)")
-
-    def pegar_dose_vacina(self, mensagem: str = ""):
-        while True:
-            valor_lido = input(mensagem)
-            try:
-                if not valor_lido.isdigit():
-                    raise CaracterAlfabeticoExcecao
-                elif int(valor_lido) not in [1,2]:
-                    raise DoseInvalida
-                return valor_lido
-            except CaracterAlfabeticoExcecao:
-                self.msg("Valor incorreto, digite um valor numérico inteiro válido (1 ou 2)")
-            except DoseInvalida:
-                self.msg("Valor incorreto, insira apenas números (1 ou 2)")
 
     def pegar_coren(self, mensagem: str = ""):
         while True:

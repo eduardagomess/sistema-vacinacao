@@ -15,8 +15,8 @@ class TelaEditaTipoVacina(AbstractTela):
         sg.theme('DarkBlue')
         layout = [
             [sg.Text('Você pode editar os dados a seguir: ')],
-            [sg.Text('nome', size=(15, 1)), sg.InputText(tipo_vacina_editar.nome, key='nome')],
-            [sg.Text( "Quantidade de doses que a vacina requer", size=(15, 1)), sg.InputText(tipo_vacina_editar.num_doses, key='num_doses')],
+            [sg.Text('nome', size=(15, 1)), sg.InputText(tipo_vacina_editar[1], key='nome')],
+            [sg.Text( "Quantidade de doses que a vacina requer", size=(15, 1)), sg.InputText(tipo_vacina_editar[1], key='num_doses')],
             [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window('Cadastro de estoque').Layout(layout)
@@ -26,7 +26,7 @@ class TelaEditaTipoVacina(AbstractTela):
 
     def open(self):
         button, values = self.__window.Read()
-        return button, values
+        return values
 
     def close(self):
         self.__window.Close()

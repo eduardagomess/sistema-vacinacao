@@ -20,7 +20,7 @@ class TelaListaTipoVacina(AbstractTela):
 
     def open(self):
         button, values = self.__window.Read()
-        return button, values
+        return values
 
     def msg(self, msg: str):
         sg.popup_ok(msg)

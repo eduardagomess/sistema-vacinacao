@@ -14,7 +14,7 @@ class TipoVacina():
 
     @property
     def num_doses(self):
-        self.__num_doses = int(self.__num_doses)
+        self.__num_doses = self.__num_doses
         return self.__num_doses
 
     @nome.setter
