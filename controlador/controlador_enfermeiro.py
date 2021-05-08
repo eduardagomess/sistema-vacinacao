@@ -93,7 +93,7 @@ class ControladorEnfermeiro:
                     novo_enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     self.__enfermeiros.append(novo_enfermeiro)
                     self.__tela_inserir_enfermeiro.close()
-                    sg.popup("Cadastramento", "Enfermeiro cadastrado com sucesso")  
+                    sg.popup("Cadastramento", "Enfermeiro cadastrado com sucesso!")  
                     cadastro = False
                     break
                 
@@ -105,12 +105,11 @@ class ControladorEnfermeiro:
 
     def listar_enfermeiros(self):
         if self.__enfermeiros == []:
-            sg.popup("Erro", "Ainda não há enfermeiros cadastrados")
+            sg.popup("Erro", "Ainda não há enfermeiros cadastrados!")
         else:
-            for enfermeiro in self.__enfermeiros:
-                self.__tela_listagem.init_components(enfermeiro, "enfermeiro")
-                self.__tela_listagem.open()
-                self.__tela_listagem.close()
+            self.__tela_listagem.init_components(self.__enfermeiros, "enfermeiro")
+            self.__tela_listagem.open()
+            self.__tela_listagem.close()
 
     def listar_pacientes(self):
         enfermeiro = self.buscar_enfermeiro()
@@ -123,10 +122,15 @@ class ControladorEnfermeiro:
                 sg.print(paciente.nome)
     
     def buscar_enfermeiro(self):
-        self.__tela_buscar_enfermeiro.init_components()
         button, value = self.__tela_buscar_enfermeiro.open()
         self.__tela_buscar_enfermeiro.close()
         id = value[0]
+        try:
+            if not id.isdigit():
+                raise Exception
+        except Exception:
+            sg.Popup("Número inválido","Insira apenas números")
+            self.busca_enfermeiro()
         if button == "Sair":
             self.controlador_sistema.tela_sistema()
         else:
@@ -233,7 +237,7 @@ class ControladorEnfermeiro:
     def excluir_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == None:
-            sg.popup("Erro", "Enfermeiro não cadastrado")
+            sg.popup("Erro", "Enfermeiro não cadastrado!")
         else:
             self.__enfermeiros.remove(enfermeiro)
             sg.popup("Remoção", "Enfermeiro removido com sucesso!")

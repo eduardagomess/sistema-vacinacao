@@ -11,42 +11,48 @@ class TelaListagem():
         sg.ChangeLookAndFeel('Reddit') 
 
         if tipo == "paciente":
-            
-            layout =[
-                [sg.Text('Nome do paciente: ' + informacoes.nome.title(), size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('Telefone do paciente: ' + informacoes.telefone, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('CPF do paciente: ' + informacoes.cpf, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('Endereço do paciente: ' + informacoes.endereco.mostrar_endereco(), size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('Data de nascimento do paciente: '+ informacoes.data_nascimento, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Button('Sair')]
-            ]
 
-            self.__window = sg.Window("Tela paciente").layout(layout)
+            lista = [[sg.Text('Paciente(s) cadastrado(s)', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
+
+            for paciente in informacoes:
+                lista += [[sg.Text('Nome do paciente: ' + paciente.nome.title() + "\n" 
+                + 'Telefone do paciente: ' + paciente.telefone + "\n" + 'CPF do paciente: '
+                + paciente.cpf + "\n" + 'Endereço do paciente: ' + paciente.endereco.mostrar_endereco() + "\n" 
+                +  'Data de nascimento do paciente: ' + paciente.data_nascimento,  font=("Helvetica", 15))]]
+
+            layout = lista
+
+            self.__window = sg.Window('Relatório de Pacientes', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
+
         
         elif tipo == "enfermeiro":
-            layout =[
-                [sg.Text('Nome do enfermeiro: ' + informacoes.nome.title(), size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('Telefone do enfermeiro: ' + informacoes.telefone, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('CPF do enfermeiro: ' + informacoes.cpf, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('COREN do enfermeiro: ' + informacoes.coren, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Button('Sair')]
-            ]
 
-            self.__window = sg.Window("Tela enfermeiro").layout(layout)
+            lista = [[sg.Text('Enfermeiro(s) cadastrado(s)', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
+
+            for enfermeiro in informacoes:
+                lista += [[sg.Text('Nome do enfermeiro: ' + enfermeiro.nome.title() + "\n" 
+                + 'Telefone do enfermeiro: ' + enfermeiro.telefone + "\n" + 'CPF do enfermeiro: ' 
+                + enfermeiro.cpf + "\n" + 'COREN do enfermeiro: ' + enfermeiro.coren + "\n", font=("Helvetica", 15))]]
+            
+            layout = lista
+
+            self.__window = sg.Window('Relatório de Enfermeiros', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
+        
         
         elif tipo == "agendamento":
-            layout =[
 
-                [sg.Text("Nome do paciente: " + informacoes["paciente"].nome.title(), size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text("A vacina está marcada para " + informacoes["agendamento"][0] + " às " + informacoes["agendamento"][1], size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text("Nome do Enfermeiro(a): " + informacoes["enfermeiro"].nome.title(), size=(80, 1), font=("Helvetica", 15))],
-                [sg.Text('COREN do enfermeiro: ' + informacoes["enfermeiro"].coren, size=(80, 1), font=("Helvetica", 15))],
-                [sg.Button('Sair')]
-            ]
+            lista = [[sg.Text('Agendamento(s) cadastrado(s)', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
 
-            self.__window = sg.Window("Tela enfermeiro").layout(layout)
+            for agendamento in informacoes:
+                lista += [[sg.Text('Nome do paciente: ' + agendamento["paciente"].nome.title() + "\n" 
+                + 'A vacina está marcada para ' + agendamento["agendamento"][0] + " às " + agendamento["agendamento"][1] + "\n" 
+                + 'Nome do Enfermeiro(a): ' + agendamento["enfermeiro"].nome.title() + "\n" + 
+                'COREN do enfermeiro: ' + agendamento["enfermeiro"].coren + "\n", font=("Helvetica", 15))]]
+            
+            layout = lista
 
-    
+            self.__window = sg.Window('Relatório de Agendamentos', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
+
     def open(self):
         self.init_components(None, None)
         button, values = self.__window.Read()

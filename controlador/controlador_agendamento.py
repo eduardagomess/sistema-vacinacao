@@ -28,7 +28,7 @@ class ControladorAgendamento:
         paciente = controlador_paciente.buscar_paciente()
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado!")
-            controlador_paciente.inserir_paciente(None, None, None, None, None, None, None, None)
+            paciente = controlador_paciente.inserir_paciente(None, None, None, None, None, None, None, None)
             enfermeiro_escolhido = controlador_enfermeiro.buscar_enfermeiro()
             if enfermeiro_escolhido == None:
                 sg.popup("Erro", "Enfermeiro não cadastrado!")

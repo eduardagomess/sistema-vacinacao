@@ -159,7 +159,8 @@ class ControladorPaciente:
                     self.__tela_inserir_paciente.close()
                     sg.popup("Cadastramento", "Paciente cadastrado com sucesso")  
                     cadastro = False
-                    break
+                    return novo_paciente
+                    #break
                 except ValueError:
                     sg.popup("Erro", "Paciente já cadastrado!")
                     self.__tela_inserir_paciente.close()
@@ -170,10 +171,9 @@ class ControladorPaciente:
         if self.__pacientes == []:
             sg.popup("Erro", "Ainda não há pacientes cadastrados")
         else:
-            for paciente in self.__pacientes:
-                self.__tela_listagem.init_components(paciente, "paciente")
-                self.__tela_listagem.open()
-                self.__tela_listagem.close()
+            self.__tela_listagem.init_components(self.__pacientes, "paciente")
+            self.__tela_listagem.open()
+            self.__tela_listagem.close()
 
     def buscar_paciente(self):
         self.__tela_bucar_paciente.init_components()

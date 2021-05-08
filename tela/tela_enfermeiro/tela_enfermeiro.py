@@ -10,7 +10,7 @@ class TelaEnfermeiro():
 
 
     def init_components(self):
-        sg.theme('DarkBlue')
+        sg.ChangeLookAndFeel('Reddit') 
         layout =[
 
             [sg.Text('Área de Enfermeiro', size=(20, 1), font=("Helvetica", 15))],
