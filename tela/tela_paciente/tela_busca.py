@@ -10,6 +10,7 @@ class TelaBuscaPaciente():
 
     
     def init_components(self):
+        sg.ChangeLookAndFeel('Reddit') 
         layout =[
                 [sg.Text('Insira o nome ou cpf do paciente', size=(30, 1)), sg.InputText()],
                 [sg.Button('Aplicar'), sg.Button('Sair')]

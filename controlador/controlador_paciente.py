@@ -205,8 +205,7 @@ class ControladorPaciente:
 
     def editar_paciente(self):
         paciente = self.buscar_paciente()
-        dados = {"nome": paciente.nome, "telefone":paciente.telefone, "cpf":paciente.cpf,
-        "bairro":paciente.endereco.bairro, "rua":paciente.endereco.rua, "numero":paciente.endereco.numero, "complemento":paciente.endereco.complemento, "data_nascimento": paciente.data_nascimento}
+    
         if paciente == None:
             sg.popup("Erro","Paciente não cadastrado")
             self.__tela_opcoes.close()

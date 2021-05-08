@@ -8,7 +8,7 @@ class TelaSistema():
         self.init_components()
 
     def init_components(self):
-        sg.theme('DarkBlue')
+        sg.ChangeLookAndFeel('Reddit') 
         layout =[
 
             [sg.Text('Sistema de Vacinação', size=(20, 1), font=("Helvetica", 15))],

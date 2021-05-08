@@ -7,10 +7,11 @@ class TelaListagem():
         self.__window = None
         self.init_components(None, None)
 
-    def init_components(self, informacoes, tipo_pessoa):
-        sg.theme('DarkBlue')
+    def init_components(self, informacoes, tipo):
+        sg.ChangeLookAndFeel('Reddit') 
 
-        if tipo_pessoa == "paciente":
+        if tipo == "paciente":
+            
             layout =[
                 [sg.Text('Nome do paciente: ' + informacoes.nome.title(), size=(80, 1), font=("Helvetica", 15))],
                 [sg.Text('Telefone do paciente: ' + informacoes.telefone, size=(80, 1), font=("Helvetica", 15))],
@@ -22,17 +23,32 @@ class TelaListagem():
 
             self.__window = sg.Window("Tela paciente").layout(layout)
         
-        else:
+        elif tipo == "enfermeiro":
             layout =[
-                [sg.Text('Sistema de Vacinação', size=(20, 1), font=("Helvetica", 15))],
-                [sg.Radio('Área de pacientes', "AREA", key=1)],
+                [sg.Text('Nome do enfermeiro: ' + informacoes.nome.title(), size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text('Telefone do enfermeiro: ' + informacoes.telefone, size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text('CPF do enfermeiro: ' + informacoes.cpf, size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text('COREN do enfermeiro: ' + informacoes.coren, size=(80, 1), font=("Helvetica", 15))],
                 [sg.Button('Sair')]
             ]
 
-            self.__window = sg.Window("Tela paciente").layout(layout)
-            
+            self.__window = sg.Window("Tela enfermeiro").layout(layout)
+        
+        elif tipo == "agendamento":
+            layout =[
+
+                [sg.Text("Nome do paciente: " + informacoes["paciente"].nome.title(), size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text("A vacina está marcada para " + informacoes["agendamento"][0] + " às " + informacoes["agendamento"][1], size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text("Nome do Enfermeiro(a): " + informacoes["enfermeiro"].nome.title(), size=(80, 1), font=("Helvetica", 15))],
+                [sg.Text('COREN do enfermeiro: ' + informacoes["enfermeiro"].coren, size=(80, 1), font=("Helvetica", 15))],
+                [sg.Button('Sair')]
+            ]
+
+            self.__window = sg.Window("Tela enfermeiro").layout(layout)
+
     
     def open(self):
+        self.init_components(None, None)
         button, values = self.__window.Read()
         return button, values
 

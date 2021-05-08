@@ -1,17 +1,17 @@
 import PySimpleGUI as sg 
 
 
-class TelaBuscaPaciente():
+class TelaBuscaEnfermeiro():
 
-    def __init__(self, controlador_paciente):
-        self.__controlador_paciente = controlador_paciente
+    def __init__(self, controlador_enfermeiro):
+        self.__controlador_enfermeiro = controlador_enfermeiro
         self.__window = None
         self.init_components()
 
     
     def init_components(self):
         layout =[
-                [sg.Text('Insira o nome ou coren do enfermeiro', size=(30, 1)), sg.InputText()],
+                [sg.Text('Insira o coren do enfermeiro', size=(30, 1)), sg.InputText()],
                 [sg.Button('Aplicar'), sg.Button('Sair')]
             ]
         self.__window = sg.Window("Tela Enfermeiro").layout(layout)

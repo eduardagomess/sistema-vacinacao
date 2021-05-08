@@ -22,7 +22,7 @@ class TelaAgendamento(AbstractTela):
         print(self.colorir_titulo("---------------- AGENDAMENTO ----------------"))
         dia = {1: "segunda", 2: "terca", 3: "quarta", 4: "quinta", 5: "sexta"}
         opcao = self.pega_dia()
-        horarios_preenchidos = agenda[dia[opcao].title()]
+        horarios_preenchidos = agenda[dia[oq.title()]
         horarios_disponiveis = self.mostra_horas(horarios_preenchidos)
         hora = int(self.pegar_num("Insira o numero referente a hora escolhida: "))
         return [dia[opcao], horarios_disponiveis[hora]]

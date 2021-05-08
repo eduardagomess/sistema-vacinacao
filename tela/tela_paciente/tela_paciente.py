@@ -10,7 +10,7 @@ class TelaPaciente():
 
 
     def init_components(self):
-        sg.theme('DarkBlue')
+        sg.ChangeLookAndFeel('Reddit')
         layout =[
 
             [sg.Text('Área de Pacientes', size=(20, 1), font=("Helvetica", 15))],
@@ -33,7 +33,4 @@ class TelaPaciente():
 
     def msg(self, msg: str):
         self.__window.MsgBoxOK(msg)
-   
-       
-
     

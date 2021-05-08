@@ -9,7 +9,7 @@ class TelaInserirPaciente():
         self.init_components(None, None, None, None, None, None, None, None)  
     
     def init_components(self, nome, telefone, cpf, bairro, rua, numero, complemento, data_nascimento):
-        sg.ChangeLookAndFeel('Reddit')
+        sg.ChangeLookAndFeel('Reddit') 
     
         layout = [
             [sg.Text('Preencha os campos a seguir')],  
