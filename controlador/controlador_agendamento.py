@@ -4,8 +4,8 @@ from tela.tela_agendamento.tela_inserir_agendamento_dia import TelaInserirDia
 from tela.tela_agendamento.tela_inserir_agendamento_hora import TelaInserirHora
 from tela.tela_agendamento.tela_mudanca_agendamento import TelaMudancaAgendamento
 from tela.tela_paciente.tela_listagem import TelaListagem
-from utils import estilo
 from entidade.agendamento import Agendamento
+from utils import estilo
 import PySimpleGUI as sg
 import time
 
@@ -29,12 +29,10 @@ class ControladorAgendamento:
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado!")
             paciente = controlador_paciente.inserir_paciente(None, None, None, None, None, None, None, None)
-            enfermeiro_escolhido = controlador_enfermeiro.buscar_enfermeiro()
-            if enfermeiro_escolhido == None:
+            enfermeiro= controlador_enfermeiro.buscar_enfermeiro()
+            if enfermeiro == None:
                 sg.popup("Erro", "Enfermeiro não cadastrado!")
-                controlador_enfermeiro.inserir_enfermeiro(None, None, None, None)
-                paciente = controlador_paciente.buscar_paciente()
-                enfermeiro_escolhido = controlador_enfermeiro.buscar_enfermeiro()
+                enfermeiro_escolhido = controlador_enfermeiro.inserir_enfermeiro(None, None, None, None)
                 button, value_dia = self.__tela_inserir_dia.open()
                 self.__tela_inserir_dia.close()
                 dia = value_dia["dia_da_semana"].lower().capitalize()
@@ -48,7 +46,6 @@ class ControladorAgendamento:
                     sg.popup("Agendamento realizado com sucesso!")
                 else:
                     sg.popup("Data não disponível")
-            
         else:
             if paciente.nome in self.__agendamento.agendamentos:
                 sg.popup("Paciente já possui agendamento")
@@ -57,23 +54,22 @@ class ControladorAgendamento:
                 if enfermeiro_escolhido == None:
                     sg.popup("Erro", "Enfermeiro não cadastrado!")
                     enfermeiro_escolhido = controlador_enfermeiro.inserir_enfermeiro(None, None, None, None)
-                
-                button, value_dia = self.__tela_inserir_dia.open()
-                self.__tela_inserir_dia.close()
-                dia = value_dia["dia_da_semana"].lower().capitalize()
-                self.__tela_inserir_hora.init_components(self.__agendamento.agenda[dia])
-                button, value_hora = self.__tela_inserir_hora.open()
-                hora = value_hora["horario"]
-                self.__tela_inserir_hora.close()
-                print(self.__agendamento.agenda[dia])
-                if hora in self.__agendamento.agenda[dia]:
-                    self.__agendamento.agenda[dia].remove(hora)
-                    self.__agendamento.agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
-                    print(self.__agendamento.agendamentos)
-                    print(self.__agendamento.agendamentos[paciente.nome])
-                    sg.popup("Agendamento realizado com sucesso!")
-                else:
-                    sg.popup("Data não disponível")
+                    button, value_dia = self.__tela_inserir_dia.open()
+                    self.__tela_inserir_dia.close()
+                    dia = value_dia["dia_da_semana"].lower().capitalize()
+                    self.__tela_inserir_hora.init_components(self.__agendamento.agenda[dia])
+                    button, value_hora = self.__tela_inserir_hora.open()
+                    hora = value_hora["horario"]
+                    self.__tela_inserir_hora.close()
+                    print(self.__agendamento.agenda[dia])
+                    if hora in self.__agendamento.agenda[dia]:
+                        self.__agendamento.agenda[dia].remove(hora)
+                        self.__agendamento.agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
+                        print(self.__agendamento.agendamentos)
+                        print(self.__agendamento.agendamentos[paciente.nome])
+                        sg.popup("Agendamento realizado com sucesso!")
+                    else:
+                        sg.popup("Data não disponível")
 
     def buscar_agendamento(self):
         controlador_paciente = self.__controlador_sistema.controlador_paciente
@@ -101,6 +97,7 @@ class ControladorAgendamento:
                 sg.popup("Paciente ainda não possui agendamento")
             else:
                 button, value = self.__tela_mudanca_agendamento.open()
+                
                 if value["dia"]:
                     button, value_dia = self.__tela_inserir_dia.open()
                     self.__tela_inserir_dia.close()

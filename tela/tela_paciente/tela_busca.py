@@ -8,16 +8,15 @@ class TelaBuscaPaciente():
         self.__window = None
         self.init_components()
 
-    
     def init_components(self):
         sg.ChangeLookAndFeel('Reddit') 
         layout =[
-                [sg.Text('Insira o nome ou cpf do paciente', size=(30, 1)), sg.InputText()],
-                [sg.Button('Aplicar'), sg.Button('Sair')]
+
+                [sg.Text('Insira o cpf do paciente', size=(20, 1), font=("Helvetica", 16)), sg.InputText()],
+                [sg.Button('Aplicar', font=("Helvetica", 15),size=(5,1)), sg.Button('Sair', font=("Helvetica", 15),size=(5,1))]
             ]
         self.__window = sg.Window("Tela Paciente").layout(layout)
- 
-    
+
     def open(self):
         self.init_components()
         button, values = self.__window.Read()

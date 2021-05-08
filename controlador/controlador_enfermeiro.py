@@ -95,7 +95,7 @@ class ControladorEnfermeiro:
                     self.__tela_inserir_enfermeiro.close()
                     sg.popup("Cadastramento", "Enfermeiro cadastrado com sucesso!")  
                     cadastro = False
-                    break
+                    return novo_enfermeiro
                 
                 except ValueError:
                     sg.popup("Erro", "Enfermeiro já cadastrado!")
