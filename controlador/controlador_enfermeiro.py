@@ -33,7 +33,7 @@ class ControladorEnfermeiro:
                     elif len(nome.replace(" ", "")) < 5:
                         raise NomeInvalido  
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras", size=(20,20))
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(None, dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     break
