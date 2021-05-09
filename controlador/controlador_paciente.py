@@ -19,7 +19,6 @@ import datetime
 
 class ControladorPaciente:
     def __init__(self, controlador_sistema):
-        #self.__pacientes = []
         self.__pacienteDAO = PacienteDAO()
         self.__tela_paciente = TelaPaciente(self)
         self.__tela_inserir_paciente = TelaInserirPaciente(self)
@@ -150,20 +149,16 @@ class ControladorPaciente:
                     self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"],dados_paciente["cpf"],  dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],dados_paciente["complemento"], None)
                     break
                 try:
-                    #for paciente in self.__pacientes:
                     for paciente in self.__pacienteDAO.get_all():
                         if paciente.cpf == dados_paciente["cpf"]:
                             raise ValueError
                     novo_paciente = Paciente(nome, telefone, cpf, data_nascimento)
                     novo_paciente.determinar_endereco(bairro, rua, numero,complemento)
-                    #self.__pacientes.append(novo_paciente)
-                    print("chegou no add")
                     self.__pacienteDAO.add(novo_paciente)
                     self.__tela_inserir_paciente.close()
                     sg.popup("Paciente cadastrado com sucesso", font=("Helvetica", 15, "bold"), text_color='#4682B4') 
                     cadastro = False
                     return novo_paciente
-                    #break
                 except ValueError:
                     sg.popup("Erro", "Paciente já cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
@@ -174,7 +169,6 @@ class ControladorPaciente:
 
                 
     def listar_pacientes(self):
-        #if self.__pacientes == []:
         if self.__pacienteDAO.get_all() == []:
             sg.popup("Erro", "Ainda não há pacientes cadastrados", font=("Helvetica", 15, "bold"), text_color='red')
         else:
@@ -201,7 +195,6 @@ class ControladorPaciente:
         except CpfInvalido:
             sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944",font=("Helvetica", 15, "bold"), text_color='red')
             self.buscar_paciente()
-        #for paciente in self.__pacientes:
         for paciente in self.__pacienteDAO.get_all():
             if paciente.cpf == id:
                 return paciente
@@ -391,7 +384,6 @@ class ControladorPaciente:
             sg.popup("Erro", "Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
             self.__pacienteDAO.remove(paciente)
-            #self.__pacientes.remove(paciente)
             sg.popup("Remoção", "Paciente removido com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
 
     def retornar_sistema(self):

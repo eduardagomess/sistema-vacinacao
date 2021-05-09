@@ -42,9 +42,7 @@ class ControladorAgendamento:
                 if hora in self.__agendamentoDAO.get().agenda[dia]:
                     self.__agendamentoDAO.get().agenda[dia].remove(hora)
                     self.__agendamentoDAO.save()
-                    print("salvando paciente")
                     self.__agendamentoDAO.get().agendamentos[paciente.nome] = {"paciente": paciente, "agendamento": [dia, hora], "enfermeiro": enfermeiro_escolhido}
-                    print(self.__agendamentoDAO.get())
                     self.__agendamentoDAO.save()
                     sg.popup("Agendamento realizado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 else:
@@ -101,7 +99,6 @@ class ControladorAgendamento:
                 self.__tela_listagem.open()
                 self.__tela_listagem.close()
                 
-
     def editar_agendamento(self):
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
@@ -133,7 +130,6 @@ class ControladorAgendamento:
                             self.__agendamentoDAO.get().agendamentos[paciente.nome]["agendamento"][1] = hora_nova
                             self.__agendamentoDAO.save()
 
-
                 elif value["hora"]:
                     dia = self.__agendamentoDAO.get().agendamentos[paciente.nome]["agendamento"][0]
                     self.__agendamentoDAO.get().agenda[dia].insert(0, self.__agendamentoDAO.get().agendamentos[paciente.nome]["agendamento"][1])
@@ -144,7 +140,6 @@ class ControladorAgendamento:
                     self.__tela_inserir_hora.close()
                     sg.popup("Alteração feita com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                    
-
                 elif value["dia/hora"]:
                     button, value_dia = self.__tela_inserir_dia.open() 
                     self.__tela_inserir_dia.close()
@@ -167,7 +162,6 @@ class ControladorAgendamento:
                             self.__agendamentoDAO.get().agendamentos[paciente.nome]["agendamento"][0] = dia
                             self.__agendamentoDAO.get().agendamentos[paciente.nome]["agendamento"][1] = hora_nova
                             self.__agendamentoDAO.save()
-
                 else:
                     enfermeiro = controlador_enfermeiro.buscar_enfermeiro()
                     if enfermeiro == None:
@@ -215,7 +209,6 @@ class ControladorAgendamento:
         
         while True:
             button, values = self.__tela_agendamento.open()
-            print(values)
             if button == "Sair":
                 break
             else:

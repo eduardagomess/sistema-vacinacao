@@ -19,8 +19,6 @@ class AgendamentoDAO:
         self.__cache = pickle.load(open(self.__data_source, "rb"))
 
     def save(self):
-        print("ta no save")
-        print(self.__cache.agendamentos)
         self.__dump()
 
     def get(self):

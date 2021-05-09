@@ -18,7 +18,6 @@ import PySimpleGUI as sg
 class ControladorEnfermeiro:
 
     def __init__(self, controlador_sistema):
-        #self.__enfermeiros = []
         self.__enfermeiroDAO = EnfermeiroDAO()
         self.__tela_enfermeiro = TelaEnfermeiro(self)
         self.__tela_inserir_enfermeiro = TelaInserirEnfermeiro(self)
@@ -275,4 +274,3 @@ class ControladorEnfermeiro:
                         else:
                             opcoes[index]()
                     index += 1
-
