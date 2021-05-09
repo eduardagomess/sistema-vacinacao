@@ -36,7 +36,11 @@ class ControladorEstoque:
         controlador_vacina = self.__controlador_sistema.controlador_tipo_vacina
         dados_vacina = self.__tela_registro_estoque.open()
         nao_cadastrado = True
-        for tipo_de_vacina in controlador_vacina.tipos_de_vacinas:
+        #tipo_vacina = controlador_vacina.busca_vacina(dados_vacina["nome"]
+        #tipo_vacina is None --> vacina não existe
+        #ao instanciar o estoque, passar tipo_vacina
+        for tipo_de_vacina in controlador_vacina.__tipos_de_vacinas:
+            #dados vacina opassa como parametro pra outro metodo do tipovacina
             if tipo_de_vacina.nome == dados_vacina["nome"]:
                 nao_cadastrado = False
                 novo_registro_estoque = Estoque(dados_vacina["nome"], dados_vacina["qtd"],

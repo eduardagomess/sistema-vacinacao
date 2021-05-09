@@ -7,21 +7,21 @@ class TelaRegistroTipoVacina(AbstractTela):
     def __init__(self, controlador_tipo_vacina):
         self.__controlador_tipo_vacina = controlador_tipo_vacina
         self.__window = None
-        self.pega_dados_vacina()
+        self.pega_dados_vacina(None, None)
 
-    def pega_dados_vacina(self):
+    def pega_dados_vacina(self, nome, num_doses):
         sg.theme('DarkBlue')
         layout = [
             [sg.Text('Insira os dados a seguir')],
-            [sg.Text('Nome da vacina: ', size=(15, 1)), sg.InputText('nome', key='nome')],
-            [sg.Text('Quantidade de doses que a vacina requer: ', size=(15, 1)), sg.InputText('número de doses', key='num_doses')],
+            [sg.Text('Nome da vacina: ', size=(15, 1)), sg.InputText(nome, key='nome')],
+            [sg.Text('Quantidade de doses que a vacina requer: ', size=(15, 1)), sg.InputText(num_doses, key='num_doses')],
             [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window('Sistema de Vacinação').Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()
-        return values
+        return button, values
 
     def close(self):
         self.__window.Close()
