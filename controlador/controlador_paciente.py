@@ -312,11 +312,8 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome, paciente.telefone, paciente.cpf, None, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 except NomeInvalido:
-<<<<<<< HEAD
                     sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
-=======
-                    ssg.Popup("Bairro inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
->>>>>>> 57e969fe5e17e91b64c04610eab15a8caa299f41
+                    sg.Popup("Bairro inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, None,paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         

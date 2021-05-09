@@ -1,6 +1,7 @@
 from tela.tela_abstrata import AbstractTela
 import PySimpleGUI as sg
 
+
 class TelaBuscaEstoque(AbstractTela):
     def __init__(self, controlador_estoque):
         super().__init__()
@@ -9,26 +10,20 @@ class TelaBuscaEstoque(AbstractTela):
         self.init_components()
 
     def init_components(self):
-        sg.theme('DarkBlue')
+        sg.theme('Reddit')
         layout = [
             [sg.Text("Escolha o método de busca desejado: ")],
-            [sg.Text("Busca por nome"), sg.InputText('nome')],
-            [sg.Text("Busca por lote"), sg.InputText('lote')],
+            [sg.Radio('Nome', 'BUSCA'), sg.Radio('Lote', 'BUSCA')],
+            [sg.InputText('Pfizer', key='nome')],
             [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window("Sistema de Posto").Layout(layout)
 
     def open(self):
-        botao, valores = self.__window.Read()
-        if botao is None or botao == "Sair":
+        button, valores = self.__window.Read()
+        if button is None or button == "Sair":
             self.close()
-        return valores
+        return button, valores
 
     def close(self):
         self.__window.Close()
-
-    def msg(self, msg: str):
-        self.__window.MsgBoxOK(msg)
-
-    #msgbox aparecendo o conteudo buscado
-

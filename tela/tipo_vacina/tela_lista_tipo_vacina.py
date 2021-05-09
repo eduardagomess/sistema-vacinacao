@@ -9,13 +9,12 @@ class TelaListaTipoVacina(AbstractTela):
         self.__controlador_tipo_vacina = controlador_tipo_vacina
         self.__window = None
 
-#BUG
     def init_components(self, tipo_vacinas):
         tps = []
         for tipo_vacina in tipo_vacinas:
             tp = "A vacina {} requer {} aplicações. ".format(tipo_vacina.nome, tipo_vacina.num_doses) + "\n"
             tps.append(tp)
-        sg.Popup("Vacinas encontradas", *tps, title = "Sistema de Posto")
+        sg.Popup("Vacinas encontradas: \n", *tps, title = "Sistema de Posto")
         return list(tps)
 
     def open(self):

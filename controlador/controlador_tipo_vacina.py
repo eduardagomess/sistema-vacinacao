@@ -16,7 +16,7 @@ class ControladorTipoVacina:
         self.__tela_menu_tipo_vacina = TelaMenuTipoVacina(self)
         self.__tela_busca_tipo_vacina = TelaBuscaTipoVacina(self)
         # self.__tipos_de_vacinas = [] vai pra classe TiposVacinaDAO
-        self.__tipos_de_vacinas = []
+        self.__tipos_de_vacinas = [TipoVacina('Pfizer', 2)]
         self.__controlador_sistema = controlador_sistema
         self.__tela_registro_tipo_vacina = TelaRegistroTipoVacina(self)
 
@@ -38,6 +38,8 @@ class ControladorTipoVacina:
                     novo_tipo_vacina = TipoVacina(nome, num_doses)
                     self.__tipos_de_vacinas.append(novo_tipo_vacina)
                     self.__tela_menu_tipo_vacina.msg("Resposta cadastrada com sucesso! ")
+        else:
+            self.retornar_sistema()
 
     def editar_tipo_vacina(self):
         button, tipo_vacina_editar = self.buscar_tipo_vacina(2)
@@ -78,11 +80,10 @@ class ControladorTipoVacina:
         button, nome = self.__tela_busca_tipo_vacina.open()
         if button == "Aplicar":
             self.__tela_busca_tipo_vacina.close()
-            if (self.__tipos_de_vacinas == []):
+            if self.__tipos_de_vacinas == []:
                     self.__tela_menu_tipo_vacina.msg("Não há vacinas cadastradas!!")
             else:
                 nome = self.__tela_menu_tipo_vacina.pegar_nome_vacina(nome[0])
-                print(nome)
                 for tipo_de_vacina in self.__tipos_de_vacinas:
                     if tipo_de_vacina.nome == nome and opcao == 1:
                         self.__tela_menu_tipo_vacina.mostra_tipo_vacina(tipo_de_vacina)

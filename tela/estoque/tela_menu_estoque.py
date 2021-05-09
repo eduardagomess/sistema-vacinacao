@@ -11,7 +11,7 @@ class TelaMenuEstoque(AbstractTela):
         self.mostra_opcoes_estoque()
 
     def mostra_opcoes_estoque(self):
-        sg.theme('DarkBlue')
+        sg.theme('Reddit')
         layout =[
 
             [sg.Text('Controle de estoque', size=(20, 1), font=("Helvetica", 15))],
@@ -20,24 +20,19 @@ class TelaMenuEstoque(AbstractTela):
             [sg.Radio('Listar estoque', "AREA", key=3)],
             [sg.Radio('Buscar estoque de uma vacina', "AREA", key=4)],
             [sg.Radio('Excluir estoque', "AREA", key=5)],
-            [sg.Button('Aplicar'), sg.Button('Sair')]
+            [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window('Sistema de Posto').Layout(layout)
 
     def open(self):
-        botao, valores = self.__window.Read()
-        if botao is None or botao == "Sair":
-            self.__window.close()
-        return botao, valores
+        button, values = self.__window.Read()
+        return button, values
 
     def close(self):
         self.__window.Close()
 
 #Vai para outro arquivo
     def mostra_dados(self, estoque):
-        if estoque == []:
-            self.msg("O ESTOQUE ESTÁ VAZIO!")
-        else:
             for vacina in estoque:
                 print("Nome da vacina: {}".format(self.colorir_info(vacina.nome)))
                 print("Número de aplicações que a vacina requer: {}".format(self.colorir_info(vacina.num_doses)))
@@ -45,12 +40,17 @@ class TelaMenuEstoque(AbstractTela):
                 print("Data de recebimento de lote: {}".format(self.colorir_info((vacina.data_recebimento))))
                 print("Número de lote: {}".format(self.colorir_info(vacina.lote)))
 
-    def mostra_dados_vacina(self, vacina):
-            print("Nome da vacina: {}".format(self.colorir_info(vacina.nome)))
-            print("Número de aplicações que a vacina requer: {}".format(self.colorir_info(vacina.num_doses)))
-            print("Número de doses em estoque: {}".format(self.colorir_info(vacina.qtd)))
-            print("Data de recebimento de lote: {}".format(self.colorir_info(vacina.data_recebimento)))
-            print("Número de lote: {}".format(self.colorir_info(vacina.lote)))
+    def mostra_dados_estoque(self, estoque):
+        self.msg("Vacina: {} \n Doses no sistema: {} \n Lote {} recebido em {}. \n ".format(estoque.tipo_vacina.nome, estoque.qtd, estoque.lote, estoque.data_recebimento))
+
+
+    def lista_estoque(self, estoque):
+        tps = []
+        for estoq in estoque:
+            tp = "Vacina: {} \n Doses no sistema: {} \n Lote {} recebido em {}. \n ".format(estoq.tipo_vacina.nome, estoq.qtd, estoq.lote, estoq.data_recebimento) + "\n"
+            tps.append(tp)
+        sg.Popup("Vacinas encontradas: \n", *tps, title = "Sistema de Posto")
+        return list(tps)
 
 #MENSAGENS
     def mostra_vacina_inexistente(self):
@@ -58,9 +58,6 @@ class TelaMenuEstoque(AbstractTela):
 
     def mostra_resposta_cadastrada(self):
         self.msg(" Resposta cadastrada com sucesso! ")
-
-    def mostra_mensagem_exclusao(self):
-        self.msg("ESTOQUE EXCLUÍDO COM SUCESSO!")
 
     def mostra_tipo_vacina(self, tipo_vacina):
         self.msg("Nome da vacina: {}".format(tipo_vacina.nome) +

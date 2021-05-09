@@ -22,7 +22,7 @@ class TelaMenuTipoVacina(AbstractTela):
             [sg.Radio('Excluir registro', "AREA", key=5)],
             [sg.Button('Aplicar'), sg.Button('Sair')]
         ]
-        self.__window = sg.Window('Sistema de Vacinação').Layout(layout)
+        self.__window = sg.Window('Sistema de Posto').Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()

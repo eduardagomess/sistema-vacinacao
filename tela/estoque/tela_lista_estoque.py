@@ -6,10 +6,3 @@ class TelaListaEstoque(AbstractTela):
         super().__init__()
         self.__window = None
         self.__controlador_estoque = controlador_estoque
-        self.init_components()
-
-    def init_components(self):
-        self.__window.close()
-
-    def close(self):
-        self.__window.Close()

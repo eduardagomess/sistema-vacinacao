@@ -14,7 +14,7 @@ class AbstractTela(ABC):
 
     @abstractmethod
     def __init__(self):
-        pass
+        self.__window = None
 
     def pegar_opcao(self, mensagem: str = "", inteiros_validos: [] = None):
         while True:
@@ -33,12 +33,7 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido"))
                 if inteiros_validos:
                     print(self.colorir_info("Valores válidos: "), (self.colorir_info(inteiros_validos)))
-<<<<<<< HEAD
-  
-=======
 
-
->>>>>>> 57e969fe5e17e91b64c04610eab15a8caa299f41
 
     def pegar_nome(self,  mensagem: str = ""):
         while True:
@@ -57,11 +52,21 @@ class AbstractTela(ABC):
     def pegar_nome_vacina(self, mensagem: str = ""):
         nome_vacina = mensagem
         try:
-            if len(nome_vacina.replace(" ", "")) < 5:
+            if len(nome_vacina) < 5:
                 raise NomeInvalido
             return nome_vacina.title()
         except NomeInvalido:
             sg.popup("Preencha o nome com no mínimo 5 caracteres")
+            return False
+
+    def pegar_quantidade(self, msg: str = ""):
+        qtd = msg
+        try:
+            if not qtd.isdigit():
+                raise CaracterAlfabeticoExcecao
+            return qtd
+        except CaracterAlfabeticoExcecao:
+            sg.popup("Quantidade deve conter apenas números!")
             return False
 
     def pegar_dose_vacina(self, mensagem: str = ""):
@@ -108,14 +113,14 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, o CPF deve conter 11 digitos, formatação: 12645974944"))
 
     def pegar_data_nascimento(self, mensagem: str = ""):
-        while True:
-            data_nascimento = input(mensagem)
-            formatacao = "%d/%m/%Y"
-            try:
-                datetime.datetime.strptime(data_nascimento, formatacao)
-                return data_nascimento
-            except ValueError:
-                print(self.colorir_erro("Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA"))
+        data_nascimento = mensagem
+        formatacao = "%d/%m/%Y"
+        try:
+            datetime.datetime.strptime(data_nascimento, formatacao)
+            return data_nascimento
+        except ValueError:
+            sg.popup("Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
+            return False
 
     def pegar_complemento(self, mensagem: str = ""):
         while True:
@@ -166,7 +171,8 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, o COREN deve conter 6 digitos, formatação: 123456"))
 
     def open(self):
-        pass
+        button, values = self.__window.Read()
+        return values
 
     def close(self):
         pass
