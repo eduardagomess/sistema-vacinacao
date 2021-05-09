@@ -5,8 +5,8 @@ from abc import ABC, abstractmethod
 class DAO(ABC):
 
     @abstractmethod
-    def __init__(self, data_source=''):
-        self.__data_source = data_source
+    def __init__(self, datasource: str = ''):
+        self.__data_source = datasource
         self.__cache = {}
         try:
             self.__load()
@@ -17,7 +17,7 @@ class DAO(ABC):
         pickle.dump(self.__cache, open(self.__data_source, "wb"))
 
     def __load(self):
-        self.__cache = pickle.load(self.__cache, open(self.__data_source, "rb"))
+        self.__cache = pickle.load(open(self.__data_source, "rb"))
 
     def add(self, key, obj):
         self.__cache[key] = obj
@@ -32,3 +32,9 @@ class DAO(ABC):
 
     def get_all(self):
         return self.__cache.values()
+
+    def get(self, key):
+        try:
+            return self.__cache[key]
+        except KeyError:
+            pass

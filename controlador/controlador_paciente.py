@@ -12,13 +12,15 @@ from excecao.telefone_invalido import TelefoneComNumeroInvalido
 from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
 import PySimpleGUI as sg
+from persistencia.pacienteDAO import PacienteDAO
 import datetime
 
 
 
 class ControladorPaciente:
     def __init__(self, controlador_sistema):
-        self.__pacientes = []
+        #self.__pacientes = []
+        self.__pacienteDAO = PacienteDAO()
         self.__tela_paciente = TelaPaciente(self)
         self.__tela_inserir_paciente = TelaInserirPaciente(self)
         self.__tela_bucar_paciente = TelaBuscaPaciente(self)
@@ -31,7 +33,6 @@ class ControladorPaciente:
         self.__tela_inserir_paciente.init_components(nome, telefone, cpf, bairro, rua, numero, complemento, data_nascimento)
         button, dados_paciente = self.__tela_inserir_paciente.open()
         cadastrado = True
-         
         if button == 'Salvar':
             while cadastrado:
                 nome = dados_paciente["nome"]
@@ -149,12 +150,15 @@ class ControladorPaciente:
                     self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"],dados_paciente["cpf"],  dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],dados_paciente["complemento"], None)
                     break
                 try:
-                    for paciente in self.__pacientes:
+                    #for paciente in self.__pacientes:
+                    for paciente in self.__pacienteDAO.get_all():
                         if paciente.cpf == dados_paciente["cpf"]:
                             raise ValueError
                     novo_paciente = Paciente(nome, telefone, cpf, data_nascimento)
                     novo_paciente.determinar_endereco(bairro, rua, numero,complemento)
-                    self.__pacientes.append(novo_paciente)
+                    #self.__pacientes.append(novo_paciente)
+                    print("chegou no add")
+                    self.__pacienteDAO.add(novo_paciente)
                     self.__tela_inserir_paciente.close()
                     sg.popup("Paciente cadastrado com sucesso", font=("Helvetica", 15, "bold"), text_color='#4682B4') 
                     cadastro = False
@@ -170,10 +174,11 @@ class ControladorPaciente:
 
                 
     def listar_pacientes(self):
-        if self.__pacientes == []:
+        #if self.__pacientes == []:
+        if self.__pacienteDAO.get_all() == []:
             sg.popup("Erro", "Ainda não há pacientes cadastrados", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__pacientes, "paciente")
+            self.__tela_listagem.init_components(self.__pacienteDAO.get_all(), "paciente")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 
@@ -196,7 +201,8 @@ class ControladorPaciente:
         except CpfInvalido:
             sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944",font=("Helvetica", 15, "bold"), text_color='red')
             self.buscar_paciente()
-        for paciente in self.__pacientes:
+        #for paciente in self.__pacientes:
+        for paciente in self.__pacienteDAO.get_all():
             if paciente.cpf == id:
                 return paciente
         return None
@@ -206,7 +212,7 @@ class ControladorPaciente:
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(paciente, "paciente_relatorio")
+            self.__tela_listagem.init_components(self.__pacienteDAO.get(paciente), "paciente_relatorio")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 
@@ -239,6 +245,7 @@ class ControladorPaciente:
                     self.inserir_paciente(None, paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, paciente.data_nascimento)
 
                 paciente.nome = nome
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("Nome do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close() 
 
@@ -262,6 +269,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,None, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.telefone = telefone
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("Telefone do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
                 
@@ -285,6 +293,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome, paciente.telefone, None, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.cpf = cpf
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("CPF do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
                  
@@ -308,6 +317,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, None,paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.endereco.bairro = bairro
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("Bairro do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
 
@@ -328,6 +338,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, None, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.endereco.rua = rua
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("Rua do paciente alterada com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
 
@@ -341,6 +352,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, None,paciente.endereco.complemento,paciente.data_nascimento)
                        
                 paciente.endereco.numero = numero
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("Némero residencial alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
 
@@ -354,6 +366,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, None,paciente.data_nascimento)
                     
                 paciente.endereco.complemento = numero
+                self.__pacienteDAO.add(paciente)
                 sg.Popup("Complemento alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
                 
@@ -368,6 +381,7 @@ class ControladorPaciente:
                         self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, pacinete.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, None)     
 
                     paciente.data_nascimento = data_nascimento
+                    self.__pacienteDAO.add(paciente)
                     sg.Popup("Data de nascimento alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                     self.__tela_inserir_paciente.close()
 
@@ -376,7 +390,8 @@ class ControladorPaciente:
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__pacientes.remove(paciente)
+            self.__pacienteDAO.remove(paciente)
+            #self.__pacientes.remove(paciente)
             sg.popup("Remoção", "Paciente removido com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
 
     def retornar_sistema(self):

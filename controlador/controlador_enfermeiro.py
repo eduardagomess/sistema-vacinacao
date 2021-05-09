@@ -10,6 +10,7 @@ from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
 from excecao.telefone_invalido import TelefoneComNumeroInvalido
 from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
+from persistencia.enfermeiroDAO import EnfermeiroDAO
 from utils import estilo
 import PySimpleGUI as sg
 
@@ -17,7 +18,8 @@ import PySimpleGUI as sg
 class ControladorEnfermeiro:
 
     def __init__(self, controlador_sistema):
-        self.__enfermeiros = []
+        #self.__enfermeiros = []
+        self.__enfermeiroDAO = EnfermeiroDAO()
         self.__tela_enfermeiro = TelaEnfermeiro(self)
         self.__tela_inserir_enfermeiro = TelaInserirEnfermeiro(self)
         self.__tela_buscar_enfermeiro = TelaBuscaEnfermeiro(self)
@@ -93,11 +95,11 @@ class ControladorEnfermeiro:
                     self.inserir_enfermeiro(dados_enfermeiro["nome"],dados_enfermeiro["telefone"],dados_enfermeiro["cpf"], None)
                     break
                 try:
-                    for enfermeiro in self.__enfermeiros:
+                    for enfermeiro in self.__enfermeiroDAO.get_all():
                         if enfermeiro.coren == dados_enfermeiro["coren"]:
                              raise ValueError
                     novo_enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
-                    self.__enfermeiros.append(novo_enfermeiro)
+                    self.__enfermeiroDAO.add(novo_enfermeiro)
                     self.__tela_inserir_enfermeiro.close()
                     sg.popup("Enfermeiro cadastrado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')  
                     cadastro = False
@@ -112,10 +114,10 @@ class ControladorEnfermeiro:
             self.__tela_inserir_enfermeiro.close()
 
     def listar_enfermeiros(self):
-        if self.__enfermeiros == []:
+        if self.__enfermeiroDAO.get_all() == []:
             sg.popup("Erro", "Ainda não há enfermeiros cadastrados!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__enfermeiros, "enfermeiro")
+            self.__tela_listagem.init_components(self.__enfermeiroDAO.get_all(), "enfermeiro")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 
@@ -145,7 +147,7 @@ class ControladorEnfermeiro:
             sg.Popup("Número inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
             self.buscar_enfermeiro()
         else:
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__enfermeiroDAO.get_all():
                 if enfermeiro.coren == id:
                     return enfermeiro
         return None
@@ -251,7 +253,7 @@ class ControladorEnfermeiro:
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__enfermeiros.remove(enfermeiro)
+            self.__enfermeiroDAO.remove(enfermeiro)
             sg.popup("Enfermeiro removido com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
 
     def retornar_sistema(self):
