@@ -41,6 +41,3 @@ class Paciente(Pessoa):
 
     def determinar_endereco(self, bairro: str, rua: str, numero: int, complemento: str):
         self.__endereco = Endereco(bairro, rua, numero, complemento)
-
-
-

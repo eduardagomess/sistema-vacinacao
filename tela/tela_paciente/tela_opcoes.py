@@ -21,7 +21,7 @@ class TelaOpcoes():
             [sg.Radio('Alterar data de nascimento', "AREA", font=("Helvetica", 15), key="data_nascimento")],
             [sg.Button('Aplicar', font=("Helvetica", 15),size=(5,1)), sg.Button('Sair', font=("Helvetica", 15),size=(5,1))]
         ]
-        self.__window = sg.Window("Área paciente", size=(500,200)).layout(layout)
+        self.__window = sg.Window("Área paciente", size=(500,280)).layout(layout)
         
     def open(self):
         self.init_components()
