@@ -1,7 +1,7 @@
 from tela.tela_paciente.tela_paciente import TelaPaciente
 from tela.tela_paciente.tela_inserir_paciente import TelaInserirPaciente
 from tela.tela_paciente.tela_busca import TelaBuscaPaciente
-from tela.tela_paciente.tela_listagem import TelaListagem
+from tela.tela_listagem import TelaListagem
 from tela.tela_paciente.tela_opcoes import TelaOpcoes
 from tela.tela_endereco.tela_endereco import TelaEndereco
 from entidade.paciente import Paciente
@@ -13,6 +13,7 @@ from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
 from excecao.dose_invalida import DoseInvalida
 import PySimpleGUI as sg
+import datetime
 
 
 
@@ -24,6 +25,7 @@ class ControladorPaciente:
         self.__tela_bucar_paciente = TelaBuscaPaciente(self)
         self.__tela_listagem = TelaListagem(self)
         self.__tela_opcoes_mudanca = TelaOpcoes(self)
+
         self.__tele_endereco = TelaEndereco(self)
         self.__controlador_sistema = controlador_sistema
 
@@ -41,12 +43,12 @@ class ControladorPaciente:
                     elif len(nome.replace(" ", "")) < 5:
                         raise NomeInvalido  
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Nome inválido","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(None, dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(None, dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
@@ -58,12 +60,12 @@ class ControladorPaciente:
                     elif len(telefone) < 10 or (len(telefone) > 13):
                         raise TelefoneComNumeroInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("Telefone inválido", "Valor incorreto, insira apenas números")
+                    sg.Popup("Telefone inválido", "Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"],None, dados_paciente["cpf"], dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
                 except TelefoneComNumeroInvalido:
-                    sg.Popup("Telefone inválido","Valor incorreto, o número deve conter de 10 a 11 digitos (incluíndo DDD)")
+                    sg.Popup("Telefone inválido","O número deve conter de 10 a 11 digitos (incluíndo DDD)", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"],None, dados_paciente["cpf"], dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
@@ -75,14 +77,14 @@ class ControladorPaciente:
                     elif len(cpf) != 11:
                         raise CpfInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("CPF inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("CPF inválido","Insira apenas números",font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"], None, dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
                 except CpfInvalido:
-                    sg.Popup("CPF inválido","Valor incorreto, o CPF deve conter 11 digitos, formatação: 12645974944")
+                    sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944",font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
-                    self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"], None, dados_paciente["data_nascimento"])
+                    self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"], None,dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
                 
                 bairro = dados_paciente["bairro"]
@@ -92,12 +94,12 @@ class ControladorPaciente:
                     elif len(bairro.replace(" ", "")) < 5:
                         raise NomeInvalido 
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Bairro inválido","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], None, dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Bairro inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], None, dados_paciente["rua"], dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
@@ -109,12 +111,12 @@ class ControladorPaciente:
                     elif len(rua.replace(" ", "")) < 5:
                         raise NomeInvalido
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Rua inválida","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["bairro"], None, dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Rua inválida","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["bairro"], None, dados_paciente["numero"], dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
@@ -124,7 +126,7 @@ class ControladorPaciente:
                     if not numero.isdigit():
                         raise Exception
                 except Exception:
-                    sg.Popup("Número inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("Número residencial inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["bairro"], dados_paciente["rua"], None, dados_paciente["complemento"],dados_paciente["data_nascimento"])
                     break
@@ -134,22 +136,20 @@ class ControladorPaciente:
                     if not complemento.replace(" ", "").isalnum():
                         raise Exception
                 except Exception:
-                    sg.Popup("Complemento inválido","Valor incorreto, insira apenas letras e numeros")
+                    sg.Popup("Complemento inválido","Insira apenas letras e numeros", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(dados_paciente["nome"], dados_paciente["telefone"], dados_paciente["cpf"], dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], None,dados_paciente["data_nascimento"])
                     break
 
                 data_nascimento = dados_paciente["data_nascimento"]
                 try:
-                    if not data_nascimento.replace("/", "").isdigit():
-                        raise ValueError
+                    formatacao = '%d/%m/%Y'
+                    datetime.datetime.strptime(data_nascimento, formatacao)
                 except ValueError:
-                    sg.Popup("Data inválida","Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
+                    sg.Popup("Data inválida","insira apenas números, com a seguite formatação: DD/MM/AAAA", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
-                    self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"],dados_paciente["cpf"],  dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"], None)
+                    self.inserir_paciente(dados_paciente["nome"],dados_paciente["telefone"],dados_paciente["cpf"],  dados_paciente["bairro"], dados_paciente["rua"], dados_paciente["numero"],dados_paciente["complemento"], None)
                     break
-                
-              
                 try:
                     for paciente in self.__pacientes:
                         if paciente.cpf == dados_paciente["cpf"]:
@@ -158,58 +158,68 @@ class ControladorPaciente:
                     novo_paciente.determinar_endereco(bairro, rua, numero,complemento)
                     self.__pacientes.append(novo_paciente)
                     self.__tela_inserir_paciente.close()
-                    sg.popup("Cadastramento", "Paciente cadastrado com sucesso")  
+                    sg.popup("Cadastramento", "Paciente cadastrado com sucesso", font=("Helvetica", 15, "bold"), text_color='#4682B4') 
                     cadastro = False
-                    break
+                    return novo_paciente
+                    #break
                 except ValueError:
-                    sg.popup("Erro", "Paciente já cadastrado!")
+                    sg.popup("Erro", "Paciente já cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
-                    self.inserir_paciente()
+                    self.inserir_paciente(None, None, None, None, None, None, None, None)
                     break
+        else:
+            self.__tela_inserir_paciente.close()
+
                 
     def listar_pacientes(self):
         if self.__pacientes == []:
-            sg.popup("Erro", "Ainda não há pacientes cadastrados")
+            sg.popup("Erro", "Ainda não há pacientes cadastrados", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            for paciente in self.__pacientes:
-                self.__tela_listagem.init_components(paciente, "paciente")
-                self.__tela_listagem.open()
-                self.__tela_listagem.close()
+            self.__tela_listagem.init_components(self.__pacientes, "paciente")
+            self.__tela_listagem.open()
+            self.__tela_listagem.close()
 
     def buscar_paciente(self):
+        print("antes da bagaça")
+        self.__tela_bucar_paciente.init_components()
         button, value = self.__tela_bucar_paciente.open()
         self.__tela_bucar_paciente.close()
+        print("chegou nessa bagaça")
+        id = value[0]
         if button == "Sair":
-            self.controlador_sistema.tela_sistema()
-        else:
-            id = value[0]
-            if id.isalpha():
-                for paciente in self.__pacientes:
-                    if paciente.nome == value[0]:
-                        return paciente
-                return None
-            else:
-                for paciente in self.__pacientes:
-                    if paciente.cpf == id:
-                        return paciente
-                return None
+            self.__tela_paciente.open()
+            return
+        try:
+            if not id.isdigit():
+                raise CaracterAlfabeticoExcecao
+            elif len(id) != 11:
+                raise CpfInvalido
+        except CaracterAlfabeticoExcecao:
+            sg.Popup("CPF inválido","Insira apenas números",font=("Helvetica", 15, "bold"), text_color='red')
+            self.buscar_paciente()
+        except CpfInvalido:
+            sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944",font=("Helvetica", 15, "bold"), text_color='red')
+            self.buscar_paciente()
+        for paciente in self.__pacientes:
+            if paciente.cpf == id:
+                return paciente
+        return None
 
     def busca_paciente(self):
+        print("busca_paciente")
         paciente = self.buscar_paciente()
         if paciente == None:
-            sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!")
+            sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(paciente, "paciente")
+            self.__tela_listagem.init_components(paciente, "paciente_relatorio")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 
     def editar_paciente(self):
         paciente = self.buscar_paciente()
-        print(paciente)
-        dados = {"nome": paciente.nome, "telefone":paciente.telefone, "cpf":paciente.cpf,
-        "bairro":paciente.endereco.bairro, "rua":paciente.endereco.rua, "numero":paciente.endereco.numero, "complemento":paciente.endereco.complemento, "data_nascimento": paciente.data_nascimento}
+    
         if paciente == None:
-            sg.popup("Erro","Paciente não cadastrado")
+            sg.popup("Erro","Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
             self.__tela_opcoes.close()
         
         else:
@@ -226,12 +236,12 @@ class ControladorPaciente:
                     elif len(nome.replace(" ", "")) < 5:
                         raise NomeInvalido  
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Nome inválido","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(None, paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, paciente.data_nascimento)
                    
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(None, paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, paciente.data_nascimento)
 
@@ -250,12 +260,12 @@ class ControladorPaciente:
                     elif len(telefone) < 10 or (len(telefone) > 13):
                         raise TelefoneComNumeroInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("Telefone inválido",  "Valor incorreto, insira apenas números")
+                    sg.Popup("Telefone inválido", "Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,None, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 except TelefoneComNumeroInvalido:
-                    sg.Popup("Telefone inválido", "Valor incorreto, o número deve conter de 10 a 11 digitos (incluíndo DDD)")
+                    sg.Popup("Telefone inválido", "O número deve conter de 10 a 11 digitos (incluíndo DDD)", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,None, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
@@ -274,12 +284,12 @@ class ControladorPaciente:
                     elif len(cpf) != 11:
                         raise CpfInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("CPF inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("CPF inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome, paciente.telefone, None, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                        
                 except CpfInvalido:
-                    sg.Popup("CPF inválido","Valor incorreto, o CPF deve conter 11 digitos, formatação: 12645974944")
+                    sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome, paciente.telefone, None, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
@@ -297,12 +307,16 @@ class ControladorPaciente:
                     elif len(bairro.replace(" ", "")) < 5:
                         raise NomeInvalido 
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido""Valor incorreto, insira apenas letras")
+                    sg.Popup("Bairro inválido", "Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome, paciente.telefone, paciente.cpf, None, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 except NomeInvalido:
+<<<<<<< HEAD
                     sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+=======
+                    ssg.Popup("Bairro inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
+>>>>>>> 57e969fe5e17e91b64c04610eab15a8caa299f41
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, None,paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
@@ -316,12 +330,12 @@ class ControladorPaciente:
                     elif len(rua.replace(" ", "")) < 5:
                         raise NomeInvalido
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Rua inválido","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, dados_paciente["bairro"], None, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Rua inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, None, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
@@ -334,7 +348,7 @@ class ControladorPaciente:
                     if not numero.isdigit():
                         raise Exception
                 except Exception:
-                    sg.Popup("Número inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("Número residencial inválido","Insira apenas caracteres numéricos", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, None,paciente.endereco.complemento,paciente.data_nascimento)
                        
@@ -346,7 +360,7 @@ class ControladorPaciente:
                     if not complemento.replace(" ", "").isalnum():
                         raise Exception
                 except Exception:
-                    sg.Popup("Complemento Inválido","Valor incorreto, insira apenas letras e numeros")
+                    sg.Popup("Complemento Inválido","Insira apenas letras e numeros", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, None,paciente.data_nascimento)
                     
@@ -360,7 +374,7 @@ class ControladorPaciente:
                         if not data_nascimento.replace("/", "").isdigit():
                             raise ValueError
                     except ValueError:
-                        sg.Popup("Data inválida","Valor incorreto, insira apenas números, com a seguite formatação: DD/MM/AAAA")
+                        sg.Popup("Data inválida","Insira apenas números, com a seguite formatação: DD/MM/AAAA", font=("Helvetica", 15, "bold"), text_color='red')
                         self.__tela_inserir_paciente.close()
                         self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, None)
                         
@@ -371,10 +385,10 @@ class ControladorPaciente:
     def excluir_paciente(self):
         paciente = self.buscar_paciente()
         if paciente == None:
-            sg.popup("Erro", "Paciente não cadastrado")
+            sg.popup("Erro", "Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
             self.__pacientes.remove(paciente)
-            sg.popup("Remoção", "Paciente removido com sucesso!")
+            sg.popup("Remoção", "Paciente removido com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
 
     def retornar_sistema(self):
         return self.__controlador_sistema
@@ -383,6 +397,7 @@ class ControladorPaciente:
         opcoes = {1: self.inserir_paciente, 2: self.listar_pacientes, 3: self.editar_paciente, 4: self.excluir_paciente, 5: self.busca_paciente}
         while True:
             button, values = self.__tela_paciente.open()
+            print(values)
             if button == "Sair":
                 break
             else:
@@ -392,5 +407,6 @@ class ControladorPaciente:
                         if index == 1:
                             opcoes[index](None, None, None, None, None, None, None, None) 
                         else:
-                             opcoes[index]()
+                            print("entrou no else")
+                            opcoes[index]()
                     index += 1
