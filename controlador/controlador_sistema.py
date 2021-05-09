@@ -5,6 +5,12 @@ from controlador.controlador_agendamento import ControladorAgendamento
 from controlador.controlador_paciente import ControladorPaciente
 from controlador.controlador_enfermeiro import ControladorEnfermeiro
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
+from excecao.nome_invalido import NomeInvalido
+from excecao.caracter_numerico import NomeComCaracterNumerico
+from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
+from excecao.telefone_invalido import TelefoneComNumeroInvalido
+from excecao.coren_invalido import CorenInvalido
+from excecao.cpf_invalido import CpfInvalido
 
 
 class ControladorSistema:

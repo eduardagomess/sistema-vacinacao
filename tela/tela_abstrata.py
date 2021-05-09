@@ -33,12 +33,6 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, digite um valor numérico inteiro válido"))
                 if inteiros_validos:
                     print(self.colorir_info("Valores válidos: "), (self.colorir_info(inteiros_validos)))
-<<<<<<< HEAD
-  
-=======
-
-
->>>>>>> 57e969fe5e17e91b64c04610eab15a8caa299f41
 
     def pegar_nome(self,  mensagem: str = ""):
         while True:
