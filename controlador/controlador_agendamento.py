@@ -104,15 +104,10 @@ class ControladorAgendamento:
                 sg.popup("Paciente sem agendamento!", font=("Helvetica", 15, "bold"), text_color='red')
             else:
                 agendamento = self.__agendamentoDAO.get().agendamentos[paciente.nome]
-<<<<<<< HEAD
+
                 self.__controlador_sistema.tela_listagem.init_components(agendamento, "agendamento")
                 self.__controlador_sistema.tela_listagem.open()
                 self.__controlador_sistema.tela_listagem.close()
-=======
-                self.__tela_listagem.init_components(agendamento, "agendamento")
-                self.__tela_listagem.open()
-                self.__tela_listagem.close()
->>>>>>> 3f33bbff2c36d6f20f4664e2db5b85494fc17e61
 
     def pega_inf_agendamento(self):
         paciente = self.__controlador_paciente.buscar_paciente()

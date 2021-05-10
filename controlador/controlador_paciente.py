@@ -163,7 +163,7 @@ class ControladorPaciente:
                     self.inserir_paciente(None, None, None, None, None, None, None, None)
                     break
         else:
-            self.__tela_inserir_paciente.close()
+            self.__tela_inserir_paciente.open()
 
                 
     def listar_pacientes(self):

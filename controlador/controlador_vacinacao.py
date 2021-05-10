@@ -53,9 +53,10 @@ class ControladorVacinacao:
         if agendamento:
             paciente = agendamento["paciente"]
             if self.__vacinacao_dao.get(paciente.cpf):
-                paciente = self.__vacinacao_dao.get(paciente.cpf)
+                #paciente = self.__vacinacao_dao.get(paciente.cpf)
+                vacinacao = self.__vacinacao_dao.get(paciente.cpf)
             enfermeiro = agendamento["enfermeiro"]
-            if paciente.dose == 0:
+            if vacinacao.paciente.dose == 0:
                 lotes, nomes = self.__controlador_estoque.estoques_disponiveis()
                 self.__tela_lista_estoques_compativeis.init_components(lotes, nomes)
                 button, values = self.__tela_lista_estoques_compativeis.open()
@@ -64,14 +65,15 @@ class ControladorVacinacao:
                     for value in values:
                         if value:
                             tipo_dose = value
-                            paciente.dose += 1
+                            vacinacao.paciente.dose = 1
+                            print(vacinacao.paciente.dose)
                             self.__controlador_estoque.vacina(tipo_dose)
                             vacinacao = Vacinacao(paciente, enfermeiro, paciente.dose, tipo_dose)
                             self.__tela_menu_vacinacao.msg("{} recebeu a primeira dose do lote {}!".format(paciente.nome, tipo_dose))
             elif paciente.dose == 1:
                 doses_da_vacina = self.__controlador_estoque.pega_doses(paciente.tipo_dose)
                 if doses_da_vacina == '2':
-                    paciente.dose = 1
+                    paciente.dose += 1
                     paciente = self.__vacinacao_dao.get(paciente.cpf)
                     self.__controlador_estoque.vacina(paciente.tipo_dose)
                     vacinacao = Vacinacao(paciente, enfermeiro, paciente.dose, paciente.tipo_dose)
