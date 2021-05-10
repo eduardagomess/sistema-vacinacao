@@ -6,13 +6,18 @@ class TelaVacinacao(AbstractTela):
     def __init__(self, controlador_sistema):
         super().__init__()
         self.__controlador_sistema = controlador_sistema
+        self.__window  = None
+        self.mostra_opcoes()
 
     def mostra_opcoes(self):
+        layout = [
+            [sg.Radio(())]
+        ]
+
         print(self.colorir_titulo("------ ÁREA DE VACINAS --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - Incluir vacinação")
         print("2 - Listar vacinações")
-        print("3 - Editar vacinação")
         print("4 - Excluir vacinação")
         print("5 - Mostrar situação de vacina do paciente")
         print("6 - Retornar a tela principal do sistema")
