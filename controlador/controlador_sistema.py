@@ -5,13 +5,14 @@ from controlador.controlador_agendamento import ControladorAgendamento
 from controlador.controlador_paciente import ControladorPaciente
 from controlador.controlador_enfermeiro import ControladorEnfermeiro
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
-
+from tela.tela_listagem import TelaListagem
 
 
 class ControladorSistema:
 
     def __init__(self):
         self.__tela_sistema = TelaSistema(self)
+        self.__tela_listagem = TelaListagem(self)
         self.__controlador_vacinacao = ControladorVacinacao(self)
         self.__controlador_estoque = ControladorEstoque(self)
         self.__controlador_agendamento = ControladorAgendamento(self)
@@ -71,6 +72,10 @@ class ControladorSistema:
     @property
     def tela_sistema(self):
         return self.__tela_sistema
+
+    @property
+    def tela_listagem(self):
+        return self.__tela_listagem
 
     def abre_tela(self):
         opcoes = {1: self.acessar_area_paciente, 2: self.acessar_area_enfermeiro,

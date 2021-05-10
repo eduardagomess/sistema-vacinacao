@@ -1,6 +1,5 @@
 from entidade.enfermeiro import Enfermeiro
 from tela.tela_enfermeiro.tela_inserir_enfermeiro import TelaInserirEnfermeiro
-from tela.tela_listagem import TelaListagem
 from tela.tela_enfermeiro.tela_busca_enf import TelaBuscaEnfermeiro
 from tela.tela_enfermeiro.tela_op_mudanca import TelaOpcoesMudanca
 from tela.tela_enfermeiro.tela_enfermeiro import TelaEnfermeiro
@@ -22,7 +21,6 @@ class ControladorEnfermeiro:
         self.__tela_enfermeiro = TelaEnfermeiro(self)
         self.__tela_inserir_enfermeiro = TelaInserirEnfermeiro(self)
         self.__tela_buscar_enfermeiro = TelaBuscaEnfermeiro(self)
-        self.__tela_listagem = TelaListagem(self)
         self.__tela_opcao_mudanca = TelaOpcoesMudanca(self)
         self.__controlador_sistema = controlador_sistema
 
@@ -116,10 +114,10 @@ class ControladorEnfermeiro:
         if self.__enfermeiroDAO.get_all() == []:
             sg.popup("Erro", "Ainda não há enfermeiros cadastrados!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__enfermeiroDAO.get_all(), "enfermeiro")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
-
+            self.__controlador_sistema.tela_listagem.init_components(self.__enfermeiroDAO.get_all(), "enfermeiro")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
+ 
     def listar_pacientes(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == "Sair":
@@ -130,10 +128,10 @@ class ControladorEnfermeiro:
         elif len(enfermeiro.lista_pacientes) == 0:
             sg.popup("Enfermeiro sem pacientes", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(enfermeiro, "lista_pacientes")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
- 
+            self.__controlador_sistema.tela_listagem.init_components(enfermeiro, "lista_pacientes")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
+
     def buscar_enfermeiro(self):
         self.__tela_buscar_enfermeiro.init_components()
         button, value = self.__tela_buscar_enfermeiro.open()
@@ -162,9 +160,9 @@ class ControladorEnfermeiro:
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(enfermeiro, "enfermeiro-relatorio")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
+            self.__controlador_sistema.tela_listagem.init_components(enfermeiro, "enfermeiro-relatorio")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
 
     def editar_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()

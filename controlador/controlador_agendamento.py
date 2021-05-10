@@ -2,7 +2,6 @@ from tela.tela_agendamento.tela_agendamento import TelaAgendamento
 from tela.tela_agendamento.tela_inserir_agendamento_dia import TelaInserirDia
 from tela.tela_agendamento.tela_inserir_agendamento_hora import TelaInserirHora
 from tela.tela_agendamento.tela_mudanca_agendamento import TelaMudancaAgendamento
-from tela.tela_listagem import TelaListagem
 from entidade.agendamento import Agendamento
 from persistencia.agendamentoDAO import AgendamentoDAO
 from utils import estilo
@@ -16,7 +15,6 @@ class ControladorAgendamento:
         self.__tela_agendamento = TelaAgendamento(self)
         self.__tela_inserir_dia = TelaInserirDia(self)
         self.__tela_inserir_hora = TelaInserirHora(self)
-        self.__tela_listagem = TelaListagem(self)
         self.__tela_mudanca_agendamento = TelaMudancaAgendamento(self)
         self.__controlador_sistema = controlador_sistema
         self.__agendamentoDAO = AgendamentoDAO()
@@ -96,10 +94,9 @@ class ControladorAgendamento:
                 sg.popup("Paciente sem agendamento!", font=("Helvetica", 15, "bold"), text_color='red')
             else:
                 agendamento = self.__agendamentoDAO.get().agendamentos[paciente.nome]
-                self.__tela_listagem.init_components(agendamento, "agendamento")
-                self.__tela_listagem.open()
-                self.__tela_listagem.close()
-
+                self.__controlador_sistema.tela_listagem.init_components(agendamento, "agendamento")
+                self.__controlador_sistema.tela_listagem.open()
+                self.__controlador_sistema.tela_listagem.close()
 
     def pega_inf_agendamento(self):
         controlador_paciente = self.__controlador_sistema.controlador_paciente
@@ -202,9 +199,9 @@ class ControladorAgendamento:
         if self.__agendamentoDAO.get().agendamentos == {}:
             sg.popup("Ainda há agendamentos!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__agendamentoDAO.get().agendamentos, "agendamentos")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
+            self.__controlador_sistema.tela_listagem.init_components(self.__agendamentoDAO.get().agendamentos, "agendamentos")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
 
     def retornar_sistema(self):
         return self.__controlador_sistema
@@ -213,9 +210,9 @@ class ControladorAgendamento:
         if self.__agendamentoDAO.get().agendamentos == {}:
             sg.popup("Ainda não relatório disponível", font=("Helvetica", 15, "bold"), text_color='#4682B4')
         else:
-            self.__tela_listagem.init_components(self.__agendamentoDAO.get().agendamentos, "relatorio")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
+            self.__controlador_sistema.tela_listagem.init_components(self.__agendamentoDAO.get().agendamentos, "relatorio")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
 
     def abre_tela(self):
         opcoes = {1: self.inserir_agendamento, 2: self.editar_agendamento, 3: self.excluir_agendamento,
@@ -223,7 +220,7 @@ class ControladorAgendamento:
         
         while True:
             button, values = self.__tela_agendamento.open()
-            if button == "Sair":
+            if button == "Sair" or values == None:
                 break
             else:
                 index= 1

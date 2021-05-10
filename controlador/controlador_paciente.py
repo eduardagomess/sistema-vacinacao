@@ -1,7 +1,6 @@
 from tela.tela_paciente.tela_paciente import TelaPaciente
 from tela.tela_paciente.tela_inserir_paciente import TelaInserirPaciente
 from tela.tela_paciente.tela_busca import TelaBuscaPaciente
-from tela.tela_listagem import TelaListagem
 from tela.tela_paciente.tela_opcoes import TelaOpcoes
 from tela.tela_endereco.tela_endereco import TelaEndereco
 from entidade.paciente import Paciente
@@ -23,7 +22,6 @@ class ControladorPaciente:
         self.__tela_paciente = TelaPaciente(self)
         self.__tela_inserir_paciente = TelaInserirPaciente(self)
         self.__tela_bucar_paciente = TelaBuscaPaciente(self)
-        self.__tela_listagem = TelaListagem(self)
         self.__tela_opcoes_mudanca = TelaOpcoes(self)
         self.__tele_endereco = TelaEndereco(self)
         self.__controlador_sistema = controlador_sistema
@@ -172,9 +170,9 @@ class ControladorPaciente:
         if self.__pacienteDAO.get_all() == []:
             sg.popup("Erro", "Ainda não há pacientes cadastrados", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__pacienteDAO.get_all(), "paciente")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
+            self.__controlador_sistema.tela_listagem.init_components(self.__pacienteDAO.get_all(), "paciente")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
 
     def buscar_paciente(self):
         self.__tela_bucar_paciente.init_components()
@@ -208,9 +206,9 @@ class ControladorPaciente:
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__pacienteDAO.get(paciente.cpf), "paciente_relatorio")
-            self.__tela_listagem.open()
-            self.__tela_listagem.close()
+            self.__controlador_sistema.tela_listagem.init_components(self.__pacienteDAO.get(paciente.cpf), "paciente_relatorio")
+            self.__controlador_sistema.tela_listagem.open()
+            self.__controlador_sistema.tela_listagem.close()
 
     def editar_paciente(self):
         paciente = self.buscar_paciente()
