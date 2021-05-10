@@ -8,9 +8,9 @@ class TelaListaEstoque(AbstractTela):
         self.__window = None
         self.__controlador_estoque = controlador_estoque
 
-    def init_components(self, compativeis):
-        layout = [[sg.Text("Foi encontrado mais de uma possibilidade de estoque. Escolha uma das opções abaixo: ")],
-                  *[[sg.Radio(str(opcao), 1, key=opcao), ] for opcao in compativeis],
+    def init_components(self, compativeis, estoque):
+        layout = [*[[sg.Text("Escolha uma dos lotes da vacina {} abaixo: ".format(opcao)),] for opcao in estoque],
+                  *[[[sg.Radio(str(opcao), 1, key=opcao), ] for opcao in compativeis]],
                   [[sg.Submit(), sg.Cancel()]]
                   ]
         self.__window = sg.Window("Sistema de Posto", layout)
