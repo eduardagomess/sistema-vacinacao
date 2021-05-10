@@ -11,8 +11,10 @@ class VacinacaoDAO(DAO):
         super().__init__('vacinacao.pkl')
 
     def add(self, cpf, vacinacao):
-        if isinstance(cpf, Paciente) and (vacinacao is not None) and isinstance(vacinacao, Vacinacao):
+        if isinstance(cpf, str) and (vacinacao is not None) and isinstance(vacinacao, Vacinacao):
             super().add(cpf, vacinacao)
+        else:
+            print("problema")
 
     def get(self, key: str):
         if isinstance(key, str):

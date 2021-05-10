@@ -177,10 +177,11 @@ class ControladorEstoque:
         if button == "Submit" and estoque:
             if len(compativeis) > 1:
                 lista_compativeis = []
+                nome_vacina = estoque.tipo_vacina.nome
                 print('joia', len(compativeis))
                 for estoque in compativeis:
                     lista_compativeis.append(estoque.lote)
-                self.__tela_lista_estoques_compativeis.init_components(lista_compativeis)
+                self.__tela_lista_estoques_compativeis.init_components(lista_compativeis, nome_vacina)
                 button, values = self.__tela_lista_estoques_compativeis.open()
                 print(button, values)
                 if button == "Submit" and values:
@@ -194,4 +195,19 @@ class ControladorEstoque:
 
 #usado no controladorvacinacao
     def estoques_disponiveis(self):
-        self.__tela_lista_estoques_compativeis.init_components(self.__estoque_dao.get_all())
+        estoques = self.__estoque_dao.get_all()
+        all_estoques = []
+        nomes = []
+        for estoque in estoques:
+            all_estoques.append(estoque.lote)
+            nomes.append(estoque.tipo_vacina.nome)
+        return all_estoques, nomes
+
+    def vacina(self, lote):
+        estoque = self.__estoque_dao.get(lote)
+        estoque.qtd -= 1
+        self.__estoque_dao.add(lote, estoque)
+
+    def pega_doses(self, tipo_dose):
+        estoque = self.__estoque_dao.get(tipo_dose)
+        return estoque.tipo_vacina.num_doses

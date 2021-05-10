@@ -20,25 +20,19 @@ class TelaMenuVacinacao(AbstractTela):
         ]
         self.__window = sg.Window('Tela da vacinações').Layout(layout)
 
-    def mostra_opcao_tipo_vacina(self):
-        print(self.colorir_titulo("------ TIPO DE VACINA --------"))
-        print("Escolha uma das opções abaixo: ")
-        print("1 - CoronaVac")
-        print("2 - Pfizer")
-        opcao = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
-        tipos_vacina = {1: "CoronaVac", 2: "Pfizer"}
-        return tipos_vacina[opcao]
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
 
     def mostra_vacina(self, vacinacao):
-        for vacina in vacinacao:
-            print("\nNome do paciente: ", self.colorir_info(vacina.paciente.nome))
-            print("Nome do enfermeiro: ", self.colorir_info(vacina.enfermeiro.nome))
-            print("Tipo da vacina: ", self.colorir_info(vacina.tipo_dose))
-            print("Estágio da dose: ", self.colorir_info(vacina.dose))
-        print(input(("\nAperte enter para continuar: ")))
+        vacinacoes = []
+        for vacinado in vacinacao:
+            registro_vacina = "Paciente {} foi vacinado por enfermeiro(a) {}, tem a {} dose do lote {}. \n".format(vacinado.paciente.nome, vacinado.enfermeiro.nome,
+                                                                                                                   vacinado.dose, vacinado.tipo_dose)
+            vacinacoes.append(registro_vacina)
+        sg.popup("Registros encontrados: \n", *vacinacoes, title="Sistema de Posto")
+        return vacinacoes
 
-    def mostra_dose_paciente(self, paciente):
-        print("\n Nome do paciente: ", self.colorir_info(paciente.nome))
-        print("Tipo da vacina: ", self.colorir_info(paciente.tipo_dose))
-        print("Estágio da dose: ", self.colorir_info(paciente.dose))
-        print(input(("\nAperte enter para continuar: ")))
+    def mostra_vacinacao(self, vacinacao):
+        sg.popup("Paciente {} foi vacinado por enfermeiro(a) {}, tem a {} dose do lote {}. \n".format(vacinacao.paciente.nome, vacinacao.enfermeiro.nome,
+                                                                                                                   vacinacao.dose, vacinacao.tipo_dose))

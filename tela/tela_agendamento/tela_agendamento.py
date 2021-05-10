@@ -25,7 +25,6 @@ class TelaAgendamento():
         self.__window = sg.Window("Tela Agendamento", size=(500,280)).layout(layout)
         
     def open(self):
-        
         button, values = self.__window.Read()
         return button, values
 
