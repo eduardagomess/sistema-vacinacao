@@ -13,9 +13,9 @@ class TelaMenuVacinacao(AbstractTela):
     def mostra_opcoes(self):
         layout = [
             [sg.Text('Tela de vacinações', size=(20, 1), font=("Helvetica", 15))],
-            [sg.Radio('Registrar vacinacação', "AREA", key=1)],
-            [sg.Radio('Listar vacinacações', "AREA", key=2)],
-            [sg.Radio('Mostrar a vacinacao de um paciente', "AREA", key =3)],
+            [sg.Radio('Registrar vacinação', "AREA", key=1)],
+            [sg.Radio('Listar vacinações', "AREA", key=2)],
+            [sg.Radio('Mostrar a vacinação de um paciente', "AREA", key =3)],
             [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window('Tela da vacinações').Layout(layout)

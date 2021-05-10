@@ -31,15 +31,6 @@ class TelaMenuEstoque(AbstractTela):
     def close(self):
         self.__window.Close()
 
-    # Vai para outro arquivo
-    def mostra_dados(self, estoque):
-        for vacina in estoque:
-            print("Nome da vacina: {}".format(self.colorir_info(vacina.nome)))
-            print("Número de aplicações que a vacina requer: {}".format(self.colorir_info(vacina.num_doses)))
-            print("Número de doses em estoque: {}".format(self.colorir_info(vacina.qtd)))
-            print("Data de recebimento de lote: {}".format(self.colorir_info((vacina.data_recebimento))))
-            print("Número de lote: {}".format(self.colorir_info(vacina.lote)))
-
     def mostra_dados_estoque(self, estoque):
         self.msg("Vacina: {} \n Doses no sistema: {} \n Lote {} recebido em {}. \n ".format(estoque.tipo_vacina.nome,
                                                                                             estoque.qtd, estoque.lote,
@@ -55,20 +46,10 @@ class TelaMenuEstoque(AbstractTela):
         sg.Popup("Vacinas encontradas: \n", *tps, title="Sistema de Posto")
         return list(tps)
 
-    # MENSAGENS
-    def mostra_vacina_inexistente(self):
-        self.msg("ESSA VACINA NÃO FOI ENCONTRADA! \n Cadastre-a primeiro!")
-
-    def mostra_resposta_cadastrada(self):
-        self.msg(" Resposta cadastrada com sucesso! ")
-
     def mostra_tipo_vacina(self, tipo_vacina):
         self.msg("Nome da vacina: {}".format(tipo_vacina.nome) +
                  ("Número de aplicações que a vacina requer: {}".format(tipo_vacina.num_doses))
                  + ("Número de doses em estoque: {}".format(tipo_vacina.qtd)))
-
-    def pega_opcao_tipo_nao_cadastrado(self):
-        self.msg("VACINA NÃO CADASTRADA!")
 
     def lote_inexistente(self):
         self.msg("LOTE INEXISTENTE!")

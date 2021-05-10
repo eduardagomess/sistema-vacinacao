@@ -56,7 +56,6 @@ class ControladorEstoque:
                 self.__tela_menu_estoque.msg(
                     "Essa vacina não foi cadastrada no sistema! \n Cadastre-a antes de incluir estoque.")
             else:
-                # dados vacina passa como parametro pra outro metodo do tipovacina
                 nome = self.__tela_menu_estoque.pegar_nome_vacina(dados_vacina["nome"])
                 qtd = self.__tela_menu_estoque.pegar_quantidade(dados_vacina['qtd'])
                 data_recebimento = self.__tela_menu_estoque.pegar_data_nascimento(dados_vacina['data_recebimento'])
@@ -70,6 +69,9 @@ class ControladorEstoque:
                         self.__estoque_dao.add(lote, novo_registro_estoque)
                         self.__tela_registro_estoque.close()
                         self.__tela_registro_estoque.msg("Estoque registrado com sucesso!")
+                else:
+                    self.__tela_menu_estoque.msg("Foi detectado um erro de input! Favor verifique os dados para continuar. \n"
+                                                 "Nome de vacina e lote precisam ter no mínimo 5 caracteres.")
         else:
             self.__tela_registro_estoque.close()
 
@@ -82,10 +84,8 @@ class ControladorEstoque:
             qtd_valida = self.__tela_menu_estoque.pegar_quantidade(dado_a_editar[2])
             self.__tela_edita_estoque.close()
             sucesso = False
-            print(button, dado_a_editar, qtd_valida)
             if qtd_valida and (dado_a_editar[0] or dado_a_editar[1]):
                 if dado_a_editar[0]:
-                    print('ok')
                     estoque.qtd += int(dado_a_editar[2])
                     self.__estoque_dao.add(estoque.lote, estoque)
                     self.__tela_edita_estoque.close()
@@ -145,7 +145,6 @@ class ControladorEstoque:
                     elif not valores[1] and opcao == 2:
                         self.__tela_menu_estoque.msg("Não é possível fazer essa operação usando o nome na busca!")
                 else:
-                    print(nome_valido, lote_valido, estoque_por_lote, estoque_por_nome)
                     self.__tela_menu_estoque.msg("Estoque inexistente!")
                     return False, False, False
         else:
@@ -178,12 +177,10 @@ class ControladorEstoque:
             if len(compativeis) > 1:
                 lista_compativeis = []
                 nome_vacina = estoque.tipo_vacina.nome
-                print('joia', len(compativeis))
                 for estoque in compativeis:
                     lista_compativeis.append(estoque.lote)
                 self.__tela_lista_estoques_compativeis.init_components(lista_compativeis, nome_vacina)
                 button, values = self.__tela_lista_estoques_compativeis.open()
-                print(button, values)
                 if button == "Submit" and values:
                     for value in values:
                         if value:
