@@ -39,7 +39,7 @@ class TelaListagem():
             self.__window = sg.Window('Relatório de Enfermeiros', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
         
         
-        elif tipo == "agendamento":
+        elif tipo == "agendamentos":
 
             lista = [[sg.Text('Agendamento(s) cadastrado(s)', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
 
@@ -53,14 +53,29 @@ class TelaListagem():
 
             self.__window = sg.Window('Relatório de Agendamentos', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
 
+
+        elif tipo == "agendamento":
+
+            lista = [[sg.Text('Informações Agendamento', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
+
+            lista += [[sg.Text('Nome do paciente: ' + informacoes["paciente"].nome.title() + "\n" 
+                + 'A vacina está marcada para ' + informacoes["agendamento"][0] + " às " + informacoes["agendamento"][1] + "\n" 
+                + 'Nome do Enfermeiro(a): ' + informacoes["enfermeiro"].nome.title() + "\n" + 
+                'COREN do enfermeiro: ' + informacoes["enfermeiro"].coren + "\n", font=("Helvetica", 15))]]
+            
+            layout = lista
+
+            self.__window = sg.Window('Informações Agendamento', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
+
+
         elif tipo == "paciente_relatorio":
             
             lista = [[sg.Text('Informação paciente', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
 
-            lista += [[sg.Text('Nome do paciente: ' + informacoes.nome.title() + "\n" 
-                + 'Telefone do paciente: ' + informacoes.telefone + "\n" + 'CPF do paciente: '
-                + informacoes.cpf + "\n" + 'Endereço do paciente: ' + informacoes.endereco.mostrar_endereco() + "\n" 
-                +  'Data de nascimento do paciente: ' + informacoes.data_nascimento,  font=("Helvetica", 15))]]
+            lista += [[sg.Text('Nome do paciente: ' + informacoes["paciente"].nome.title() + "\n" 
+                + 'Telefone do paciente: ' + informacoes["paciente"].telefone + "\n" + 'CPF do paciente: '
+                + informacoes["paciente"].cpf + "\n" + 'Endereço do paciente: ' +informacoes["paciente"].endereco.mostrar_endereco() + "\n" 
+                +  'Data de nascimento do paciente: ' + informacoes["paciente"].data_nascimento,  font=("Helvetica", 15))]]
 
             layout = lista
 

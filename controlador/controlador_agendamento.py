@@ -188,7 +188,7 @@ class ControladorAgendamento:
         if self.__agendamentoDAO.get().agendamentos == {}:
             sg.popup("Ainda há agendamentos!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__agendamentoDAO.get().agendamentos, "agendamento")
+            self.__tela_listagem.init_components(self.__agendamentoDAO.get().agendamentos, "agendamentos")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 
