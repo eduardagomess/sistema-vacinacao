@@ -14,7 +14,7 @@ class TelaBuscaTipoVacina(AbstractTela):
         sg.theme('DarkBlue')
         layout = [
             [sg.Text('Busca de vacina', size=(20, 1), font=("Helvetica", 15))],
-            [sg.Text('Nome: '), sg.InputText('Pfizer')],
+            [sg.Text('Nome: '), sg.InputText()],
             [sg.Button('Aplicar'), sg.Button('Sair')]
         ]
         self.__window = sg.Window('Sistema de Vacinação').Layout(layout)

@@ -191,3 +191,7 @@ class ControladorEstoque:
             self.__tela_menu_estoque.msg("ESTOQUE EXCLUÍDO COM SUCESSO!")
         else:
             self.__tela_busca_estoque.close()
+
+#usado no controladorvacinacao
+    def estoques_disponiveis(self):
+        self.__tela_lista_estoques_compativeis.init_components(self.__estoque_dao.get_all())

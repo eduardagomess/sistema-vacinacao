@@ -1,34 +1,31 @@
 from tela.tela_abstrata import AbstractTela
+import PySimpleGUI as sg
 
 
-class TelaVacinacao(AbstractTela):
+class TelaMenuVacinacao(AbstractTela):
 
     def __init__(self, controlador_sistema):
         super().__init__()
         self.__controlador_sistema = controlador_sistema
-        self.__window  = None
+        self.__window = None
         self.mostra_opcoes()
 
     def mostra_opcoes(self):
         layout = [
-            [sg.Radio(())]
+            [sg.Text('Tela de vacinações', size=(20, 1), font=("Helvetica", 15))],
+            [sg.Radio('Registrar vacinacação', "AREA", key=1)],
+            [sg.Radio('Listar vacinacações', "AREA", key=2)],
+            [sg.Radio('Mostrar a vacinacao de um paciente', "AREA", key =3)],
+            [sg.Submit(), sg.Cancel()]
         ]
-
-        print(self.colorir_titulo("------ ÁREA DE VACINAS --------"))
-        print("Escolha uma das opções abaixo: ")
-        print("1 - Incluir vacinação")
-        print("2 - Listar vacinações")
-        print("4 - Excluir vacinação")
-        print("5 - Mostrar situação de vacina do paciente")
-        print("6 - Retornar a tela principal do sistema")
-        return self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2, 3, 4, 5, 6])
+        self.__window = sg.Window('Tela da vacinações').Layout(layout)
 
     def mostra_opcao_tipo_vacina(self):
         print(self.colorir_titulo("------ TIPO DE VACINA --------"))
         print("Escolha uma das opções abaixo: ")
         print("1 - CoronaVac")
         print("2 - Pfizer")
-        opcao  = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
+        opcao = self.pegar_opcao("Insira o número da opção escolhida: ", [1, 2])
         tipos_vacina = {1: "CoronaVac", 2: "Pfizer"}
         return tipos_vacina[opcao]
 
@@ -45,4 +42,3 @@ class TelaVacinacao(AbstractTela):
         print("Tipo da vacina: ", self.colorir_info(paciente.tipo_dose))
         print("Estágio da dose: ", self.colorir_info(paciente.dose))
         print(input(("\nAperte enter para continuar: ")))
-
