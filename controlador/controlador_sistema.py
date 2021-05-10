@@ -83,7 +83,7 @@ class ControladorSistema:
                   5: self.acessar_agendamentos, 6: self.acessar_tipo_vacina}
         while True:
             button, values = self.__tela_sistema.open()
-            if button == "Sair" or button is None:
+            if button == "Sair" or values == None or button is None:
                 self.__tela_sistema.close()
                 break
             else:

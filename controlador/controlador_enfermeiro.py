@@ -122,6 +122,9 @@ class ControladorEnfermeiro:
 
     def listar_pacientes(self):
         enfermeiro = self.buscar_enfermeiro()
+        if enfermeiro == "Sair":
+            self.__tela_enfermeiro.close()
+            return
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         elif len(enfermeiro.lista_pacientes) == 0:
@@ -137,22 +140,25 @@ class ControladorEnfermeiro:
         self.__tela_buscar_enfermeiro.close()
         id = value[0]
         if button == "Sair":
-            self.__tela_enfermeiro.open()
-            return
-        try:
-            if not id.isdigit():
-                raise Exception
-        except Exception:
-            sg.Popup("Número inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
-            self.buscar_enfermeiro()
+            return "Sair"
         else:
-            for enfermeiro in self.__enfermeiroDAO.get_all():
-                if enfermeiro.coren == id:
-                    return enfermeiro
-        return None
+            try:
+                if not id.isdigit():
+                    raise Exception
+            except Exception:
+                sg.Popup("Número inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
+                self.buscar_enfermeiro()
+            else:
+                for enfermeiro in self.__enfermeiroDAO.get_all():
+                    if enfermeiro.coren == id:
+                        return enfermeiro
+            return None
 
     def busca_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
+        if enfermeiro == "Sair":
+            self.__tela_enfermeiro.close()
+            return
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
@@ -162,6 +168,9 @@ class ControladorEnfermeiro:
 
     def editar_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
+        if enfermeiro == "Sair":
+            self.__tela_enfermeiro.close()
+            return
         if enfermeiro == None:
             sg.popup("Erro","Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')   
         else:
@@ -249,6 +258,9 @@ class ControladorEnfermeiro:
         
     def excluir_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
+        if enfermeiro == "Sair":
+            self.__tela_enfermeiro.close()
+            return
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
@@ -263,7 +275,7 @@ class ControladorEnfermeiro:
                   4: self.excluir_enfermeiro, 5: self.busca_enfermeiro, 6: self.listar_pacientes, 7: self.retornar_sistema}
         while True:
             button, values = self.__tela_enfermeiro.open()
-            if button == "Sair":
+            if button == "Sair" or values == None:
                 break
             else:
                 index= 1

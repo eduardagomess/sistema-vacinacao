@@ -182,26 +182,29 @@ class ControladorPaciente:
         self.__tela_bucar_paciente.close()
         id = value[0]
         if button == "Sair":
-            self.__tela_paciente.open()
-            return
-        try:
-            if not id.isdigit():
-                raise CaracterAlfabeticoExcecao
-            elif len(id) != 11:
-                raise CpfInvalido
-        except CaracterAlfabeticoExcecao:
-            sg.Popup("CPF inválido","Insira apenas números",font=("Helvetica", 15, "bold"), text_color='red')
-            self.buscar_paciente()
-        except CpfInvalido:
-            sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944",font=("Helvetica", 15, "bold"), text_color='red')
-            self.buscar_paciente()
-        for paciente in self.__pacienteDAO.get_all():
-            if paciente.cpf == id:
-                return paciente
-        return None
+            return "Sair"
+        else:
+            try:
+                if not id.isdigit():
+                    raise CaracterAlfabeticoExcecao
+                elif len(id) != 11:
+                    raise CpfInvalido
+            except CaracterAlfabeticoExcecao:
+                sg.Popup("CPF inválido","Insira apenas números",font=("Helvetica", 15, "bold"), text_color='red')
+                self.buscar_paciente()
+            except CpfInvalido:
+                sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944",font=("Helvetica", 15, "bold"), text_color='red')
+                self.buscar_paciente()
+            for paciente in self.__pacienteDAO.get_all():
+                if paciente.cpf == id:
+                    return paciente
+            return None
 
     def busca_paciente(self):
         paciente = self.buscar_paciente()
+        if paciente == "Sair":
+            self.__tela_paciente.close()
+            return
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
@@ -211,6 +214,9 @@ class ControladorPaciente:
 
     def editar_paciente(self):
         paciente = self.buscar_paciente()
+        if paciente == "Sair":
+            self.__tela_paciente.close()
+            return
         if paciente == None:
             sg.popup("Erro","Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
             self.__tela_opcoes.close()
@@ -380,6 +386,9 @@ class ControladorPaciente:
 
     def excluir_paciente(self):
         paciente = self.buscar_paciente()
+        if paciente == "Sair":
+            self.__tela_paciente.close()
+            return
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
@@ -393,7 +402,7 @@ class ControladorPaciente:
         opcoes = {1: self.inserir_paciente, 2: self.listar_pacientes, 3: self.editar_paciente, 4: self.excluir_paciente, 5: self.busca_paciente}
         while True:
             button, values = self.__tela_paciente.open()
-            if button == "Sair":
+            if button == "Sair" or values == None:
                 break
             else:
                 index= 1

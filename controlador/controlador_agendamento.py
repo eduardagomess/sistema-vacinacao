@@ -47,7 +47,8 @@ class ControladorAgendamento:
                     sg.popup("Agendamento realizado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 else:
                     sg.popup("Data não disponível", font=("Helvetica", 15, "bold"), text_color='red')
-        else:
+         
+        elif paciente != "Sair":
             if paciente.nome in self.__agendamentoDAO.get().agendamentos:
                 sg.popup("Paciente já possui agendamento", font=("Helvetica", 15, "bold"), text_color='red')
             else:
@@ -90,7 +91,7 @@ class ControladorAgendamento:
         paciente = controlador_paciente.buscar_paciente()
         if paciente == None:
             sg.popup("Paciente ainda não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
-        else:
+        elif paciente != "Sair":
             if paciente.nome not in self.__agendamentoDAO.get().agendamentos:
                 sg.popup("Paciente sem agendamento!", font=("Helvetica", 15, "bold"), text_color='red')
             else:
@@ -105,7 +106,7 @@ class ControladorAgendamento:
         paciente = controlador_paciente.buscar_paciente()
         if paciente == None:
             sg.popup("Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
-        else:
+        elif paciente != "Sair":
             if paciente.nome not in self.__agendamentoDAO.get().agendamentos:
                 sg.popup("Paciente ainda não possui agendamento", font=("Helvetica", 15, "bold"), text_color='red')
             else:
@@ -174,7 +175,7 @@ class ControladorAgendamento:
         paciente = controlador_paciente.buscar_paciente()
         if paciente == None:
             sg.popup("Paciente não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
-        else:
+        elif paciente != "Sair":
             if paciente.nome not in self.__agendamentoDAO.get().agendamentos:
                 sg.popup("Paciente ainda não possui agendamento", font=("Helvetica", 15, "bold"), text_color='red')
             else:
