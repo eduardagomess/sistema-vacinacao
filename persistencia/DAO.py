@@ -5,8 +5,8 @@ from abc import ABC, abstractmethod
 class DAO(ABC):
 
     @abstractmethod
-    def __init__(self, data_source=''):
-        self.__data_source = data_source
+    def __init__(self, datasource: str = ''):
+        self.__data_source = datasource
         self.__cache = {}
         try:
             self.__load()
@@ -38,4 +38,7 @@ class DAO(ABC):
             return self.__cache[key]
         except KeyError:
             pass
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1d0f923f2aa8d69428828e4ccb76c87bd5248d01
