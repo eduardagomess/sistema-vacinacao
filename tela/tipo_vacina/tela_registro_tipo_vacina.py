@@ -10,7 +10,7 @@ class TelaRegistroTipoVacina(AbstractTela):
         self.pega_dados_vacina(None, None)
 
     def pega_dados_vacina(self, nome, num_doses):
-        sg.theme('DarkBlue')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Insira os dados a seguir')],
             [sg.Text('Nome da vacina: ', size=(15, 1)), sg.InputText(nome, key='nome')],

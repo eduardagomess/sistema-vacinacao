@@ -14,15 +14,13 @@ class TelaBuscaEstoque(AbstractTela):
         layout = [
             [sg.Text("Escolha o método de busca desejado: ")],
             [sg.Radio('Nome', 'BUSCA'), sg.Radio('Lote', 'BUSCA')],
-            [sg.InputText('Pfizer', key='nome')],
+            [sg.InputText('00001', key=2)],
             [sg.Submit(), sg.Cancel()]
         ]
         self.__window = sg.Window("Sistema de Posto").Layout(layout)
 
     def open(self):
         button, valores = self.__window.Read()
-        if button is None or button == "Sair":
-            self.close()
         return button, valores
 
     def close(self):

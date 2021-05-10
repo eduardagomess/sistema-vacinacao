@@ -3,24 +3,26 @@ from controlador.controlador_tipo_vacina import ControladorTipoVacina
 from entidade.vacina import TipoVacina
 from datetime import datetime
 from tela.estoque.tela_busca_estoque import TelaBuscaEstoque
-from tela.estoque.tela_lista_estoque import TelaListaEstoque
+from tela.estoque.tela_lista_estoques_compativeis import TelaListaEstoque
 from tela.estoque.tela_registro_estoque import TelaCadastraEstoque
 from tela.estoque.tela_menu_estoque import TelaMenuEstoque
 from tela.estoque.tela_edita_estoque import TelaEditaEstoque
+from persistencia.estoqueDAO import EstoqueDAO
 
 
 class ControladorEstoque:
 
     def __init__(self, controlador_sistema):
+        self.__tela_lista_estoques_compativeis = TelaListaEstoque(self)
         self.__tela_menu_estoque = TelaMenuEstoque(self)
         self.__tela_registro_estoque = TelaCadastraEstoque(self)
         self.__tela_busca_estoque = TelaBuscaEstoque(self)
         self.__tela_edita_estoque = TelaEditaEstoque(self)
-        self.__tela_lista_estoque = TelaListaEstoque(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_vacina = ControladorTipoVacina
         self.__vacinas_aplicadas = []
-        self.__estoque = [Estoque(TipoVacina('Pfizer', 2), 2000, datetime(year=1999, month=7, day=3), 'Lll001')]
+        self.__estoque_dao = EstoqueDAO()
+        # self.__estoque = self.__estoque_dao.get_all()
 
     def abre_tela(self):
         opcoes = {1: self.adicionar_estoque, 2: self.editar_estoque, 3: self.listar_vacina,
@@ -35,7 +37,7 @@ class ControladorEstoque:
                     if i:
                         if index == 1:
                             opcoes[index](None, None, None, None)
-                        elif (index == 4 or index == 3) and self.__estoque == []:
+                        elif (index == 4 or index == 3) and not self.__estoque_dao.get_all():
                             self.__tela_menu_estoque.msg("Não há vacinas cadastradas!")
                         elif index == 4:
                             opcoes[index](1)
@@ -53,123 +55,139 @@ class ControladorEstoque:
             if tipo_vacina is None:
                 self.__tela_menu_estoque.msg(
                     "Essa vacina não foi cadastrada no sistema! \n Cadastre-a antes de incluir estoque.")
-                self.__tela_registro_estoque.close()
             else:
-                # dados vacina opassa como parametro pra outro metodo do tipovacina
+                # dados vacina passa como parametro pra outro metodo do tipovacina
                 nome = self.__tela_menu_estoque.pegar_nome_vacina(dados_vacina["nome"])
                 qtd = self.__tela_menu_estoque.pegar_quantidade(dados_vacina['qtd'])
                 data_recebimento = self.__tela_menu_estoque.pegar_data_nascimento(dados_vacina['data_recebimento'])
                 lote = self.__tela_menu_estoque.pegar_nome_vacina(dados_vacina['lote'])
-                self.__tela_registro_estoque.close()
-                cadastrado = False
                 if nome and qtd and data_recebimento and lote:
-                    for estoque in self.__estoque:
-                        if estoque.lote == lote and estoque.tipo_vacina.nome == nome:
-                            self.__tela_menu_estoque.msg("Esse estoque já está cadastrado para essa vacina!")
-                            self.__tela_menu_estoque.close()
-                            cadastrado = True
-                    if self.__estoque == [] or not cadastrado:
+                    if self.__estoque_dao.get(lote):
+                        self.__tela_menu_estoque.msg("Esse estoque já está cadastrado para essa vacina!")
+                        self.__tela_menu_estoque.close()
+                    elif not self.__estoque_dao.get(lote) or not self.__estoque_dao.get_all():
                         novo_registro_estoque = Estoque(tipo_vacina, qtd, data_recebimento, lote)
-                        self.__estoque.append(novo_registro_estoque)
+                        self.__estoque_dao.add(lote, novo_registro_estoque)
                         self.__tela_registro_estoque.close()
                         self.__tela_registro_estoque.msg("Estoque registrado com sucesso!")
         else:
             self.__tela_registro_estoque.close()
 
-#editar_estoque com bug quando botao = cancel/none, ou apos rodar outra função
+
     def editar_estoque(self):
-        button, estoque_por_lote = self.buscar_estoque(2)
-        if estoque_por_lote and button == "Submit":
+        button, estoque, vazio = self.buscar_estoque(2)
+        if estoque and button == "Submit":
             self.__tela_edita_estoque.mostra_opcao_alterar_quantidade()
             button, dado_a_editar = self.__tela_edita_estoque.open()
+            qtd_valida = self.__tela_menu_estoque.pegar_quantidade(dado_a_editar[2])
             self.__tela_edita_estoque.close()
             sucesso = False
-            for estoque in self.__estoque:
-                if estoque.tipo_vacina.nome == estoque_por_lote.tipo_vacina.nome:
-                    if dado_a_editar[0]:
-                        estoque.qtd += int(dado_a_editar[2])
+            print(button, dado_a_editar, qtd_valida)
+            if qtd_valida and (dado_a_editar[0] or dado_a_editar[1]):
+                if dado_a_editar[0]:
+                    print('ok')
+                    estoque.qtd += int(dado_a_editar[2])
+                    self.__estoque_dao.add(estoque.lote, estoque)
+                    self.__tela_edita_estoque.close()
+                    sucesso = True
+                elif dado_a_editar[1]:
+                    if int(dado_a_editar[2]) > estoque.qtd:
+                        self.__tela_menu_estoque.msg(
+                            "NÃO É POSSÍVEL EXCLUIR MAIS VACINAS DO QUE HÁ EM ESTOQUE!")
+                    else:
+                        estoque.qtd -= int(dado_a_editar[2])
+                        self.__estoque_dao.add(estoque.lote, estoque)
+                        self.__tela_edita_estoque.close()
                         sucesso = True
-                    elif dado_a_editar[1]:
-                        if int(dado_a_editar[2]) > estoque.qtd:
-                            self.__tela_menu_estoque.msg("NÃO É POSSÍVEL EXCLUIR MAIS VACINAS DO QUE HÁ EM ESTOQUE!")
-                        else:
-                            estoque.qtd -= int(dado_a_editar[2])
-                            sucesso = True
                 if sucesso:
                     self.__tela_menu_estoque.msg("Alteração aplicada! Atual quantidade de {}, lote {}: {}".format(
                         estoque.tipo_vacina.nome, estoque.lote, estoque.qtd))
-        else:
-            self.retornar_sistema()
+        self.__tela_edita_estoque.close()
+        self.retornar_sistema()
 
     def listar_vacina(self):
-        if not self.__estoque:
-            self.__tela_menu_estoque.msg("Não há estoque cadastrado!")
-        else:
-            self.__tela_menu_estoque.lista_estoque(self.__estoque)
+        self.__tela_menu_estoque.lista_estoque(self.__estoque_dao.get_all())
 
     def listar_vacinas_aplicadas(self):
         return self.__vacinas_aplicadas
+
+    def registra_vacina_aplicada(self):
+        pass
 
     def retornar_sistema(self):
         return self.__controlador_sistema
 
     def buscar_estoque(self, opcao):
+        self.__tela_busca_estoque.init_components()
         button, valores = self.__tela_busca_estoque.open()
-        if button == "Submit":
-            estoque_por_nome = self.buscar_estoque_por_nome(valores)
-            estoque_por_lote = self.buscar_estoque_por_lote(valores)
-            self.__tela_busca_estoque.close()
+        if button == "Submit" and valores:
             if not valores[0] and not valores[1]:
                 self.__tela_menu_estoque.msg("Você deve selecionar uma das opções.")
+                self.__tela_busca_estoque.close()
                 self.buscar_estoque(opcao)
-            elif estoque_por_nome:
-                nome_valido = self.__tela_menu_estoque.pegar_nome_vacina(estoque_por_nome.tipo_vacina.nome)
-                if nome_valido and opcao == 1:
-                    self.__tela_menu_estoque.mostra_dados_estoque(estoque_por_nome)
-                elif nome_valido and opcao == 2:
-                    return button, estoque_por_nome
-            elif estoque_por_lote:
-                lote_valido = self.__tela_menu_estoque.pegar_nome_vacina(estoque_por_lote.lote)
-                if lote_valido and opcao == 1:
-                    self.__tela_menu_estoque.mostra_dados_estoque(estoque_por_lote)
-                elif lote_valido and opcao == 2:
-                    return button, estoque_por_lote
+            else:
+                continua, estoque_por_nome, correspondentes = self.buscar_estoque_por_nome(valores)
+                estoque_por_lote, busca_por_lote = self.buscar_estoque_por_lote(valores)
+                nome_valido = self.__tela_menu_estoque.pegar_nome_vacina(str(estoque_por_nome))
+                lote_valido = self.__tela_menu_estoque.pegar_nome_vacina(str(estoque_por_lote))
+                self.__tela_busca_estoque.close()
+                if estoque_por_nome and continua and not busca_por_lote:
+                    if nome_valido and opcao == 1:
+                        self.__tela_menu_estoque.lista_estoque(correspondentes)
+                    elif nome_valido and opcao == 2:
+                        self.__tela_menu_estoque.msg("Não é possível fazer essa operação usando o nome na busca!")
+                        return False, False, False
+                elif estoque_por_lote:
+                    if lote_valido and opcao == 1:
+                        self.__tela_menu_estoque.mostra_dados_estoque(estoque_por_lote)
+                    elif lote_valido and opcao == 2:
+                        return button, estoque_por_lote, [estoque_por_lote]
+                    elif not valores[1] and opcao == 2:
+                        self.__tela_menu_estoque.msg("Não é possível fazer essa operação usando o nome na busca!")
+                else:
+                    print(nome_valido, lote_valido, estoque_por_lote, estoque_por_nome)
+                    self.__tela_menu_estoque.msg("Estoque inexistente!")
+                    return False, False, False
+        else:
+            self.__tela_busca_estoque.close()
+            self.retornar_sistema()
+            button, values, dec = False, False, False
+            return button, values, dec
 
     def buscar_estoque_por_nome(self, valores):
-        for estoque in self.__estoque:
-            if estoque.tipo_vacina.nome == valores['nome']:
-                return estoque
-            else:
-                return False
+        correspondentes = []
+        continua = False
+        for estoque in self.__estoque_dao.get_all():
+            if valores[2].title() == estoque.tipo_vacina.nome:
+                correspondentes.append(estoque)
+                continua = True
+        return continua, valores[2].title(), correspondentes
 
     def buscar_estoque_por_lote(self, valores):
-        for estoque in self.__estoque:
-            if estoque.lote == valores[1]:
-                return estoque
-            else:
-                return False
+        busca_por_lote = valores[1]
+        acha_lote = self.__estoque_dao.get(valores[2].title())
+        if acha_lote:
+            return acha_lote, busca_por_lote
+        else:
+            return False, busca_por_lote
 
     def excluir_estoque(self):
-        estoque_por_lote = self.buscar_estoque(2)
-        if estoque_por_lote is None:
-            self.__tela_menu_estoque.msg("LOTE INEXISTENTE!")
+        button, estoque, compativeis = self.buscar_estoque(2)
+        self.__tela_busca_estoque.close()
+        if button == "Submit" and estoque:
+            if len(compativeis) > 1:
+                lista_compativeis = []
+                print('joia', len(compativeis))
+                for estoque in compativeis:
+                    lista_compativeis.append(estoque.lote)
+                self.__tela_lista_estoques_compativeis.init_components(lista_compativeis)
+                button, values = self.__tela_lista_estoques_compativeis.open()
+                print(button, values)
+                if button == "Submit" and values:
+                    for value in values:
+                        if value:
+                            self.__estoque_dao.remove(value)
+            self.__estoque_dao.remove(estoque.lote)
+            self.__tela_menu_estoque.msg("ESTOQUE EXCLUÍDO COM SUCESSO!")
         else:
-            for estoque in self.__estoque:
-                if estoque_por_lote.tipo_vacina.nome == estoque.tipo_vacina.nome:
-                    self.__estoque.remove(estoque)
-                    self.__tela_busca_estoque.close()
-                    self.__tela_menu_estoque.msg("ESTOQUE EXCLUÍDO COM SUCESSO!")
-
-    def pega_vacina_nome(self):
-        nome = self.__tela_busca_estoque.open()
-        for estoque in self.__estoque:
-            if estoque.tipo_vacina.nome == nome:
-                return estoque
-        return None
-
-    def pega_vacina_lote(self):
-        lote = self.__tela_busca_estoque.open().title()
-        for estoque in self.__estoque:
-            if estoque.lote == lote:
-                return estoque
-        return None
+            self.__tela_busca_estoque.close()

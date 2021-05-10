@@ -14,14 +14,14 @@ class TelaBuscaTipoVacina(AbstractTela):
         sg.theme('DarkBlue')
         layout = [
             [sg.Text('Busca de vacina', size=(20, 1), font=("Helvetica", 15))],
-            [sg.Text('Nome: '), sg.InputText()],
+            [sg.Text('Nome: '), sg.InputText('Pfizer')],
             [sg.Button('Aplicar'), sg.Button('Sair')]
         ]
         self.__window = sg.Window('Sistema de Vacinação').Layout(layout)
 
     def open(self):
         button, values = self.__window.Read()
-        if button == None or button =='Sair':
+        if button is None or button == 'Sair':
             self.__window.close()
         return button, values
 

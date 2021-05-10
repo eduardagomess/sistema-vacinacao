@@ -7,6 +7,7 @@ from controlador.controlador_enfermeiro import ControladorEnfermeiro
 from controlador.controlador_tipo_vacina import ControladorTipoVacina
 
 
+
 class ControladorSistema:
 
     def __init__(self):

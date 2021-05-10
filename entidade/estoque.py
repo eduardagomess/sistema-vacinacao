@@ -1,4 +1,3 @@
-from excecao import erro_de_tipo
 from entidade.vacina import TipoVacina
 from datetime import datetime
 
@@ -17,7 +16,7 @@ class Estoque:
 
     @property
     def qtd(self):
-        return self.__qtd
+        return int(self.__qtd)
 
     @property
     def lote(self):
@@ -25,7 +24,7 @@ class Estoque:
 
     @qtd.setter
     def qtd(self, qtd):
-        self.__qtd = qtd
+        self.__qtd = int(qtd)
 
     @property
     def data_recebimento(self):

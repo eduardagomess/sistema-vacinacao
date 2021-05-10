@@ -53,9 +53,9 @@ class TelaListagem():
 
             self.__window = sg.Window('Relatório de Agendamentos', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
 
-        if tipo == "paciente_relatorio":
+        elif tipo == "paciente_relatorio":
             
-            lista = [[sg.Text('Paciente(s) cadastrado(s)', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
+            lista = [[sg.Text('Informação paciente', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
 
             
             lista += [[sg.Text('Nome do paciente: ' + informacoes.nome.title() + "\n" 
@@ -66,6 +66,28 @@ class TelaListagem():
             layout = lista
 
             self.__window = sg.Window('Relatório de Paciente', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
+        
+
+        elif tipo == "enfermeiro-relatorio":
+
+            lista = [[sg.Text('Informação enfermeiro', justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
+
+            lista += [[sg.Text('Nome do enfermeiro: ' + informacoes.nome.title() + "\n" 
+                + 'Telefone do enfermeiro: ' + informacoes.telefone + "\n" + 'CPF do enfermeiro: ' 
+                + informacoes.cpf + "\n" + 'COREN do enfermeiro: ' + informacoes.coren + "\n", font=("Helvetica", 15))]]
+            
+            layout = lista
+            self.__window = sg.Window('Relatório de Enfermeiros', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
+
+
+        elif tipo == "lista_pacientes":
+            lista = [[sg.Text('Paciente(s) do enfermeiro(a)' + informacoes.nome.title(), justification = 'center', text_color='#4682B4', font=("Helvetica", 15))]]
+
+            for paciente in informacoes.lista_pacientes:
+                lista += [[sg.Text('Nome do paciente: ' + paciente.nome.title() + "\n" , font=("Helvetica", 15))]]
+            
+            layout = lista
+            self.__window = sg.Window('Relatório de Pacientes', default_button_element_size=(40, 1), size=(800,800)).Layout(layout)
 
     def open(self):
         self.init_components(None, None)

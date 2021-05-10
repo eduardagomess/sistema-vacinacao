@@ -34,7 +34,6 @@ class AbstractTela(ABC):
                 if inteiros_validos:
                     print(self.colorir_info("Valores válidos: "), (self.colorir_info(inteiros_validos)))
 
-
     def pegar_nome(self,  mensagem: str = ""):
         while True:
             nome = input(mensagem)
@@ -50,8 +49,9 @@ class AbstractTela(ABC):
                 sg.popup("Preencha o nome com no mínimo 5 caracteres")
 
     def pegar_nome_vacina(self, mensagem: str = ""):
-        nome_vacina = mensagem
+        nome_vacina = str(mensagem)
         try:
+            nome_vacina.replace(" ", "")
             if len(nome_vacina) < 5:
                 raise NomeInvalido
             return nome_vacina.title()
@@ -171,8 +171,7 @@ class AbstractTela(ABC):
                 print(self.colorir_erro("Valor incorreto, o COREN deve conter 6 digitos, formatação: 123456"))
 
     def open(self):
-        button, values = self.__window.Read()
-        return values
+        pass
 
     def close(self):
         pass

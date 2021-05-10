@@ -24,3 +24,6 @@ class TelaCadastraEstoque(AbstractTela):
     def open(self):
         button, values = self.__window.Read()
         return button, values
+
+    def close(self):
+        self.__window.Close()

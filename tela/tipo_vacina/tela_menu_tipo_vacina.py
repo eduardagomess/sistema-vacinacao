@@ -12,7 +12,7 @@ class TelaMenuTipoVacina(AbstractTela):
         self.mostra_opcoes()
 
     def mostra_opcoes(self):
-        sg.theme('DarkBlue')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Registro de vacina', size=(20, 1), font=("Helvetica", 15))],
             [sg.Radio('Registrar vacina', "AREA", key=1)],
@@ -41,9 +41,7 @@ class TelaMenuTipoVacina(AbstractTela):
 
     def mostra_tipo_vacina(self, tipo_vacina):
         self.msg(
-            ("Nome da vacina: {}".format(tipo_vacina.nome)) + "\n" + "Número de aplicações que a vacina requer: {}".format(tipo_vacina.num_doses) + "\n"
-            "-----------"
-        )
+            ("Nome da vacina: {}".format(tipo_vacina.nome)) + "\n" + "Número de aplicações que a vacina requer: {}".format(tipo_vacina.num_doses) + "\n")
         return tipo_vacina
 
     def mostra_vacina_inexistente(self):

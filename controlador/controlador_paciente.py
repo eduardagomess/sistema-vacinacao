@@ -11,7 +11,6 @@ from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
 from excecao.telefone_invalido import TelefoneComNumeroInvalido
 from excecao.coren_invalido import CorenInvalido
 from excecao.cpf_invalido import CpfInvalido
-from excecao.dose_invalida import DoseInvalida
 import PySimpleGUI as sg
 import datetime
 
@@ -25,7 +24,6 @@ class ControladorPaciente:
         self.__tela_bucar_paciente = TelaBuscaPaciente(self)
         self.__tela_listagem = TelaListagem(self)
         self.__tela_opcoes_mudanca = TelaOpcoes(self)
-
         self.__tele_endereco = TelaEndereco(self)
         self.__controlador_sistema = controlador_sistema
 
@@ -158,7 +156,7 @@ class ControladorPaciente:
                     novo_paciente.determinar_endereco(bairro, rua, numero,complemento)
                     self.__pacientes.append(novo_paciente)
                     self.__tela_inserir_paciente.close()
-                    sg.popup("Cadastramento", "Paciente cadastrado com sucesso", font=("Helvetica", 15, "bold"), text_color='#4682B4') 
+                    sg.popup("Paciente cadastrado com sucesso", font=("Helvetica", 15, "bold"), text_color='#4682B4') 
                     cadastro = False
                     return novo_paciente
                     #break
@@ -180,11 +178,9 @@ class ControladorPaciente:
             self.__tela_listagem.close()
 
     def buscar_paciente(self):
-        print("antes da bagaça")
         self.__tela_bucar_paciente.init_components()
         button, value = self.__tela_bucar_paciente.open()
         self.__tela_bucar_paciente.close()
-        print("chegou nessa bagaça")
         id = value[0]
         if button == "Sair":
             self.__tela_paciente.open()
@@ -206,7 +202,6 @@ class ControladorPaciente:
         return None
 
     def busca_paciente(self):
-        print("busca_paciente")
         paciente = self.buscar_paciente()
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!", font=("Helvetica", 15, "bold"), text_color='red')
@@ -217,18 +212,16 @@ class ControladorPaciente:
 
     def editar_paciente(self):
         paciente = self.buscar_paciente()
-    
         if paciente == None:
             sg.popup("Erro","Paciente não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
             self.__tela_opcoes.close()
-        
         else:
             button, value = self.__tela_opcoes_mudanca.open()
             self.__tela_opcoes_mudanca.close()
-            print(value)
             if value["nome"]:
                 self.__tela_inserir_paciente.init_components(None, paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, paciente.data_nascimento)
                 button, dados_paciente = self.__tela_inserir_paciente.open()
+                self.__tela_inserir_paciente.close()
                 nome = dados_paciente["nome"]
                 try:
                     if not nome.replace(" ", "").isalpha():
@@ -246,13 +239,12 @@ class ControladorPaciente:
                     self.inserir_paciente(None, paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, paciente.data_nascimento)
 
                 paciente.nome = nome
+                sg.Popup("Nome do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close() 
-               
 
             if value["telefone"]:
                 self.__tela_inserir_paciente.init_components(paciente.nome, None, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, paciente.data_nascimento)
                 button, dados_paciente = self.__tela_inserir_paciente.open()
-                print(dados_paciente["telefone"])
                 telefone = dados_paciente["telefone"]
                 try:
                     if not telefone.isdigit():
@@ -269,11 +261,10 @@ class ControladorPaciente:
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,None, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
-                telefone = dados_paciente["telefone"]
                 paciente.telefone = telefone
+                sg.Popup("Telefone do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
                 
-            
             if value["cpf"]:
                 self.__tela_inserir_paciente.init_components(paciente.nome, paciente.telefone, None, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                 button, dados_paciente = self.__tela_inserir_paciente.open()
@@ -294,9 +285,9 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome, paciente.telefone, None, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.cpf = cpf
+                sg.Popup("CPF do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
-                
-                
+                 
             if value["endereco"]:
                 self.__tela_inserir_paciente.init_components(paciente.nome, paciente.telefone, paciente.cpf, None, None, None, None, paciente.data_nascimento)
                 button, dados_paciente = self.__tela_inserir_paciente.open()
@@ -313,11 +304,13 @@ class ControladorPaciente:
                         
                 except NomeInvalido:
                     sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+
                     sg.Popup("Bairro inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, None,paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.endereco.bairro = bairro
+                sg.Popup("Bairro do paciente alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
 
                 rua = dados_paciente["rua"]  
@@ -337,8 +330,8 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, None, paciente.endereco.numero, paciente.endereco.complemento,paciente.data_nascimento)
                         
                 paciente.endereco.rua = rua
+                sg.Popup("Rua do paciente alterada com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
-
 
                 numero = dados_paciente["numero"] 
                 try:
@@ -350,6 +343,7 @@ class ControladorPaciente:
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, None,paciente.endereco.complemento,paciente.data_nascimento)
                        
                 paciente.endereco.numero = numero
+                sg.Popup("Némero residencial alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
 
                 complemento = dados_paciente["complemento"] 
@@ -361,8 +355,8 @@ class ControladorPaciente:
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, None,paciente.data_nascimento)
                     
-
                 paciente.endereco.complemento = numero
+                sg.Popup("Complemento alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_paciente.close()
                 
                 data_nascimento = dados_paciente["data_nascimento"]
@@ -373,10 +367,10 @@ class ControladorPaciente:
                     except ValueError:
                         sg.Popup("Data inválida","Insira apenas números, com a seguite formatação: DD/MM/AAAA", font=("Helvetica", 15, "bold"), text_color='red')
                         self.__tela_inserir_paciente.close()
-                        self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, paciente.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, None)
-                        
-                    
+                        self.inserir_paciente(paciente.nome,paciente.telefone, paciente.cpf, pacinete.endereco.bairro, paciente.endereco.rua, paciente.endereco.numero, paciente.endereco.complemento, None)     
+
                     paciente.data_nascimento = data_nascimento
+                    sg.Popup("Data de nascimento alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                     self.__tela_inserir_paciente.close()
 
     def excluir_paciente(self):
@@ -394,7 +388,6 @@ class ControladorPaciente:
         opcoes = {1: self.inserir_paciente, 2: self.listar_pacientes, 3: self.editar_paciente, 4: self.excluir_paciente, 5: self.busca_paciente}
         while True:
             button, values = self.__tela_paciente.open()
-            print(values)
             if button == "Sair":
                 break
             else:
@@ -404,6 +397,5 @@ class ControladorPaciente:
                         if index == 1:
                             opcoes[index](None, None, None, None, None, None, None, None) 
                         else:
-                            print("entrou no else")
                             opcoes[index]()
                     index += 1

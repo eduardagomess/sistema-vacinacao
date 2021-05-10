@@ -4,6 +4,12 @@ from tela.tela_listagem import TelaListagem
 from tela.tela_enfermeiro.tela_busca_enf import TelaBuscaEnfermeiro
 from tela.tela_enfermeiro.tela_op_mudanca import TelaOpcoesMudanca
 from tela.tela_enfermeiro.tela_enfermeiro import TelaEnfermeiro
+from excecao.nome_invalido import NomeInvalido
+from excecao.caracter_numerico import NomeComCaracterNumerico
+from excecao.caracter_alfabetico import CaracterAlfabeticoExcecao
+from excecao.telefone_invalido import TelefoneComNumeroInvalido
+from excecao.coren_invalido import CorenInvalido
+from excecao.cpf_invalido import CpfInvalido
 from utils import estilo
 import PySimpleGUI as sg
 
@@ -33,12 +39,12 @@ class ControladorEnfermeiro:
                     elif len(nome.replace(" ", "")) < 5:
                         raise NomeInvalido  
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras", size=(20,20))
+                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(None, dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     break
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres")
+                    sg.Popup("Nome inválido","Preencha o nome com no mínimo 5 caracteres", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(None, dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     break
@@ -50,12 +56,12 @@ class ControladorEnfermeiro:
                     elif len(telefone) < 10 or (len(telefone) > 13):
                         raise TelefoneComNumeroInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("Telefone inválido", "Valor incorreto, insira apenas números")
+                    sg.Popup("Telefone inválido", "Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(dados_enfermeiro["nome"], None, dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     break
                 except TelefoneComNumeroInvalido:
-                    sg.Popup("Telefone inválido","Valor incorreto, o número deve conter de 10 a 11 digitos (incluíndo DDD)")
+                    sg.Popup("Telefone inválido","O número deve conter de 10 a 11 digitos (incluíndo DDD)", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(dados_enfermeiro["nome"], None, dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     break
@@ -67,12 +73,12 @@ class ControladorEnfermeiro:
                     elif len(cpf) != 11:
                         raise CpfInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("CPF inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("CPF inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(dados_enfermeiro["nome"],dados_enfermeiro["telefone"], None, dados_enfermeiro["coren"])
                     break
                 except CpfInvalido:
-                    sg.Popup("CPF inválido","Valor incorreto, o CPF deve conter 11 digitos, formatação: 12645974944")
+                    sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(dados_enfermeiro["nome"],dados_enfermeiro["telefone"], None, dados_enfermeiro["coren"])
                     break
@@ -82,7 +88,7 @@ class ControladorEnfermeiro:
                     if not coren.isdigit():
                         raise Exception
                 except Exception:
-                    sg.Popup("Número inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("COREN inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(dados_enfermeiro["nome"],dados_enfermeiro["telefone"],dados_enfermeiro["cpf"], None)
                     break
@@ -93,19 +99,21 @@ class ControladorEnfermeiro:
                     novo_enfermeiro = Enfermeiro(dados_enfermeiro["nome"], dados_enfermeiro["telefone"], dados_enfermeiro["cpf"], dados_enfermeiro["coren"])
                     self.__enfermeiros.append(novo_enfermeiro)
                     self.__tela_inserir_enfermeiro.close()
-                    sg.popup("Cadastramento", "Enfermeiro cadastrado com sucesso!")  
+                    sg.popup("Enfermeiro cadastrado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')  
                     cadastro = False
                     return novo_enfermeiro
                 
                 except ValueError:
-                    sg.popup("Erro", "Enfermeiro já cadastrado!")
+                    sg.popup("Enfermeiro já cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
-                    self.inserir_enfermeiro()
+                    self.inserir_enfermeiro(None, None, None, None)
                     break
+        else:
+            self.__tela_inserir_enfermeiro.close()
 
     def listar_enfermeiros(self):
         if self.__enfermeiros == []:
-            sg.popup("Erro", "Ainda não há enfermeiros cadastrados!")
+            sg.popup("Erro", "Ainda não há enfermeiros cadastrados!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
             self.__tela_listagem.init_components(self.__enfermeiros, "enfermeiro")
             self.__tela_listagem.open()
@@ -114,44 +122,47 @@ class ControladorEnfermeiro:
     def listar_pacientes(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == None:
-            sg.popup("Erro", "Enfermeiro não cadastrado", "Faça o cadastro!")
+            sg.popup("Erro", "Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         elif len(enfermeiro.lista_pacientes) == 0:
-            sg.popup("Erro", "Enfermeiro sem pacientes")
+            sg.popup("Enfermeiro sem pacientes", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            for paciente in enfermeiro.lista_pacientes:
-                sg.print(paciente.nome)
-    
+            self.__tela_listagem.init_components(enfermeiro, "lista_pacientes")
+            self.__tela_listagem.open()
+            self.__tela_listagem.close()
+ 
     def buscar_enfermeiro(self):
+        self.__tela_buscar_enfermeiro.init_components()
         button, value = self.__tela_buscar_enfermeiro.open()
         self.__tela_buscar_enfermeiro.close()
         id = value[0]
+        if button == "Sair":
+            self.__tela_enfermeiro.open()
+            return
         try:
             if not id.isdigit():
                 raise Exception
         except Exception:
-            sg.Popup("Número inválido","Insira apenas números")
-            self.busca_enfermeiro()
-        if button == "Sair":
-            self.controlador_sistema.tela_sistema()
+            sg.Popup("Número inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
+            self.buscar_enfermeiro()
         else:
             for enfermeiro in self.__enfermeiros:
                 if enfermeiro.coren == id:
                     return enfermeiro
-            return None
+        return None
 
     def busca_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == None:
-            sg.popup("Erro", "Enfermeiro não cadastrado", "Faça o cadastro!")
+            sg.popup("Erro", "Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(enfermeiro, "enfermeiro")
+            self.__tela_listagem.init_components(enfermeiro, "enfermeiro-relatorio")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 
     def editar_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == None:
-            sg.popup("Erro","Enfermeiro não cadastrado")      
+            sg.popup("Erro","Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')   
         else:
             button, value = self.__tela_opcao_mudanca.open()
             self.__tela_opcao_mudanca.close()
@@ -165,15 +176,16 @@ class ControladorEnfermeiro:
                     elif len(nome.replace(" ", "")) < 5:
                         raise NomeInvalido  
                 except NomeComCaracterNumerico:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Nome inválido","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(None, enfermeiro.telefone, enfermeiro.cpf, enfermeiro.coren)
                 except NomeInvalido:
-                    sg.Popup("Nome inválido","Valor incorreto, insira apenas letras")
+                    sg.Popup("Nome inválido","Insira apenas letras", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(None, enfermeiro.telefone, enfermeiro.cpf, enfermeiro.coren)
 
                 enfermeiro.nome = nome
+                sg.Popup("Nome do enfermeiro alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_enfermeiro.close() 
                
             if value["telefone"]:
@@ -186,20 +198,19 @@ class ControladorEnfermeiro:
                     elif len(telefone) < 10 or (len(telefone) > 13):
                         raise TelefoneComNumeroInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("Telefone inválido",  "Valor incorreto, insira apenas números")
+                    sg.Popup("Telefone inválido", "Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(enfermeiro.nome, None, enfermeiro.cpf,enfermeiro.coren)
                         
                 except TelefoneComNumeroInvalido:
-                    sg.Popup("Telefone inválido", "Valor incorreto, o número deve conter de 10 a 11 digitos (incluíndo DDD)")
+                    sg.Popup("Telefone inválido", "O número deve conter de 10 a 11 digitos (incluíndo DDD)", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_paciente.close()
                     self.inserir_paciente(enfermeiro.nome, None, enfermeiro.cpf,enfermeiro.coren)
                         
-                telefone = dados_enfermeiro["telefone"]
                 enfermeiro.telefone = telefone
+                sg.Popup("Telefone do enfermeiro alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_enfermeiro.close()
                 
-            
             if value["cpf"]:
                 self.__tela_inserir_enfermeiro.init_components(enfermeiro.nome, enfermeiro.telefone, None, enfermeiro.coren)
                 button, dados_enfermeiro = self.__tela_inserir_enfermeiro.open()
@@ -210,16 +221,17 @@ class ControladorEnfermeiro:
                     elif len(cpf) != 11:
                         raise CpfInvalido
                 except CaracterAlfabeticoExcecao:
-                    sg.Popup("CPF inválido","Valor incorreto, insira apenas números")
+                    sg.Popup("CPF inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(enfermeiro.nome, enfermeiro.telefone, None, enfermeiro.coren)
                        
                 except CpfInvalido:
-                    sg.Popup("CPF inválido","Valor incorreto, o CPF deve conter 11 digitos, formatação: 12645974944")
+                    sg.Popup("CPF inválido","O CPF deve conter 11 digitos, formatação: 12645974944", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(enfermeiro.nome, enfermeiro.telefone, None, enfermeiro.coren)
                         
                 enfermeiro.cpf = cpf
+                sg.Popup("CPF do enfermeiro alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
                 self.__tela_inserir_enfermeiro.close()
 
                 coren = dados_enfermeiro["coren"] 
@@ -227,20 +239,20 @@ class ControladorEnfermeiro:
                     if not coren.isdigit():
                         raise Exception
                 except Exception:
-                    sg.Popup("Coren inválido","Insira apenas números")
+                    sg.Popup("Coren inválido","Insira apenas números", font=("Helvetica", 15, "bold"), text_color='red')
                     self.__tela_inserir_enfermeiro.close()
                     self.inserir_enfermeiro(enfermeiro.nome, enfermeiro.telefone, enfermeiro.cpf,enfermeiro.coren)
-                       
+                sg.Popup("COREN do enfermeiro alterado com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')     
                 enfermeiro.coren = coren
                 self.__tela_inserir_enfermeiro.close()
         
     def excluir_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == None:
-            sg.popup("Erro", "Enfermeiro não cadastrado!")
+            sg.popup("Erro", "Enfermeiro não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
             self.__enfermeiros.remove(enfermeiro)
-            sg.popup("Remoção", "Enfermeiro removido com sucesso!")
+            sg.popup("Enfermeiro removido com sucesso!", font=("Helvetica", 15, "bold"), text_color='#4682B4')
 
     def retornar_sistema(self):
         return self.__controlador_sistema

@@ -13,7 +13,7 @@ class TelaOpcoes():
         sg.ChangeLookAndFeel('Reddit') 
         layout =[
 
-            [sg.Text('Alteração do cadastrao', size=(20, 1),text_color='#4682B4', font=("Helvetica", 16, 'bold'))],
+            [sg.Text('Alteração do cadastro', size=(20, 1),text_color='#4682B4', font=("Helvetica", 16, 'bold'))],
             [sg.Radio('Alterar nome', "AREA", font=("Helvetica", 15), key="nome")],
             [sg.Radio('Alterar telefone', "AREA", font=("Helvetica", 15),  key="telefone")],
             [sg.Radio('Alterar cpf', "AREA", font=("Helvetica", 15), key="cpf")], 
@@ -21,7 +21,7 @@ class TelaOpcoes():
             [sg.Radio('Alterar data de nascimento', "AREA", font=("Helvetica", 15), key="data_nascimento")],
             [sg.Button('Aplicar', font=("Helvetica", 15),size=(5,1)), sg.Button('Sair', font=("Helvetica", 15),size=(5,1))]
         ]
-        self.__window = sg.Window("Área paciente", size=(500,200)).layout(layout)
+        self.__window = sg.Window("Área paciente", size=(500,280)).layout(layout)
         
     def open(self):
         self.init_components()
