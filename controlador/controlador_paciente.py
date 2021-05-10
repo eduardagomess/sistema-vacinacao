@@ -208,7 +208,7 @@ class ControladorPaciente:
         if paciente == None:
             sg.popup("Erro", "Paciente não cadastrado", "Faça o cadastro!", font=("Helvetica", 15, "bold"), text_color='red')
         else:
-            self.__tela_listagem.init_components(self.__pacienteDAO.get(paciente), "paciente_relatorio")
+            self.__tela_listagem.init_components(self.__pacienteDAO.get(paciente.cpf), "paciente_relatorio")
             self.__tela_listagem.open()
             self.__tela_listagem.close()
 

@@ -38,7 +38,3 @@ class DAO(ABC):
             return self.__cache[key]
         except KeyError:
             pass
-<<<<<<< HEAD
-
-=======
->>>>>>> 1d0f923f2aa8d69428828e4ccb76c87bd5248d01

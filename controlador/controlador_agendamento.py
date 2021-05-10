@@ -99,7 +99,20 @@ class ControladorAgendamento:
                 self.__tela_listagem.init_components(agendamento, "agendamento")
                 self.__tela_listagem.open()
                 self.__tela_listagem.close()
-                
+
+
+    def pega_inf_agendamento(self):
+        controlador_paciente = self.__controlador_sistema.controlador_paciente
+        paciente = controlador_paciente.buscar_paciente()
+        if paciente == None:
+            sg.popup("Paciente ainda não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')
+        elif paciente != "Sair":
+            if paciente.nome not in self.__agendamentoDAO.get().agendamentos:
+                sg.popup("Paciente sem agendamento!", font=("Helvetica", 15, "bold"), text_color='red')
+            else:
+                agendamento = self.__agendamentoDAO.get().agendamentos[paciente.nome]
+                return agendameno
+
     def editar_agendamento(self):
         controlador_paciente = self.__controlador_sistema.controlador_paciente
         controlador_enfermeiro = self.__controlador_sistema.controlador_enfermeiro
