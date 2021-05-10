@@ -157,7 +157,7 @@ class ControladorEnfermeiro:
     def busca_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == "Sair":
-            self.__tela_enfermeiro.close()
+            self.__tela_enfermeiro.open()
             return
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')
@@ -169,7 +169,7 @@ class ControladorEnfermeiro:
     def editar_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == "Sair":
-            self.__tela_enfermeiro.close()
+            self.__tela_enfermeiro.open()
             return
         if enfermeiro == None:
             sg.popup("Erro","Enfermeiro não cadastrado", font=("Helvetica", 15, "bold"), text_color='red')   
@@ -259,7 +259,7 @@ class ControladorEnfermeiro:
     def excluir_enfermeiro(self):
         enfermeiro = self.buscar_enfermeiro()
         if enfermeiro == "Sair":
-            self.__tela_enfermeiro.close()
+            self.__tela_enfermeiro.open()
             return
         if enfermeiro == None:
             sg.popup("Erro", "Enfermeiro não cadastrado!", font=("Helvetica", 15, "bold"), text_color='red')

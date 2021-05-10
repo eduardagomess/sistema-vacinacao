@@ -21,7 +21,7 @@ class TelaSistema():
             [sg.Button('Aplicar', font=("Helvetica", 15),size=(5,1)), sg.Button('Sair', font=("Helvetica", 15),size=(5,1))]
         ]
 
-        self.__window = sg.Window("Tela inicial", size=(500,350)).layout(layout)
+        self.__window = sg.Window("Tela inicial", size=(500,300)).layout(layout)
     
     def open(self):
         self.init_components()
