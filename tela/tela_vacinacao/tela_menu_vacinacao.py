@@ -28,11 +28,11 @@ class TelaMenuVacinacao(AbstractTela):
         vacinacoes = []
         for vacinado in vacinacao:
             registro_vacina = "Paciente {} foi vacinado por enfermeiro(a) {}, tem a {} dose do lote {}. \n".format(vacinado.paciente.nome, vacinado.enfermeiro.nome,
-                                                                                                                   vacinado.dose, vacinado.tipo_dose)
+                                                                                                                   vacinado.paciente.dose, vacinado.tipo_dose)
             vacinacoes.append(registro_vacina)
         sg.popup("Registros encontrados: \n", *vacinacoes, title="Sistema de Posto")
         return vacinacoes
 
     def mostra_vacinacao(self, vacinacao):
         sg.popup("Paciente {} foi vacinado por enfermeiro(a) {}, tem a {} dose do lote {}. \n".format(vacinacao.paciente.nome, vacinacao.enfermeiro.nome,
-                                                                                                                   vacinacao.dose, vacinacao.tipo_dose))
+                                                                                                                   vacinacao.paciente.dose, vacinacao.tipo_dose))

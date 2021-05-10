@@ -13,8 +13,6 @@ class VacinacaoDAO(DAO):
     def add(self, cpf, vacinacao):
         if isinstance(cpf, str) and (vacinacao is not None) and isinstance(vacinacao, Vacinacao):
             super().add(cpf, vacinacao)
-        else:
-            print("problema")
 
     def get(self, key: str):
         if isinstance(key, str):

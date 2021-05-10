@@ -43,19 +43,22 @@ class ControladorVacinacao:
         paciente = agendamento["paciente"]
         if self.__vacinacao_dao.get(paciente.cpf):
             vacinacao = self.__vacinacao_dao.get(paciente.cpf)
-            self.__tela_menu_vacinacao.mostra_vacinacao()
+            self.__tela_menu_vacinacao.mostra_vacinacao(vacinacao)
         else:
-            self.__tela_menu_vacinacao.msg("Vacinacao não encontrada para esse CPF!")
+            self.__tela_menu_vacinacao.msg("Vacinacao não encontrada para esse CPF")
 
 
     def incluir_vacinacao(self):
         agendamento = self.__controlador_agendamento.pega_inf_agendamento()
         if agendamento:
+            #OBJETO PACIENTE
             paciente = agendamento["paciente"]
-            if self.__vacinacao_dao.get(paciente.cpf):
-                paciente = self.__vacinacao_dao.get(paciente.cpf)
             enfermeiro = agendamento["enfermeiro"]
-            if paciente.dose == 0:
+            segunda_vacinacao = False
+            if self.__vacinacao_dao.get(paciente.cpf):
+                segunda_vacinacao = self.__vacinacao_dao.get(paciente.cpf)
+                print(segunda_vacinacao)
+            if not segunda_vacinacao:
                 lotes, nomes = self.__controlador_estoque.estoques_disponiveis()
                 self.__tela_lista_estoques_compativeis.init_components(lotes, nomes)
                 button, values = self.__tela_lista_estoques_compativeis.open()
@@ -66,17 +69,19 @@ class ControladorVacinacao:
                             tipo_dose = value
                             paciente.dose += 1
                             self.__controlador_estoque.vacina(tipo_dose)
-                            vacinacao = Vacinacao(paciente, enfermeiro, paciente.dose, tipo_dose)
+                            vacinacao_nova = Vacinacao(paciente, enfermeiro, tipo_dose)
+                            self.__controlador_estoque.vacina(tipo_dose)
                             self.__tela_menu_vacinacao.msg("{} recebeu a primeira dose do lote {}!".format(paciente.nome, tipo_dose))
-            elif paciente.dose == 1:
-                doses_da_vacina = self.__controlador_estoque.pega_doses(paciente.tipo_dose)
-                if doses_da_vacina == '2':
-                    paciente.dose = 1
-                    paciente = self.__vacinacao_dao.get(paciente.cpf)
-                    self.__controlador_estoque.vacina(paciente.tipo_dose)
-                    vacinacao = Vacinacao(paciente, enfermeiro, paciente.dose, paciente.tipo_dose)
-                    self.__vacinacao_dao.add(paciente.cpf, vacinacao)
-                    self.__tela_menu_vacinacao.msg("{} recebeu a segunda dose da vacina!".format(paciente.nome))
+                            self.__vacinacao_dao.add(paciente.cpf, vacinacao_nova)
+            elif segunda_vacinacao:
+                doses_da_vacina = self.__controlador_estoque.pega_doses(segunda_vacinacao.tipo_dose)
+                if doses_da_vacina == '2' and segunda_vacinacao.paciente.dose < 2:
+                    segunda_vacinacao.paciente.dose = 2
+                    #diminuindo dose do lote
+                    self.__controlador_estoque.vacina(segunda_vacinacao.tipo_dose)
+                    vacinacao_nova = Vacinacao(segunda_vacinacao.paciente, segunda_vacinacao.enfermeiro, segunda_vacinacao.tipo_dose)
+                    self.__vacinacao_dao.add(segunda_vacinacao.paciente.cpf, vacinacao_nova)
+                    self.__tela_menu_vacinacao.msg("{} recebeu a segunda dose da vacina!".format(segunda_vacinacao.paciente.nome))
                 else:
                     self.__tela_menu_vacinacao.msg("Não é possível vacinar esse paciente novamente!")
             else:
@@ -93,22 +98,3 @@ class ControladorVacinacao:
 
     def retornar_sistema(self):
         return self.__controlador_sistema
-
-
-
-"""    def editar_vacinacao(self, paciente: Paciente, enfermeiro: Enfermeiro, dose, tipo_dose):
-        if isinstance(paciente, Paciente):
-            self.__paciente = paciente
-        else:
-            raise NaoCadastrado
-        if isinstance(enfermeiro, Enfermeiro):
-            self.__enfermeiro = enfermeiro
-        else:
-            raise NaoCadastrado
-        dose_sistema = self.__tela_vacinacao.pegar_dose_vacina(dose)
-        if isinstance(tipo_dose, TipoVacina):
-            self.__tipo_dose = tipo_dose
-        else:
-            raise NaoCadastrado
-        vacinacao_editada = Vacinacao(paciente, enfermeiro, dose, tipo_dose)
-        self.__vacinacao_dao.add(paciente.cpf, vacinacao_editada)"""
